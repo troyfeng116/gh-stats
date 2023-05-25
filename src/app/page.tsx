@@ -1,5 +1,6 @@
 import styles from './page.module.css'
 
+import React from 'react'
 import Image from 'next/image'
 
 export default function Home() {
