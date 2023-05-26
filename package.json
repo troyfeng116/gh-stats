@@ -6,8 +6,8 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint && eslint --ignore-path .gitignore --ext .js,.ts .",
-        "pretty": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+        "lint": "next lint && eslint --ext .js,.ts .",
+        "pretty": "prettier --write ."
     },
     "dependencies": {
         "@types/node": "20.2.3",
