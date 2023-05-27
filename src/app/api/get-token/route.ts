@@ -4,20 +4,10 @@ import { GH_CLIENT_ID, GH_CLIENT_SECRET } from '@/server/constants'
 export const POST = async (request: Request): Promise<Response> => {
     console.log('/api/get-token POST')
 
-    const reqJson = await request.json()
+    // https://developer.mozilla.org/en-US/docs/Web/API/Request/json
+    const body = await request.json()
+    const { code } = body
 
-    // const { body } = reqJson
-    // if (body === null || body === undefined) {
-    //     const clientRes: GetTokenAPIResponse = {
-    //         success: false,
-    //         error: 'body null/undefined',
-    //     }
-    //     return new Response(JSON.stringify(clientRes), {
-    //         status: 400,
-    //     })
-    // }
-
-    const { code } = reqJson
     if (code === undefined) {
         const clientRes: GetTokenAPIResponse = {
             success: false,
@@ -51,10 +41,10 @@ export const POST = async (request: Request): Promise<Response> => {
     if (error !== undefined || access_token === undefined) {
         const clientRes: GetTokenAPIResponse = {
             success: false,
-            error: `${error}: unable to retrieve access token (${error_description})`,
+            error: `${error}: ${error_description}`,
         }
         return new Response(JSON.stringify(clientRes), {
-            status: 404,
+            status: 400,
         })
     }
 
