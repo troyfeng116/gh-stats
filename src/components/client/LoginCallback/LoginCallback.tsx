@@ -28,7 +28,7 @@ export const LoginCallback: React.FC = () => {
                 })
             }
         }
-    }, [params])
+    }, [params, login])
 
     if (isLoading) {
         return <div>Loading</div>

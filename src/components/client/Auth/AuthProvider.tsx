@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useReducer } from 'react'
+import React, { createContext, useCallback, useContext, useReducer } from 'react'
 
 import { AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT } from './actions'
 import { reducer } from './reducer'
@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
     })
     const { authStatus, accessToken } = state
 
-    const login = async (code: string, callback: (success: boolean, error?: string) => void) => {
+    const login = useCallback(async (code: string, callback: (success: boolean, error?: string) => void) => {
         console.log('[AuthProvider] login')
 
         const tokenResponse = await getTokenAPI(code)
@@ -71,14 +71,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
             setAccessTokenCookie(accessToken)
             callback(true)
         }
-    }
+    }, [])
 
-    const logout = () => {
+    const logout = useCallback(() => {
         console.log('[AuthProvider] logout')
 
         dispatch({ type: AUTH_LOGOUT })
         clearCookies()
-    }
+    }, [])
 
     return (
         <authContext.Provider
