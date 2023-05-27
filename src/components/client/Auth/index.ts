@@ -1,2 +1,2 @@
-import { AuthProvider } from "./AuthProvider";
-export 
+import { AuthProvider, AuthStatus, useAuth } from './AuthProvider'
+export { AuthProvider, AuthStatus, useAuth }

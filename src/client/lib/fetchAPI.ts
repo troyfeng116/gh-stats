@@ -2,6 +2,8 @@
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAPI = async (url: string, headers?: any): Promise<any> => {
+    console.log(`GET ${url}`)
+
     headers = {
         ...headers,
         'Content-Type': 'application/json',
@@ -11,13 +13,16 @@ export const getAPI = async (url: string, headers?: any): Promise<any> => {
         method: 'GET',
         headers: headers,
     })
-    console.log('fetch get-token complete')
+
     const resJson = await res.json()
+    console.log(`GET ${url} complete: ${JSON.stringify(resJson)}`)
     return resJson
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const postAPI = async (url: string, headers?: any, body?: any): Promise<any> => {
+    console.log(`GET ${url}, ${JSON.stringify(body)}`)
+
     headers = {
         ...headers,
         'Content-Type': 'application/json',
@@ -32,5 +37,6 @@ export const postAPI = async (url: string, headers?: any, body?: any): Promise<a
     })
 
     const resJson = await res.json()
+    console.log(`POST ${url} complete: ${JSON.stringify(resJson)}`)
     return resJson
 }

@@ -4,6 +4,8 @@ import React from 'react'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 
+import { AuthProvider } from '@/components/client/Auth'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -15,11 +17,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={inter.className}>
-                <nav>
-                    <Link href="/">Home</Link>
-                    <Link href="/login">Login</Link>
-                </nav>
-                {children}
+                <AuthProvider>
+                    <nav>
+                        <Link href="/">Home</Link>
+                        <Link href="/login">Login</Link>
+                    </nav>
+                    {children}
+                </AuthProvider>
             </body>
         </html>
     )

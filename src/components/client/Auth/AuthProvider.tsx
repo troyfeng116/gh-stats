@@ -1,23 +1,28 @@
-import React, { createContext, useContext, useState } from 'react'
+'use client'
+
+import React, { createContext, useContext, useReducer } from 'react'
+
+import { AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT } from './actions'
+import { reducer } from './reducer'
 
 import { getTokenAPI } from '@/client/lib'
 import { clearCookies, deleteAccessTokenCookie, setAccessTokenCookie } from '@/client/utils/cookies'
 
-export enum AuthState {
+export enum AuthStatus {
     INITIALIZING = 'INITIALIZING',
     UNAUTH = 'UNAUTH',
     AUTH = 'AUTH',
 }
 
 export interface AuthContext {
-    state: AuthState
+    authStatus: AuthStatus
     accessToken?: string
     login: (code: string, callback: (success: boolean, error?: string) => void) => Promise<void>
     logout: () => void
 }
 
 const initialAuthContext: AuthContext = {
-    state: AuthState.INITIALIZING,
+    authStatus: AuthStatus.INITIALIZING,
     accessToken: undefined,
     login: async () => {
         return
@@ -29,19 +34,27 @@ const initialAuthContext: AuthContext = {
 
 const authContext = createContext(initialAuthContext)
 
-export const useAuth: () => AuthContext = () => {
+export const useAuth = (): AuthContext => {
     return useContext(authContext)
 }
 
+export interface AuthState {
+    authStatus: AuthStatus
+    accessToken?: string
+}
+
 interface AuthProviderProps {
-    child: React.ReactNode
+    children: React.ReactNode
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderProps) => {
-    const { child } = props
+    const { children } = props
 
-    const [authState, setAuthState] = useState<AuthState>(AuthState.INITIALIZING)
-    const [accessToken, setAccessToken] = useState<string>()
+    const [state, dispatch] = useReducer(reducer, {
+        authStatus: AuthStatus.INITIALIZING,
+        accessToken: undefined,
+    })
+    const { authStatus, accessToken } = state
 
     const login = async (code: string, callback: (success: boolean, error?: string) => void) => {
         console.log('[AuthProvider] login')
@@ -50,13 +63,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
         console.log(tokenResponse)
         const { success, error, accessToken } = tokenResponse
         if (!success || accessToken === undefined) {
-            setAccessToken(undefined)
-            setAuthState(AuthState.UNAUTH)
+            dispatch({ type: AUTH_LOGIN_FAILED })
             deleteAccessTokenCookie()
             callback(false, error)
         } else {
-            setAccessToken(accessToken)
-            setAuthState(AuthState.AUTH)
+            dispatch({ type: AUTH_LOGIN_SUCCESS, accessToken: accessToken })
             setAccessTokenCookie(accessToken)
             callback(true)
         }
@@ -65,21 +76,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
     const logout = () => {
         console.log('[AuthProvider] logout')
 
-        setAuthState(AuthState.UNAUTH)
-        setAccessToken(undefined)
+        dispatch({ type: AUTH_LOGOUT })
         clearCookies()
     }
 
     return (
         <authContext.Provider
             value={{
-                state: authState,
+                authStatus: authStatus,
                 accessToken: accessToken,
                 login: login,
                 logout: logout,
             }}
         >
-            {child}
+            {children}
         </authContext.Provider>
     )
 }
