@@ -3,6 +3,8 @@ import styles from './page.module.css'
 import React from 'react'
 import Image from 'next/image'
 
+import { VERSION_NUMBER } from '@/config/constants'
+
 export default function Home() {
     return (
         <main className={styles.main}>
@@ -82,6 +84,8 @@ export default function Home() {
                     </h2>
                     <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
                 </a>
+
+                <p>{VERSION_NUMBER}</p>
             </div>
         </main>
     )
