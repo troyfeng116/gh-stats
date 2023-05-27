@@ -5,7 +5,7 @@ import React from 'react'
 import Home from '@/components/client/Home'
 import { VERSION_NUMBER } from '@/config/constants'
 
-export default function Index() {
+export default function HomePage() {
     return (
         <main className={styles.main}>
             <Home />
