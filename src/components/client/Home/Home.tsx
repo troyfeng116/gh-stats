@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { TestAPIResponse } from '@/models/test'
+import { TestAPIResponse } from '@/models/api'
 
 export const Home: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
