@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 
 import { getTokenAPI } from '@/client/lib'
+import { clearCookies, deleteAccessTokenCookie, setAccessTokenCookie } from '@/client/utils/cookies'
 
 export enum AuthState {
     INITIALIZING = 'INITIALIZING',
@@ -51,10 +52,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
         if (!success || accessToken === undefined) {
             setAccessToken(undefined)
             setAuthState(AuthState.UNAUTH)
+            deleteAccessTokenCookie()
             callback(false, error)
         } else {
             setAccessToken(accessToken)
             setAuthState(AuthState.AUTH)
+            setAccessTokenCookie(accessToken)
             callback(true)
         }
     }
@@ -64,6 +67,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
 
         setAuthState(AuthState.UNAUTH)
         setAccessToken(undefined)
+        clearCookies()
     }
 
     return (
