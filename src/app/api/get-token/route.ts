@@ -1,4 +1,5 @@
 import { GetTokenAPIResponse } from '@/models/api'
+import { GH_OAuthAccessTokenAPIError, GH_OAuthAccessTokenAPISuccess } from '@/models/gh'
 import { GH_CLIENT_ID, GH_CLIENT_SECRET } from '@/server/constants'
 
 export const POST = async (request: Request): Promise<Response> => {
@@ -37,8 +38,11 @@ export const POST = async (request: Request): Promise<Response> => {
     const resJson = await res.json()
     console.log(resJson)
 
-    const { error, error_description, access_token } = resJson
-    if (error !== undefined || access_token === undefined) {
+    const { error: unknownError, access_token: unknownAccessToken } = resJson
+    if (unknownError !== undefined || unknownAccessToken === undefined) {
+        // type cast
+        const ghResJson = resJson as GH_OAuthAccessTokenAPIError
+        const { error, error_description } = ghResJson
         const clientRes: GetTokenAPIResponse = {
             success: false,
             error: `${error}: ${error_description}`,
@@ -48,10 +52,15 @@ export const POST = async (request: Request): Promise<Response> => {
         })
     }
 
+    const ghResJson = resJson as GH_OAuthAccessTokenAPISuccess
+    const { access_token, refresh_token } = ghResJson
+
     const clientRes: GetTokenAPIResponse = {
         success: true,
-        accessToken: access_token as string,
+        accessToken: access_token,
+        refreshToken: refresh_token,
     }
+
     return new Response(JSON.stringify(clientRes), {
         status: 200,
     })
