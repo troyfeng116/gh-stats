@@ -11,8 +11,12 @@ export interface GH_OAuthAccessTokenAPISuccess {
     scope: string
 }
 
+// https://docs.github.com/en/apps/oauth-apps/maintaining-oauth-apps/troubleshooting-oauth-app-access-token-request-errors#bad-verification-code
 export interface GH_OAuthAccessTokenAPIError {
     error: string
     error_description: string
     error_uri: string
 }
+
+export type GH_OAuthAccessTokenAPIResponse = Partial<GH_OAuthAccessTokenAPISuccess> &
+    Partial<GH_OAuthAccessTokenAPIError>
