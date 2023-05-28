@@ -8,3 +8,8 @@ export interface GetTokenAPIResponse {
     accessToken?: string
     refreshToken?: string
 }
+
+export interface ValidateTokenAPIResponse {
+    success: boolean
+    error?: string
+}

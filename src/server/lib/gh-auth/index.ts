@@ -1,5 +1,10 @@
 import { GetTokenAPIResponse } from '@/models/api'
-import { GH_OAuthAccessTokenAPIError, GH_OAuthAccessTokenAPIResponse, GH_OAuthAccessTokenAPISuccess } from '@/models/gh'
+import {
+    GH_OAuthAccessTokenAPIError,
+    GH_OAuthAccessTokenAPIResponse,
+    GH_OAuthAccessTokenAPISuccess,
+    GH_UserAPI,
+} from '@/models/gh'
 import { GH_CLIENT_ID, GH_CLIENT_SECRET } from '@/server/constants'
 
 const processTokenRes = (resJson: GH_OAuthAccessTokenAPIResponse): GetTokenAPIResponse => {
@@ -65,8 +70,29 @@ export const GH_refreshTokenAPI = async (refreshToken: string): Promise<GetToken
         },
     })
 
+    // TODO: res.status check, return undefined
+
     const resJson = (await res.json()) as GH_OAuthAccessTokenAPIResponse
     console.log(resJson)
 
     return processTokenRes(resJson)
+}
+
+export const GH_getUserAPI = async (accessToken: string): Promise<GH_UserAPI | undefined> => {
+    const res = await fetch('https://api.github.com/user/repos', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    })
+    console.log(res)
+
+    if (res.status !== 200) {
+        return undefined
+    }
+
+    const resJson = (await res.json()) as GH_UserAPI
+    console.log(resJson)
+
+    return resJson
 }

@@ -5,8 +5,13 @@ import React, { createContext, useCallback, useContext, useEffect, useReducer } 
 import { AUTH_COOKIE_VALIDATED, AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_NO_COOKIE } from './actions'
 import { reducer } from './reducer'
 
-import { getTokenAPI } from '@/client/lib'
-import { clearCookies, deleteAccessTokenCookie, getAccessTokenCookie } from '@/client/utils/cookies'
+import { getTokenAPI, refreshTokenAPI, validateTokenAPI } from '@/client/lib'
+import {
+    clearCookies,
+    deleteAccessTokenCookie,
+    getAccessTokenCookie,
+    getRefreshTokenCookie,
+} from '@/client/utils/cookies'
 
 export enum AuthStatus {
     INITIALIZING = 'INITIALIZING',
@@ -57,14 +62,39 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
     const { authStatus, accessToken } = state
 
     useEffect(() => {
-        const accessToken = getAccessTokenCookie()
-        if (accessToken === undefined) {
-            dispatch({ type: AUTH_NO_COOKIE })
-            return
+        const attemptToValidateCookies = async () => {
+            // TODO: merge into single getTokens
+            const accessToken = getAccessTokenCookie()
+            const refreshToken = getRefreshTokenCookie()
+            if (accessToken === undefined || refreshToken === undefined) {
+                dispatch({ type: AUTH_NO_COOKIE })
+                return
+            }
+
+            const validateResponse = await validateTokenAPI(accessToken)
+            const { success: validateSuccess, error: validateError } = validateResponse
+            if (validateSuccess) {
+                dispatch({ type: AUTH_COOKIE_VALIDATED, accessToken: accessToken })
+                return
+            }
+
+            console.log(validateError)
+
+            const refreshResponse = await refreshTokenAPI(refreshToken)
+            const { success: refreshSuccess, error: refreshError, accessToken: updatedAccessToken } = refreshResponse
+            if (refreshSuccess && updatedAccessToken !== undefined) {
+                dispatch({ type: AUTH_COOKIE_VALIDATED, accessToken: updatedAccessToken })
+                const test = await validateTokenAPI(accessToken)
+                console.log(test)
+                return
+            }
+
+            console.log(refreshError)
+            dispatch({ type: AUTH_LOGIN_FAILED })
         }
 
         // TODO: validate token, else refresh?
-        dispatch({ type: AUTH_COOKIE_VALIDATED, accessToken: accessToken })
+        attemptToValidateCookies()
     }, [])
 
     useEffect(() => {
