@@ -6,7 +6,12 @@ import { AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT } from './actions'
 import { reducer } from './reducer'
 
 import { getTokenAPI } from '@/client/lib'
-import { clearCookies, deleteAccessTokenCookie, setAccessTokenCookie } from '@/client/utils/cookies'
+import {
+    clearCookies,
+    deleteAccessTokenCookie,
+    setAccessTokenCookie,
+    setRefreshTokenCookie,
+} from '@/client/utils/cookies'
 
 export enum AuthStatus {
     INITIALIZING = 'INITIALIZING',
@@ -61,14 +66,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
 
         const tokenResponse = await getTokenAPI(code)
         console.log(tokenResponse)
-        const { success, error, accessToken } = tokenResponse
-        if (!success || accessToken === undefined) {
+        const { success, error, accessToken, refreshToken } = tokenResponse
+        if (!success || accessToken === undefined || refreshToken === undefined) {
             dispatch({ type: AUTH_LOGIN_FAILED })
             deleteAccessTokenCookie()
             callback(false, error)
         } else {
             dispatch({ type: AUTH_LOGIN_SUCCESS, accessToken: accessToken })
             setAccessTokenCookie(accessToken)
+            setRefreshTokenCookie(refreshToken)
             callback(true)
         }
     }, [])
