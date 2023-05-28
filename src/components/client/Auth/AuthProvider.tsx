@@ -1,17 +1,12 @@
 'use client'
 
-import React, { createContext, useCallback, useContext, useReducer } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useReducer } from 'react'
 
-import { AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT } from './actions'
+import { AUTH_COOKIE_VALIDATED, AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_NO_COOKIE } from './actions'
 import { reducer } from './reducer'
 
 import { getTokenAPI } from '@/client/lib'
-import {
-    clearCookies,
-    deleteAccessTokenCookie,
-    setAccessTokenCookie,
-    setRefreshTokenCookie,
-} from '@/client/utils/cookies'
+import { clearCookies, deleteAccessTokenCookie, getAccessTokenCookie } from '@/client/utils/cookies'
 
 export enum AuthStatus {
     INITIALIZING = 'INITIALIZING',
@@ -61,6 +56,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
     })
     const { authStatus, accessToken } = state
 
+    useEffect(() => {
+        const accessToken = getAccessTokenCookie()
+        if (accessToken === undefined) {
+            dispatch({ type: AUTH_NO_COOKIE })
+            return
+        }
+
+        // TODO: validate token, else refresh?
+        dispatch({ type: AUTH_COOKIE_VALIDATED, accessToken: accessToken })
+    }, [])
+
+    useEffect(() => {
+        console.log(authStatus)
+    }, [authStatus])
+
     const login = useCallback(async (code: string, callback: (success: boolean, error?: string) => void) => {
         console.log('[AuthProvider] login')
 
@@ -73,8 +83,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
             callback(false, error)
         } else {
             dispatch({ type: AUTH_LOGIN_SUCCESS, accessToken: accessToken })
-            setAccessTokenCookie(accessToken)
-            setRefreshTokenCookie(refreshToken)
+            // setAccessTokenCookie(accessToken)
+            // setRefreshTokenCookie(refreshToken)
             callback(true)
         }
     }, [])

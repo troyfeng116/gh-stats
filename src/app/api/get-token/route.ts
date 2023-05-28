@@ -1,5 +1,8 @@
+import { cookies } from 'next/headers'
+
 import { GetTokenAPIResponse } from '@/models/api'
 import { GH_getTokenWithClientCodeAPI } from '@/server/lib/gh-auth'
+import { setAccessTokenCookie, setRefreshTokenCookie } from '@/server/utils/checkAuth'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('/api/get-token POST')
@@ -26,6 +29,10 @@ export const POST = async (request: Request): Promise<Response> => {
             statusText: error,
         })
     }
+
+    const cookieStore = cookies()
+    setAccessTokenCookie(cookieStore, accessToken)
+    setRefreshTokenCookie(cookieStore, refreshToken)
 
     return new Response(JSON.stringify(res), {
         status: 200,

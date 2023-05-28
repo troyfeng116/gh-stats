@@ -1,15 +1,16 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { useAuth } from '@/components/client/Auth'
 
 export const LoginCallback: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const params = useSearchParams()
 
+    const params = useSearchParams()
     const { accessToken, login } = useAuth()
+    const router = useRouter()
 
     useEffect(() => {
         if (params !== undefined) {
@@ -21,14 +22,17 @@ export const LoginCallback: React.FC = () => {
                 login(code, (success: boolean, error?: string) => {
                     setIsLoading(false)
                     if (success) {
+                        router.push('/')
                         console.log('success!')
                     } else {
+                        // TODO: better error messaging
+                        router.push('/login')
                         console.log(error)
                     }
                 })
             }
         }
-    }, [params, login])
+    }, [router, params, login])
 
     if (isLoading) {
         return <div>Loading</div>
