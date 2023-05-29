@@ -2,6 +2,12 @@ import { postAPI } from '../fetchAPI'
 
 import { GetTokenAPIResponse, ValidateTokenAPIResponse } from '@/models/shared'
 
+/*
+Unauthenticated APIs (no access token needed)
+*/
+
+// TODO: demo screen? (with my data: add my token as env var on backend)
+
 export const getTokenAPI = async (code: string): Promise<GetTokenAPIResponse> => {
     const payload = { code: code }
     const res = await postAPI('/api/get-token', {}, payload)
