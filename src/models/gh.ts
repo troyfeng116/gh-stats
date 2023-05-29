@@ -2,11 +2,12 @@
 Interfaces for GitHub API responses.
 */
 
+// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github
 export interface GH_OAuthAccessTokenAPISuccess {
     access_token: string
-    expires_in: number
-    refresh_token: string
-    refresh_token_expires_in: number
+    // expires_in: number
+    // refresh_token: string
+    // refresh_token_expires_in: number
     token_type: string
     scope: string
 }
@@ -21,6 +22,7 @@ export interface GH_OAuthAccessTokenAPIError {
 export type GH_OAuthAccessTokenAPIResponse = Partial<GH_OAuthAccessTokenAPISuccess> &
     Partial<GH_OAuthAccessTokenAPIError>
 
+// https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-the-authenticated-user
 export interface GH_UserAPI {
     login: string
     id: number

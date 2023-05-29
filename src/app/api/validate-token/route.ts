@@ -17,7 +17,6 @@ export const POST = async (request: Request): Promise<Response> => {
     }
 
     const res = await GH_getUserAPI(accessToken)
-    console.log(res)
     if (res === undefined) {
         const clientRes: ValidateTokenAPIResponse = {
             success: false,

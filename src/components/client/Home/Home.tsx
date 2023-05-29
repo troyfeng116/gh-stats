@@ -1,12 +1,16 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 
+import { AuthStatus, useAuth } from '@/components/client/Auth'
 import { TestAPIResponse } from '@/models/api'
 
 export const Home: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [numStars, setNumStars] = useState<number>()
+
+    const { authStatus, logout } = useAuth()
 
     useEffect(() => {
         const testFetch = async () => {
@@ -25,8 +29,18 @@ export const Home: React.FC = () => {
             setNumStars(testResponse.numStars)
         }
 
-        testFetch()
-    }, [])
+        if (authStatus === AuthStatus.AUTH) {
+            testFetch()
+        }
+    }, [authStatus])
+
+    if (authStatus !== AuthStatus.AUTH) {
+        return (
+            <div>
+                <Link href="/login">Please login</Link>
+            </div>
+        )
+    }
 
     if (isLoading) {
         return <div>loading...</div>
@@ -36,5 +50,10 @@ export const Home: React.FC = () => {
         return <div>numStars not found</div>
     }
 
-    return <div>{numStars}</div>
+    return (
+        <div>
+            {numStars}
+            <button onClick={() => logout()}>Log out</button>
+        </div>
+    )
 }

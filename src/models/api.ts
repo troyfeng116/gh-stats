@@ -6,7 +6,6 @@ export interface GetTokenAPIResponse {
     success: boolean
     error?: string
     accessToken?: string
-    refreshToken?: string
 }
 
 export interface ValidateTokenAPIResponse {

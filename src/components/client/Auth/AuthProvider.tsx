@@ -5,13 +5,8 @@ import React, { createContext, useCallback, useContext, useEffect, useReducer } 
 import { AUTH_COOKIE_VALIDATED, AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_NO_COOKIE } from './actions'
 import { reducer } from './reducer'
 
-import { getTokenAPI, refreshTokenAPI, validateTokenAPI } from '@/client/lib'
-import {
-    clearCookies,
-    deleteAccessTokenCookie,
-    getAccessTokenCookie,
-    getRefreshTokenCookie,
-} from '@/client/utils/cookies'
+import { getTokenAPI, validateTokenAPI } from '@/client/lib'
+import { clearCookies, deleteAccessTokenCookie, getAccessTokenCookie } from '@/client/utils/cookies'
 
 export enum AuthStatus {
     INITIALIZING = 'INITIALIZING',
@@ -65,8 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
         const attemptToValidateCookies = async () => {
             // TODO: merge into single getTokens
             const accessToken = getAccessTokenCookie()
-            const refreshToken = getRefreshTokenCookie()
-            if (accessToken === undefined || refreshToken === undefined) {
+            if (accessToken === undefined) {
                 dispatch({ type: AUTH_NO_COOKIE })
                 return
             }
@@ -79,21 +73,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
             }
 
             console.log(validateError)
-
-            const refreshResponse = await refreshTokenAPI(refreshToken)
-            const { success: refreshSuccess, error: refreshError, accessToken: updatedAccessToken } = refreshResponse
-            if (refreshSuccess && updatedAccessToken !== undefined) {
-                dispatch({ type: AUTH_COOKIE_VALIDATED, accessToken: updatedAccessToken })
-                const test = await validateTokenAPI(accessToken)
-                console.log(test)
-                return
-            }
-
-            console.log(refreshError)
             dispatch({ type: AUTH_LOGIN_FAILED })
         }
 
-        // TODO: validate token, else refresh?
         attemptToValidateCookies()
     }, [])
 
@@ -106,8 +88,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
 
         const tokenResponse = await getTokenAPI(code)
         console.log(tokenResponse)
-        const { success, error, accessToken, refreshToken } = tokenResponse
-        if (!success || accessToken === undefined || refreshToken === undefined) {
+        const { success, error, accessToken } = tokenResponse
+        if (!success || accessToken === undefined) {
             dispatch({ type: AUTH_LOGIN_FAILED })
             deleteAccessTokenCookie()
             callback(false, error)
