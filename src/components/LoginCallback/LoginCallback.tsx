@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import { useAuth } from '@/components/client/Auth'
+import { useAuth } from '@/components/Auth'
 
 export const LoginCallback: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)

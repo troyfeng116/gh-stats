@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Login from '@/components/client/Login'
+import Login from '@/components/Login'
 import { VERSION_NUMBER } from '@/config/constants'
 
 export default function LoginPage() {

@@ -4,7 +4,7 @@ import React from 'react'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 
-import { AuthProvider } from '@/components/client/Auth'
+import { AuthProvider } from '@/components/Auth'
 
 const inter = Inter({ subsets: ['latin'] })
 

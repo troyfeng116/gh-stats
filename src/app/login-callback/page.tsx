@@ -1,6 +1,6 @@
 import React from 'react'
 
-import LoginCallback from '@/components/client/LoginCallback'
+import LoginCallback from '@/components/LoginCallback'
 import { VERSION_NUMBER } from '@/config/constants'
 
 export default function LoginCallbackPage() {
