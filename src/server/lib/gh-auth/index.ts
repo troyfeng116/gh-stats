@@ -50,33 +50,6 @@ export const GH_getTokenWithClientCodeAPI = async (code: string): Promise<GetTok
     return processTokenRes(resJson)
 }
 
-// https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/refreshing-user-access-tokens
-// export const GH_refreshTokenAPI = async (refreshToken: string): Promise<GetTokenAPIResponse> => {
-//     const payload = {
-//         refresh_token: refreshToken,
-//         grant_type: 'refresh_token',
-//         client_id: GH_CLIENT_ID,
-//         client_secret: GH_CLIENT_SECRET,
-//     }
-//     console.log(payload)
-
-//     const res = await fetch('https://github.com/login/oauth/access_token', {
-//         method: 'POST',
-//         body: JSON.stringify(payload),
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Accept: 'application/json',
-//         },
-//     })
-
-//     // TODO: res.status check, return undefined
-
-//     const resJson = (await res.json()) as GH_OAuthAccessTokenAPIResponse
-//     console.log(resJson)
-
-//     return processTokenRes(resJson)
-// }
-
 export const GH_getUserAPI = async (accessToken: string): Promise<GH_GetUserAPI | undefined> => {
     const res = await fetch('https://api.github.com/user', {
         method: 'GET',

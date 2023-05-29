@@ -15,10 +15,3 @@ export const validateTokenAPI = async (accessToken: string): Promise<ValidateTok
     const validateResponse = res as ValidateTokenAPIResponse
     return validateResponse
 }
-
-export const refreshTokenAPI = async (refreshToken: string): Promise<GetTokenAPIResponse> => {
-    const payload = { refreshToken: refreshToken }
-    const res = await postAPI('/api/refresh-token', {}, payload)
-    const refreshResponse = res as GetTokenAPIResponse
-    return refreshResponse
-}

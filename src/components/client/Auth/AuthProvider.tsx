@@ -95,8 +95,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
             callback(false, error)
         } else {
             dispatch({ type: AUTH_LOGIN_SUCCESS, accessToken: accessToken })
+            // TODO: this is handled from the server?
             // setAccessTokenCookie(accessToken)
-            // setRefreshTokenCookie(refreshToken)
             callback(true)
         }
     }, [])
