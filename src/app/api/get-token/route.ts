@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 
-import { GetTokenAPIResponse } from '@/models/shared'
-import { GH_OAuth_ExchangeClientCodeForAccessTokenAPI } from '@/server/lib/gh-oauth/access_token'
+import { SHARED_GetTokenAPIResponse } from '@/models/shared'
+import { exchangeCodeForAccessToken } from '@/server/services/getTokenService'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
 
 export const POST = async (request: Request): Promise<Response> => {
@@ -12,7 +12,7 @@ export const POST = async (request: Request): Promise<Response> => {
     const { code } = body
 
     if (code === undefined) {
-        const clientRes: GetTokenAPIResponse = {
+        const clientRes: SHARED_GetTokenAPIResponse = {
             success: false,
             error: 'body must include client code',
         }
@@ -21,7 +21,7 @@ export const POST = async (request: Request): Promise<Response> => {
         })
     }
 
-    const res = await GH_OAuth_ExchangeClientCodeForAccessTokenAPI(code)
+    const res = await exchangeCodeForAccessToken(code)
     const { success, error, accessToken } = res
     if (!success || accessToken === undefined) {
         return new Response(JSON.stringify(res), {

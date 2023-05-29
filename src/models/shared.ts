@@ -2,18 +2,18 @@
 Shared interfaces for client-server interactions
 */
 
-export interface BaseAPIResponse {
+export interface SHARED_BaseAPIResponse {
     success: boolean
     error?: string
 }
 
-export interface GetTokenAPIResponse extends BaseAPIResponse {
+export interface SHARED_GetTokenAPIResponse extends SHARED_BaseAPIResponse {
     accessToken?: string
 }
 
-export type ValidateTokenAPIResponse = BaseAPIResponse
+export type SHARED_ValidateTokenAPIResponse = SHARED_BaseAPIResponse
 
-export interface UserCardData {
+export interface SHARED_UserCardData {
     userId?: string
     name?: string
     email?: string
@@ -24,6 +24,6 @@ export interface UserCardData {
     privateRepos?: number
     totalRepos?: number
 }
-export interface GetUserCardAPIResponse extends BaseAPIResponse {
-    userCard?: UserCardData
+export interface SHARED_GetUserCardAPIResponse extends SHARED_BaseAPIResponse {
+    userCard?: SHARED_UserCardData
 }

@@ -1,5 +1,5 @@
-import { ValidateTokenAPIResponse } from '@/models/shared'
-import { GH_API_getUser } from '@/server/lib/gh-api/user'
+import { SHARED_ValidateTokenAPIResponse } from '@/models/shared'
+import { validateAccessToken } from '@/server/services/validateTokenService'
 import { AUTH_NO_TOKEN_ERROR_RES } from '@/server/utils/authHeaders'
 
 export const POST = async (request: Request): Promise<Response> => {
@@ -13,21 +13,8 @@ export const POST = async (request: Request): Promise<Response> => {
         })
     }
 
-    const { success, error } = await GH_API_getUser(accessToken)
-    if (!success) {
-        const clientRes: ValidateTokenAPIResponse = {
-            success: false,
-            error: error,
-        }
-        return new Response(JSON.stringify(clientRes), {
-            status: 200,
-        })
-    }
-
-    const clientRes: ValidateTokenAPIResponse = {
-        success: true,
-    }
-    return new Response(JSON.stringify(clientRes), {
+    const validateRes: SHARED_ValidateTokenAPIResponse = await validateAccessToken(accessToken)
+    return new Response(JSON.stringify(validateRes), {
         status: 200,
     })
 }

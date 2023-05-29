@@ -1,6 +1,6 @@
-import { BaseAPIResponse } from '@/models/shared'
+import { SHARED_BaseAPIResponse } from '@/models/shared'
 
-export const AUTH_NO_TOKEN_ERROR_RES: BaseAPIResponse = {
+export const AUTH_NO_TOKEN_ERROR_RES: SHARED_BaseAPIResponse = {
     success: false,
     error: 'must provide GitHub access token',
 }

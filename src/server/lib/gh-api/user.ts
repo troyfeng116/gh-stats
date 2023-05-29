@@ -50,13 +50,14 @@ export interface GH_API_GetAuthUserResponse {
 
 export const GH_API_getUser = async (
     accessToken: string,
-): Promise<{ res: GH_API_GetAuthUserResponse | undefined; success: boolean; error?: string }> => {
+): Promise<{ success: boolean; error?: string; user?: GH_API_GetAuthUserResponse }> => {
     const res = await getGitHubAPI('/user', accessToken)
 
     const { status, statusText } = res
+    // TODO: how to handle 304?
     if (status !== 200 && status !== 304) {
         return {
-            res: undefined,
+            user: undefined,
             success: false,
             error: `error ${status}: ${statusText}`,
         }
@@ -66,7 +67,7 @@ export const GH_API_getUser = async (
     console.log(resJson)
 
     return {
-        res: resJson,
+        user: resJson,
         success: true,
     }
 }

@@ -1,4 +1,3 @@
-import { GetTokenAPIResponse } from '@/models/shared'
 import { GH_CLIENT_ID, GH_CLIENT_SECRET } from '@/server/constants'
 
 // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github
@@ -18,7 +17,9 @@ export interface GH_OAuthAccessTokenAPIError {
 export type GH_OAuthAccessTokenAPIResponse = Partial<GH_OAuthAccessTokenAPISuccess> &
     Partial<GH_OAuthAccessTokenAPIError>
 
-const processTokenRes = (resJson: GH_OAuthAccessTokenAPIResponse): GetTokenAPIResponse => {
+const processTokenRes = (
+    resJson: GH_OAuthAccessTokenAPIResponse,
+): { success: boolean; error?: string; access_token?: string } => {
     const { error: unknownError, access_token: unknownAccessToken } = resJson
     if (unknownError !== undefined || unknownAccessToken === undefined) {
         // type cast
@@ -34,11 +35,13 @@ const processTokenRes = (resJson: GH_OAuthAccessTokenAPIResponse): GetTokenAPIRe
     const { access_token } = ghResJson
     return {
         success: true,
-        accessToken: access_token,
+        access_token: access_token,
     }
 }
 
-export const GH_OAuth_ExchangeClientCodeForAccessTokenAPI = async (code: string): Promise<GetTokenAPIResponse> => {
+export const GH_OAuth_ExchangeClientCodeForAccessTokenAPI = async (
+    code: string,
+): Promise<{ success: boolean; error?: string; access_token?: string }> => {
     const payload = {
         code: code,
         client_id: GH_CLIENT_ID,

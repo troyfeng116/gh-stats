@@ -1,5 +1,5 @@
-import { GetUserCardAPIResponse } from '@/models/shared'
-import { GH_API_getUser } from '@/server/lib/gh-api/user'
+import { SHARED_GetUserCardAPIResponse } from '@/models/shared'
+import { getUserCardData } from '@/server/services/userCardService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 
 /*
@@ -17,34 +17,16 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const { res, success, error } = await GH_API_getUser(token)
-    if (!success || res === undefined) {
-        const clientRes: GetUserCardAPIResponse = {
-            success: false,
-            error: error,
-        }
-        return new Response(JSON.stringify(clientRes), {
+    const userCardRes: SHARED_GetUserCardAPIResponse = await getUserCardData(token)
+    const { success, userCard } = userCardRes
+
+    if (!success || userCard === undefined) {
+        return new Response(JSON.stringify(userCardRes), {
             status: 400,
         })
     }
 
-    const { login, name, email, followers, following, created_at, public_repos, total_private_repos } = res
-
-    const clientRes: GetUserCardAPIResponse = {
-        success: true,
-        userCard: {
-            userId: login,
-            name: name === null ? undefined : name,
-            email: email == null ? undefined : email,
-            followers: followers,
-            following: following,
-            createdAt: created_at,
-            publicRepos: public_repos,
-            privateRepos: total_private_repos,
-            totalRepos: public_repos + total_private_repos,
-        },
-    }
-    return new Response(JSON.stringify(clientRes), {
+    return new Response(JSON.stringify(userCardRes), {
         status: 200,
     })
 }

@@ -8,6 +8,8 @@ High-level: `/src/api/[routes]` only invoke functions in `services`, which invok
 
 - abstract and wrap around the functions defined in `lib`
 - may call utils to process/combine data to return neatly to the requesting route
+- often: `services` is the bridge from raw backend data to the models defined in `models/shared`
+- for example: `lib/GH_API_getUser` returns a massive raw `GH_User` object, and `services/getUser` processes the raw `GH_User` into a format that fits `models/shared.User` to use in the client
 
 
 
