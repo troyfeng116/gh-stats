@@ -34,7 +34,11 @@ export const Home: React.FC = () => {
         }
     }, [authStatus])
 
-    if (authStatus !== AuthStatus.AUTH) {
+    if (authStatus === AuthStatus.INITIALIZING) {
+        return <div></div>
+    }
+
+    if (authStatus === AuthStatus.UNAUTH) {
         return (
             <div>
                 <Link href="/login">Please login</Link>
