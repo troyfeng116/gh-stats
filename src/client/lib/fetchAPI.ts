@@ -40,3 +40,27 @@ export const postAPI = async (url: string, headers?: any, body?: any): Promise<a
     console.log(`POST ${url} complete: ${JSON.stringify(resJson)}`)
     return resJson
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getAPIWithAuth = async (url: string, accessToken: string, headers?: any): Promise<any> => {
+    console.log(`GET ${url} with auth ${accessToken}`)
+
+    return await getAPI(url, {
+        ...headers,
+        Authorization: `Bearer ${accessToken}`,
+    })
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const postAPIWithAuth = async (url: string, accessToken: string, headers?: any, body?: any): Promise<any> => {
+    console.log(`POST ${url} with auth ${accessToken}`)
+
+    return await postAPI(
+        url,
+        {
+            ...headers,
+            Authorization: `Bearer ${accessToken}`,
+        },
+        body,
+    )
+}

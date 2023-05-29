@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 
-import { GetTokenAPIResponse } from '@/models/api'
+import { GetTokenAPIResponse } from '@/models/shared'
 import { GH_getTokenWithClientCodeAPI } from '@/server/lib/gh-auth'
-import { setAccessTokenCookie } from '@/server/utils/checkAuth'
+import { setAccessTokenCookie } from '@/server/utils/serverCookies'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('/api/get-token POST')

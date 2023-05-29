@@ -1,6 +1,6 @@
-import { postAPI } from './fetchAPI'
+import { postAPI } from '../fetchAPI'
 
-import { GetTokenAPIResponse, ValidateTokenAPIResponse } from '@/models/api'
+import { GetTokenAPIResponse, ValidateTokenAPIResponse } from '@/models/shared'
 
 export const getTokenAPI = async (code: string): Promise<GetTokenAPIResponse> => {
     const payload = { code: code }

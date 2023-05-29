@@ -1,5 +1,5 @@
 /*
-Interfaces for GitHub API responses.
+Interfaces for raw GitHub API responses.
 */
 
 // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github
