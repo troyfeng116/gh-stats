@@ -1,9 +1,9 @@
 import { ValidateTokenAPIResponse } from '@/models/shared'
-import { GH_getUserAPI } from '@/server/lib/gh-auth'
+import { GH_getUserAPI } from '@/server/lib/gh-api/user'
 import { AUTH_NO_TOKEN_ERROR_RES } from '@/server/utils/authHeaders'
 
 export const POST = async (request: Request): Promise<Response> => {
-    console.log('/api/validate-token POST')
+    console.log('POST /api/validate-token')
 
     const body = await request.json()
     const { accessToken } = body

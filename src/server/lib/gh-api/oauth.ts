@@ -1,13 +1,6 @@
-import {
-    GH_OAuthAccessTokenAPIError,
-    GH_OAuthAccessTokenAPIResponse,
-    GH_OAuthAccessTokenAPISuccess,
-    GH_UserAPI as GH_GetUserAPI,
-} from '@/models/gh'
+import { GH_OAuthAccessTokenAPIError, GH_OAuthAccessTokenAPIResponse, GH_OAuthAccessTokenAPISuccess } from '@/models/gh'
 import { GetTokenAPIResponse } from '@/models/shared'
 import { GH_CLIENT_ID, GH_CLIENT_SECRET } from '@/server/constants'
-
-const BASE_GH_API_URL = 'https://api.github.com'
 
 const processTokenRes = (resJson: GH_OAuthAccessTokenAPIResponse): GetTokenAPIResponse => {
     const { error: unknownError, access_token: unknownAccessToken } = resJson
@@ -50,34 +43,4 @@ export const GH_getTokenWithClientCodeAPI = async (code: string): Promise<GetTok
     console.log(resJson)
 
     return processTokenRes(resJson)
-}
-
-export const GH_getUserAPI = async (
-    accessToken: string,
-): Promise<{ res: GH_GetUserAPI | undefined; success: boolean; error?: string }> => {
-    const url = `${BASE_GH_API_URL}/user`
-
-    const res = await fetch(url, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    })
-
-    const { status, statusText } = res
-    if (status !== 200 && status !== 304) {
-        return {
-            res: undefined,
-            success: false,
-            error: `error ${status}: ${statusText}`,
-        }
-    }
-
-    const resJson = (await res.json()) as GH_GetUserAPI
-    console.log(resJson)
-
-    return {
-        res: resJson,
-        success: true,
-    }
 }

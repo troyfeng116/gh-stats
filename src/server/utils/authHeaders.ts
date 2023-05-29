@@ -1,5 +1,10 @@
 import { BaseAPIResponse } from '@/models/shared'
 
+export const AUTH_NO_TOKEN_ERROR_RES: BaseAPIResponse = {
+    success: false,
+    error: 'must provide GitHub access token',
+}
+
 export const checkAuthHeaders = (request: Request): string | undefined => {
     const { headers } = request
     const authHeader = headers.get('Authorization')
@@ -13,9 +18,4 @@ export const checkAuthHeaders = (request: Request): string | undefined => {
     }
 
     return undefined
-}
-
-export const AUTH_NO_TOKEN_ERROR_RES: BaseAPIResponse = {
-    success: false,
-    error: 'must provide GitHub access token',
 }

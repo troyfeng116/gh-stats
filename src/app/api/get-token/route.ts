@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers'
 
 import { GetTokenAPIResponse } from '@/models/shared'
-import { GH_getTokenWithClientCodeAPI } from '@/server/lib/gh-auth'
+import { GH_getTokenWithClientCodeAPI } from '@/server/lib/gh-api/oauth'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
 
 export const POST = async (request: Request): Promise<Response> => {
-    console.log('/api/get-token POST')
+    console.log('POST /api/get-token')
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Request/json
     const body = await request.json()

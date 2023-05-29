@@ -1,6 +1,11 @@
 import { GetUserCardAPIResponse } from '@/models/shared'
-import { GH_getUserAPI } from '@/server/lib/gh-auth'
+import { GH_getUserAPI } from '@/server/lib/gh-api/user'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
+
+/*
+Requires authentication
+Retrieve basic user card statistics
+*/
 
 export const GET = async (request: Request): Promise<Response> => {
     console.log('GET /api/user-card')
