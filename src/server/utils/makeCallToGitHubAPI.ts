@@ -1,8 +1,13 @@
 import { BASE_GH_API_URL } from '@/server/lib/gh-api'
 
+/*
+Make authenticated call to GitHub API
+Return raw `Response` objects
+*/
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getGitHubAPI = async (url: string, accessToken: string): Promise<any> => {
-    return await fetch(`${BASE_GH_API_URL}, ${url}`, {
+    return await fetch(`${BASE_GH_API_URL}${url}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${accessToken}`,

@@ -1,8 +1,10 @@
-// make fetch API call to /api routes
+/*
+Make fetch API call from client to /api server routes
+*/
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAPI = async (url: string, headers?: any): Promise<any> => {
-    console.log(`GET ${url}`)
+    console.log(`GET ${url}, headers ${JSON.stringify(headers)}`)
 
     headers = {
         ...headers,
@@ -21,7 +23,7 @@ export const getAPI = async (url: string, headers?: any): Promise<any> => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const postAPI = async (url: string, headers?: any, body?: any): Promise<any> => {
-    console.log(`GET ${url}, ${JSON.stringify(body)}`)
+    console.log(`POST ${url}, headers ${JSON.stringify(headers)}, body ${JSON.stringify(body)}`)
 
     headers = {
         ...headers,
@@ -43,8 +45,6 @@ export const postAPI = async (url: string, headers?: any, body?: any): Promise<a
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAPIWithAuth = async (url: string, accessToken: string, headers?: any): Promise<any> => {
-    console.log(`GET ${url} with auth ${accessToken}`)
-
     return await getAPI(url, {
         ...headers,
         Authorization: `Bearer ${accessToken}`,
@@ -53,8 +53,6 @@ export const getAPIWithAuth = async (url: string, accessToken: string, headers?:
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const postAPIWithAuth = async (url: string, accessToken: string, headers?: any, body?: any): Promise<any> => {
-    console.log(`POST ${url} with auth ${accessToken}`)
-
     return await postAPI(
         url,
         {

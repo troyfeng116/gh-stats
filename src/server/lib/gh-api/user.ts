@@ -19,17 +19,17 @@ export interface GH_GetAuthUserAPI {
     events_url: string
     received_events_url: string
     type: string
-    site_admin: false
-    name: string
-    company: string
+    site_admin: boolean
+    name: string | null
+    company: string | null
     blog: string
-    location: string
-    email: string
-    hireable: false
-    bio: string
-    twitter_username: string
+    location: string | null
+    email: string | null
+    hireable: boolean
+    bio: string | null
+    twitter_username: string | null
     public_repos: number
-    public_gists: 1
+    public_gists: number
     followers: number
     following: number
     created_at: string

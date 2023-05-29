@@ -34,8 +34,8 @@ export const GET = async (request: Request): Promise<Response> => {
         success: true,
         userCard: {
             userId: login,
-            name: name,
-            email: email,
+            name: name === null ? undefined : name,
+            email: email == null ? undefined : email,
             followers: followers,
             following: following,
             createdAt: created_at,
