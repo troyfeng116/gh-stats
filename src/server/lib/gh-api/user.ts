@@ -1,7 +1,7 @@
 import { getGitHubAPI } from '@/server/utils/makeCallToGitHubAPI'
 
 // https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-the-authenticated-user
-export interface GH_GetAuthUserAPI {
+export interface GH_API_GetAuthUserResponse {
     login: string
     id: number
     node_id: string
@@ -48,9 +48,9 @@ export interface GH_GetAuthUserAPI {
     }
 }
 
-export const GH_getUserAPI = async (
+export const GH_API_getUser = async (
     accessToken: string,
-): Promise<{ res: GH_GetAuthUserAPI | undefined; success: boolean; error?: string }> => {
+): Promise<{ res: GH_API_GetAuthUserResponse | undefined; success: boolean; error?: string }> => {
     const res = await getGitHubAPI('/user', accessToken)
 
     const { status, statusText } = res
@@ -62,7 +62,7 @@ export const GH_getUserAPI = async (
         }
     }
 
-    const resJson = (await res.json()) as GH_GetAuthUserAPI
+    const resJson = (await res.json()) as GH_API_GetAuthUserResponse
     console.log(resJson)
 
     return {

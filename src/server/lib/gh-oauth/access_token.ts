@@ -38,7 +38,7 @@ const processTokenRes = (resJson: GH_OAuthAccessTokenAPIResponse): GetTokenAPIRe
     }
 }
 
-export const GH_getTokenWithClientCodeAPI = async (code: string): Promise<GetTokenAPIResponse> => {
+export const GH_OAuth_ExchangeClientCodeForAccessTokenAPI = async (code: string): Promise<GetTokenAPIResponse> => {
     const payload = {
         code: code,
         client_id: GH_CLIENT_ID,

@@ -1,5 +1,5 @@
 import { GetUserCardAPIResponse } from '@/models/shared'
-import { GH_getUserAPI } from '@/server/lib/gh-api/user'
+import { GH_API_getUser } from '@/server/lib/gh-api/user'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 
 /*
@@ -17,7 +17,7 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const { res, success, error } = await GH_getUserAPI(token)
+    const { res, success, error } = await GH_API_getUser(token)
     if (!success || res === undefined) {
         const clientRes: GetUserCardAPIResponse = {
             success: false,
