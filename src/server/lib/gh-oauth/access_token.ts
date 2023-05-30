@@ -42,6 +42,14 @@ const processTokenRes = (
 export const GH_OAuth_ExchangeClientCodeForAccessTokenAPI = async (
     code: string,
 ): Promise<{ success: boolean; error?: string; access_token?: string }> => {
+    if (GH_CLIENT_ID === undefined || GH_CLIENT_SECRET === undefined) {
+        return {
+            success: false,
+            error: 'internal server error',
+            access_token: undefined,
+        }
+    }
+
     const payload = {
         code: code,
         client_id: GH_CLIENT_ID,
