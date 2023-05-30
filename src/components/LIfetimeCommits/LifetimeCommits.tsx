@@ -28,7 +28,7 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
     }, [accessToken])
 
     if (isLoading) {
-        return <div>user card loading...</div>
+        return <div>lifetime commits loading...</div>
     }
 
     if (error !== undefined) {

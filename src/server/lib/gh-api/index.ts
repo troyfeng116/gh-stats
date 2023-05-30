@@ -19,8 +19,8 @@ export const getGitHubAPI = async (url: string, accessToken: string): Promise<Re
         },
     })
 
-    console.log(res)
-    console.log(res.headers)
+    // console.log(res)
+    // console.log(res.headers)
 
     return res
 }

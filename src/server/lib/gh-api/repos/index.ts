@@ -30,6 +30,8 @@ export const GH_API_listRepos = async (
     }
 
     const resJson: GH_API_Repo[] = (await res.json()) as GH_API_Repo[]
+    // console.log(resJson)
+
     return {
         repos: resJson,
         success: true,
