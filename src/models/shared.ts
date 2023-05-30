@@ -7,11 +7,15 @@ export interface SHARED_BaseAPIResponse {
     error?: string
 }
 
+/* ======== OAuth ======== */
+
 export interface SHARED_GetTokenAPIResponse extends SHARED_BaseAPIResponse {
     accessToken?: string
 }
 
 export type SHARED_ValidateTokenAPIResponse = SHARED_BaseAPIResponse
+
+/* ======== user ======== */
 
 export interface SHARED_UserCardData {
     userId?: string
@@ -24,9 +28,12 @@ export interface SHARED_UserCardData {
     privateRepos?: number
     totalRepos?: number
 }
+
 export interface SHARED_GetUserCardAPIResponse extends SHARED_BaseAPIResponse {
     userCard?: SHARED_UserCardData
 }
+
+/* ======== commits ======== */
 
 export interface SHARED_CommitData {
     sha: string
@@ -54,9 +61,16 @@ export interface SHARED_CommitData {
         login: string
     }
 }
+
 export interface SHARED_ListCommitsAPIResponse extends SHARED_BaseAPIResponse {
     commits?: SHARED_CommitData[]
 }
+
+export interface SHARED_CountCommitsResponse extends SHARED_BaseAPIResponse {
+    numCommits?: number
+}
+
+/* ======== repos ======== */
 
 export interface SHARED_RepoData {
     id: number
@@ -98,14 +112,11 @@ export interface SHARED_RepoData {
     open_issues: number
     watchers: number
 }
+
 export interface SHARED_ListReposAPIResponse extends SHARED_BaseAPIResponse {
     repos?: SHARED_RepoData[]
 }
 
-export interface SHARED_OneRepoCountCommitsResponse extends SHARED_BaseAPIResponse {
-    numCommits?: number
-}
-
-export interface SHARED_LifetimeCommitsAPIResponse extends SHARED_BaseAPIResponse {
-    lifetimeCommits?: number
+export interface SHARED_CountReposAPIResponse extends SHARED_BaseAPIResponse {
+    numRepos?: number
 }

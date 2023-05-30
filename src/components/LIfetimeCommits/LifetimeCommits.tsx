@@ -15,12 +15,12 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
     useEffect(() => {
         const fetchUserCard = async (accessToken: string) => {
             setError(undefined)
-            const { success, error, lifetimeCommits: lifetimeCommitsAPIRes } = await lifeTimeCommitsAPI(accessToken)
+            const { success, error, numCommits } = await lifeTimeCommitsAPI(accessToken)
             setIsLoading(false)
-            if (!success || lifetimeCommitsAPIRes === undefined) {
+            if (!success || numCommits === undefined) {
                 setError(error)
             } else {
-                setLifetimeCommits(lifetimeCommitsAPIRes)
+                setLifetimeCommits(numCommits)
             }
         }
 

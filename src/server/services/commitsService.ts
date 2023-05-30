@@ -1,16 +1,38 @@
+import { listAllRepos } from './reposService'
+
 import {
     SHARED_CommitData,
-    SHARED_LifetimeCommitsAPIResponse,
+    SHARED_CountCommitsResponse,
     SHARED_ListCommitsAPIResponse,
-    SHARED_OneRepoCountCommitsResponse,
+    SHARED_RepoData,
 } from '@/models/shared'
 import { GH_API_countCommits, GH_API_listCommits } from '@/server/lib/gh-api/commits'
-import { GH_API_listRepos } from '@/server/lib/gh-api/repos'
-import { GH_API_Repo } from '@/server/lib/gh-api/repos/model'
 import { GH_API_getUser } from '@/server/lib/gh-api/users'
 
-const countCommitsInAllRepos = async (accessToken: string, authUser: string, repos: GH_API_Repo[]): Promise<number> => {
-    const promises: Promise<SHARED_OneRepoCountCommitsResponse>[] = []
+export const listCommits = async (
+    accessToken: string,
+    owner: string,
+    repo: string,
+): Promise<SHARED_ListCommitsAPIResponse> => {
+    const { success, error, commits } = await GH_API_listCommits(accessToken, owner, repo, {
+        per_page: 1,
+    })
+
+    if (!success || commits === undefined) {
+        return { commits: undefined, success: false, error: error }
+    }
+
+    return { commits: commits as SHARED_CommitData[], success: true }
+}
+
+/* ======== count commits ======== */
+
+const countCommitsInRepos = async (
+    accessToken: string,
+    authUser: string,
+    repos: SHARED_RepoData[],
+): Promise<number> => {
+    const promises: Promise<SHARED_CountCommitsResponse>[] = []
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
         const { login: ownerLogin } = owner
@@ -33,49 +55,33 @@ const countCommitsInAllRepos = async (accessToken: string, authUser: string, rep
         }
         return ct
     } catch (e) {
-        console.error(e)
+        console.error(`[commitsService] countCommitsInRepos unable to count all commits across all repos: ${e}`)
         return 0
     }
 }
 
-export const getLifetimeCommits = async (accessToken: string): Promise<SHARED_LifetimeCommitsAPIResponse> => {
+export const countLifetimeCommits = async (accessToken: string): Promise<SHARED_CountCommitsResponse> => {
     try {
-        const [userRes, reposRes] = await Promise.all([GH_API_getUser(accessToken), GH_API_listRepos(accessToken)])
+        const [userRes, reposRes] = await Promise.all([GH_API_getUser(accessToken), listAllRepos(accessToken)])
 
         const { success: userSuccess, error: userError, user } = userRes
         if (!userSuccess || user === undefined) {
-            return { lifetimeCommits: undefined, success: false, error: userError }
+            return { numCommits: undefined, success: false, error: userError }
         }
 
         const { success: reposSuccess, error: reposError, repos } = reposRes
         if (!reposSuccess || repos === undefined) {
-            return { lifetimeCommits: undefined, success: false, error: reposError }
+            return { numCommits: undefined, success: false, error: reposError }
         }
 
         const { login: authUser } = user
-        const lifetimeCommits = await countCommitsInAllRepos(accessToken, authUser, repos)
+        const lifetimeCommits = await countCommitsInRepos(accessToken, authUser, repos)
 
-        return { lifetimeCommits: lifetimeCommits, success: true }
+        return { numCommits: lifetimeCommits, success: true }
     } catch (e) {
-        console.error(e)
-        return { success: false, error: 'internal server error', lifetimeCommits: undefined }
+        console.error(`[commitsService] countLifetimeCommits unable to fetch user or get all repos ${e}`)
+        return { success: false, error: 'internal server error', numCommits: undefined }
     }
-}
-
-export const listCommits = async (
-    accessToken: string,
-    owner: string,
-    repo: string,
-): Promise<SHARED_ListCommitsAPIResponse> => {
-    const { success, error, commits } = await GH_API_listCommits(accessToken, owner, repo, {
-        per_page: 1,
-    })
-
-    if (!success || commits === undefined) {
-        return { commits: undefined, success: false, error: error }
-    }
-
-    return { commits: commits as SHARED_CommitData[], success: true }
 }
 
 export const countCommitsForRepo = async (
@@ -83,7 +89,7 @@ export const countCommitsForRepo = async (
     owner: string,
     repo: string,
     user: string,
-): Promise<SHARED_OneRepoCountCommitsResponse> => {
+): Promise<SHARED_CountCommitsResponse> => {
     const { success, error, numCommits } = await GH_API_countCommits(accessToken, owner, repo, {
         author: user,
     })
