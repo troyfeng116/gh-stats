@@ -102,6 +102,10 @@ export interface SHARED_ListReposAPIResponse extends SHARED_BaseAPIResponse {
     repos?: SHARED_RepoData[]
 }
 
+export interface SHARED_OneRepoCountCommitsResponse extends SHARED_BaseAPIResponse {
+    numCommits?: number
+}
+
 export interface SHARED_LifetimeCommitsAPIResponse extends SHARED_BaseAPIResponse {
     lifetimeCommits?: number
 }
