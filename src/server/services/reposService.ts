@@ -1,4 +1,5 @@
 import { SHARED_CountReposAPIResponse, SHARED_ListReposAPIResponse, SHARED_RepoData } from '@/models/shared'
+import { PAGE_SIZE } from '@/server/lib/gh-api'
 import { GH_API_countRepos, GH_API_listRepos } from '@/server/lib/gh-api/repos'
 
 // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
@@ -33,7 +34,6 @@ export const listAllRepos = async (accessToken: string): Promise<SHARED_ListRepo
     }
 
     const repoResPromises: Promise<SHARED_ListReposAPIResponse>[] = []
-    const PAGE_SIZE = 100
     for (let page = 1; (page - 1) * PAGE_SIZE < numRepos; page++) {
         repoResPromises.push(
             GH_API_listRepos(accessToken, {
