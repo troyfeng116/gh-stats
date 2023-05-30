@@ -7,7 +7,9 @@ export const getAccessTokenCookie = (): string | undefined => {
 }
 
 export const setAccessTokenCookie = (accessToken: string) => {
-    Cookies.set(ACCESS_TOKEN_COOKIE_NAME, accessToken)
+    Cookies.set(ACCESS_TOKEN_COOKIE_NAME, accessToken, {
+        expires: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000),
+    })
 }
 
 export const deleteAccessTokenCookie = () => {

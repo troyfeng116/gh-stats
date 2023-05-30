@@ -6,7 +6,12 @@ import { AUTH_COOKIE_VALIDATED, AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGO
 import { reducer } from './reducer'
 
 import { getTokenAPI, validateTokenAPI } from '@/client/lib/unauthAPI'
-import { clearCookies, deleteAccessTokenCookie, getAccessTokenCookie } from '@/client/utils/cookies'
+import {
+    clearCookies,
+    deleteAccessTokenCookie,
+    getAccessTokenCookie,
+    setAccessTokenCookie,
+} from '@/client/utils/cookies'
 
 export enum AuthStatus {
     INITIALIZING = 'INITIALIZING',
@@ -96,7 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
         } else {
             dispatch({ type: AUTH_LOGIN_SUCCESS, accessToken: accessToken })
             // TODO: this is handled from the server?
-            // setAccessTokenCookie(accessToken)
+            setAccessTokenCookie(accessToken)
             callback(true)
         }
     }, [])
