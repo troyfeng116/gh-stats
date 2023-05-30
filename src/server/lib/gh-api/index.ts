@@ -9,8 +9,7 @@ Make authenticated calls to GitHub API
 Return raw `Response` objects
 */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getGitHubAPI = async (url: string, accessToken: string): Promise<any> => {
+export const getGitHubAPI = async (url: string, accessToken: string): Promise<Response> => {
     const res = await fetch(`${BASE_GH_API_URL}${url}`, {
         method: 'GET',
         headers: {

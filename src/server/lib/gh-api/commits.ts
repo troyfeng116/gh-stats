@@ -1,6 +1,6 @@
 import { getGitHubAPI } from '.'
 
-import { objToQueryParamsString } from '@/server/utils/objToQueryParams'
+import { getURLWithQueryParams } from '@/server/utils/objToQueryParams'
 
 // https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-commits
 export interface GH_API_Commit {
@@ -99,10 +99,7 @@ export const GH_API_listCommits = async (
     repo: string,
     params?: GH_API_listCommitsQueryParams,
 ): Promise<{ success: boolean; error?: string; commits?: GH_API_Commit[] }> => {
-    let url = `/repos/${owner}/${repo}/commits`
-    if (params !== undefined) {
-        url = `${url}?${objToQueryParamsString(params)}`
-    }
+    const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits`, params)
 
     console.log(url)
     const res = await getGitHubAPI(url, accessToken)

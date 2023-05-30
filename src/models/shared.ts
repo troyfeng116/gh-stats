@@ -57,3 +57,51 @@ export interface SHARED_CommitData {
 export interface SHARED_ListCommitsAPIResponse extends SHARED_BaseAPIResponse {
     commits?: SHARED_CommitData[]
 }
+
+export interface SHARED_RepoData {
+    id: number
+    node_id: string
+    name: string
+    full_name: string
+    owner: {
+        login: string
+        type: string
+    }
+    private: boolean
+    description: string
+    fork: boolean
+    url: string
+    homepage: string
+    forks_count: number
+    stargazers_count: number
+    watchers_count: number
+    size: number
+    default_branch: string
+    open_issues_count: number
+    topics: string[]
+    archived: boolean
+    disabled: boolean
+    visibility: string
+    pushed_at: string
+    created_at: string
+    updated_at: string
+    permissions: {
+        admin: boolean
+        push: boolean
+        pull: boolean
+    }
+    license: {
+        key: string
+        name: string
+    }
+    forks: number
+    open_issues: number
+    watchers: number
+}
+export interface SHARED_ListReposAPIResponse extends SHARED_BaseAPIResponse {
+    repos?: SHARED_RepoData[]
+}
+
+export interface SHARED_LifetimeCommitsAPIResponse extends SHARED_BaseAPIResponse {
+    lifetimeCommits?: number
+}

@@ -3,6 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 
+import LifetimeCommits from '../LIfetimeCommits'
+
 import { AuthStatus, useAuth } from '@/components/Auth'
 import UserCard from '@/components/UserCard'
 
@@ -24,6 +26,7 @@ export const Home: React.FC = () => {
     return (
         <div>
             <UserCard accessToken={accessToken} />
+            <LifetimeCommits accessToken={accessToken} />
             <button onClick={() => logout()}>Log out</button>
         </div>
     )
