@@ -18,15 +18,15 @@ export type SHARED_ValidateTokenAPIResponse = SHARED_BaseAPIResponse
 /* ======== user ======== */
 
 export interface SHARED_UserCardData {
-    userId?: string
-    name?: string
-    email?: string
-    followers?: number
-    following?: number
-    createdAt?: string
-    publicRepos?: number
-    privateRepos?: number
-    totalRepos?: number
+    userId: string
+    name: string
+    email: string
+    followers: number
+    following: number
+    createdAt: string
+    publicRepos: number
+    privateRepos: number
+    totalRepos: number
 }
 
 export interface SHARED_GetUserCardAPIResponse extends SHARED_BaseAPIResponse {

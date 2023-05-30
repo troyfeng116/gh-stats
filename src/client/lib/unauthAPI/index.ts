@@ -1,6 +1,6 @@
 import { postAPI } from '../fetchAPI'
 
-import { SHARED_GetTokenAPIResponse, SHARED_ValidateTokenAPIResponse } from '@/models/shared'
+import { SHARED_GetTokenAPIResponse, SHARED_ValidateTokenAPIResponse } from '@/shared/models'
 
 /*
 Unauthenticated APIs (no access token needed)

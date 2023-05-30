@@ -1,6 +1,6 @@
-import { SHARED_ValidateTokenAPIResponse } from '@/models/shared'
 import { validateAccessToken } from '@/server/services/validateTokenService'
 import { AUTH_NO_TOKEN_ERROR_RES } from '@/server/utils/authHeaders'
+import { SHARED_ValidateTokenAPIResponse } from '@/shared/models'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('POST /api/validate-token')

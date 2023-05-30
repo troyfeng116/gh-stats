@@ -1,5 +1,5 @@
-import { SHARED_GetUserCardAPIResponse } from '@/models/shared'
 import { GH_API_getUser } from '@/server/lib/gh-api/users'
+import { SHARED_GetUserCardAPIResponse } from '@/shared/models'
 
 export const getUserCardData = async (accessToken: string): Promise<SHARED_GetUserCardAPIResponse> => {
     const { user, success, error } = await GH_API_getUser(accessToken)

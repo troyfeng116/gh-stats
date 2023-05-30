@@ -3,9 +3,9 @@ Requires authentication
 Returns total lifetime commits
 */
 
-import { SHARED_CountCommitsResponse } from '@/models/shared'
 import { countLifetimeCommits } from '@/server/services/commitsService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
+import { SHARED_CountCommitsResponse } from '@/shared/models'
 
 export const GET = async (request: Request): Promise<Response> => {
     console.log('GET /api/lifetime-commits')

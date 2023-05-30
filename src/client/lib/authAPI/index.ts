@@ -1,6 +1,6 @@
 import { getAPIWithAuth } from '../fetchAPI'
 
-import { SHARED_CountCommitsResponse, SHARED_GetUserCardAPIResponse } from '@/models/shared'
+import { SHARED_CountCommitsResponse, SHARED_GetUserCardAPIResponse } from '@/shared/models'
 
 /*
 Authenticated APIs (must provide access token)

@@ -24,7 +24,7 @@ export const GH_API_listCommits = async (
 ): Promise<{ success: boolean; error?: string; commits?: GH_API_Commit[] }> => {
     const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits`, params)
 
-    console.log(url)
+    // console.log(url)
     const res = await getGitHubAPI(url, accessToken)
     // console.log(res)
 
@@ -60,7 +60,7 @@ export const GH_API_countCommits = async (
     }
     const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits`, fullParams)
 
-    console.log(url)
+    // console.log(url)
     const res = await getGitHubAPI(url, accessToken)
     // console.log(res)
 

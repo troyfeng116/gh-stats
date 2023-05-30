@@ -1,13 +1,13 @@
 import { listAllRepos } from './reposService'
 
+import { GH_API_countCommits, GH_API_listCommits } from '@/server/lib/gh-api/commits'
+import { GH_API_getUser } from '@/server/lib/gh-api/users'
 import {
     SHARED_CommitData,
     SHARED_CountCommitsResponse,
     SHARED_ListCommitsAPIResponse,
     SHARED_RepoData,
-} from '@/models/shared'
-import { GH_API_countCommits, GH_API_listCommits } from '@/server/lib/gh-api/commits'
-import { GH_API_getUser } from '@/server/lib/gh-api/users'
+} from '@/shared/models'
 
 export const listCommits = async (
     accessToken: string,
@@ -46,9 +46,13 @@ const countCommitsInRepos = async (
         for (let i = 0; i < counts.length; i++) {
             const { owner, name } = repos[i]
             const { success: countSuccess, error: countError, numCommits } = counts[i]
-            console.log(`${owner.login}/${name} -> ${authUser} had ${numCommits} commits`)
+            console.log(
+                `[commitsService] countCommitsInRepos repo ${owner.login}/${name} -> authUser ${authUser} had ${numCommits} commits`,
+            )
             if (!countSuccess || numCommits === undefined) {
-                console.log(countError)
+                console.error(
+                    `[commitsService] countCommitsInREpos: repo ${owner.login}/${name} -> error ${countError}`,
+                )
                 continue
             }
             ct += numCommits

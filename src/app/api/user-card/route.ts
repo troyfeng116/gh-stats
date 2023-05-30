@@ -1,6 +1,6 @@
-import { SHARED_GetUserCardAPIResponse } from '@/models/shared'
 import { getUserCardData } from '@/server/services/userCardService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
+import { SHARED_GetUserCardAPIResponse } from '@/shared/models'
 
 /*
 Requires authentication
