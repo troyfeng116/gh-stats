@@ -27,3 +27,33 @@ export interface SHARED_UserCardData {
 export interface SHARED_GetUserCardAPIResponse extends SHARED_BaseAPIResponse {
     userCard?: SHARED_UserCardData
 }
+
+export interface SHARED_CommitData {
+    sha: string
+    commit: {
+        author: {
+            name: string
+            email: string
+            date: string
+        }
+        committer: {
+            name: string
+            email: string
+            date: string
+        }
+        message: string
+        tree: {
+            url: string
+            sha: string
+        }
+    }
+    author: {
+        login: string
+    }
+    committer: {
+        login: string
+    }
+}
+export interface SHARED_ListCommitsAPIResponse extends SHARED_BaseAPIResponse {
+    commits?: SHARED_CommitData[]
+}

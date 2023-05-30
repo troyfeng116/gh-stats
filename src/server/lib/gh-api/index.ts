@@ -11,7 +11,7 @@ Return raw `Response` objects
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getGitHubAPI = async (url: string, accessToken: string): Promise<any> => {
-    return await fetch(`${BASE_GH_API_URL}${url}`, {
+    const res = await fetch(`${BASE_GH_API_URL}${url}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -19,4 +19,9 @@ export const getGitHubAPI = async (url: string, accessToken: string): Promise<an
             Accept: 'application/vnd.github+json',
         },
     })
+
+    console.log(res)
+    console.log(res.headers)
+
+    return res
 }

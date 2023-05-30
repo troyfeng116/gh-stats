@@ -1,4 +1,5 @@
-import { SHARED_GetUserCardAPIResponse } from '@/models/shared'
+import { SHARED_GetUserCardAPIResponse, SHARED_ListCommitsAPIResponse } from '@/models/shared'
+import { listCommits } from '@/server/services/listCommitsService'
 import { getUserCardData } from '@/server/services/userCardService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 
@@ -24,6 +25,14 @@ export const GET = async (request: Request): Promise<Response> => {
         return new Response(JSON.stringify(userCardRes), {
             status: 400,
         })
+    }
+
+    const commitsRes: SHARED_ListCommitsAPIResponse = await listCommits(token, 'troyfeng116', 'troyfeng116.github.io')
+    const { commits } = commitsRes
+    if (commits !== undefined) {
+        console.log(commits.length)
+    } else {
+        console.log('commits undefined!')
     }
 
     return new Response(JSON.stringify(userCardRes), {
