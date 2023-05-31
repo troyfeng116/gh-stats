@@ -1,6 +1,7 @@
 import { GH_GQL_BaseResponse } from '..'
 
 export interface GH_GQL_UserSchema {
+    id: string
     login: string
     name: string | null
     email: string | null

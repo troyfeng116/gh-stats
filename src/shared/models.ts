@@ -165,6 +165,16 @@ export interface SHARED_GetContributorActivityResponse extends SHARED_BaseAPIRes
 
 /* ======== aggregate ======== */
 
+export const makeLifeTimeStats = (): SHARED_LifetimeStats => {
+    return {
+        numRepos: 0,
+        numCommits: 0,
+        numAdditions: 0,
+        numDeletions: 0,
+        numLines: 0,
+    }
+}
+
 export interface SHARED_LifetimeStats {
     numRepos: number
     numCommits: number

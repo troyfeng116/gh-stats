@@ -1,5 +1,5 @@
 // import { getUserCardData } from '@/server/services/userCardService'
-import { getUserCardDataFromGQL } from '@/server/services/userCardService'
+import { getUserCardDataFromGQL } from '@/server/services/gql/userCardService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 import { SHARED_GetUserCardAPIResponse } from '@/shared/models'
 

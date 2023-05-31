@@ -1,13 +1,12 @@
 import { queryGitHubGraphQL_API } from '..'
 
 import { GH_GQL_GetUserResponse, GH_GQL_GetViewerResponse, GH_GQL_UserSchema } from './model'
-import { GH_GQL_getUserQueryVariables } from './query'
+import { GH_GQL_GET_USER_QUERY, GH_GQL_GET_VIEWER_QUERY, GH_GQL_getUserQueryVariables } from './query'
 
 export const GH_GQL_getViewer = async (
     accessToken: string,
-    query: string,
 ): Promise<{ success: boolean; error?: string; user?: GH_GQL_UserSchema }> => {
-    const res = await queryGitHubGraphQL_API(accessToken, query)
+    const res = await queryGitHubGraphQL_API(accessToken, GH_GQL_GET_VIEWER_QUERY)
     const { status, statusText } = res
 
     if (status !== 200) {
@@ -32,10 +31,9 @@ export const GH_GQL_getViewer = async (
 
 export const GH_GQL_getUser = async (
     accessToken: string,
-    query: string,
     variables: GH_GQL_getUserQueryVariables,
 ): Promise<{ success: boolean; error?: string; user?: GH_GQL_UserSchema }> => {
-    const res = await queryGitHubGraphQL_API(accessToken, query, variables)
+    const res = await queryGitHubGraphQL_API(accessToken, GH_GQL_GET_USER_QUERY, variables)
     const { status, statusText } = res
 
     if (status !== 200) {
