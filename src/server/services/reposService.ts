@@ -1,5 +1,6 @@
 import { PAGE_SIZE } from '@/server/lib/gh-api'
 import { GH_API_countRepos, GH_API_listRepos } from '@/server/lib/gh-api/repos'
+import { chunkArr } from '@/server/utils/chunkArr'
 import { SHARED_CountReposAPIResponse, SHARED_ListReposAPIResponse, SHARED_RepoData } from '@/shared/models'
 
 // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
@@ -43,9 +44,15 @@ export const listAllRepos = async (accessToken: string): Promise<SHARED_ListRepo
         )
     }
 
+    const chunkedRepoResPromises = chunkArr(repoResPromises)
+
     try {
-        const repoResArr = await Promise.all(repoResPromises)
-        let allRepos: SHARED_RepoData[] = []
+        const repoResArr: SHARED_ListReposAPIResponse[] = []
+        for (let i = 0; i < chunkedRepoResPromises.length; i++) {
+            repoResArr.push(...(await Promise.all(chunkedRepoResPromises[i])))
+        }
+
+        const allRepos: SHARED_RepoData[] = []
         for (let i = 0; i < repoResArr.length; i++) {
             const { success: reposSuccess, error: reposError, repos } = repoResArr[i]
             if (!reposSuccess || repos === undefined) {
@@ -56,7 +63,7 @@ export const listAllRepos = async (accessToken: string): Promise<SHARED_ListRepo
                 }
             }
 
-            allRepos = [...allRepos, ...repos]
+            allRepos.push(...repos)
         }
 
         return {

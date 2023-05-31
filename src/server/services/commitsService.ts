@@ -2,6 +2,7 @@ import { listAllRepos } from './reposService'
 
 import { GH_API_countCommits, GH_API_listCommits } from '@/server/lib/gh-api/commits'
 import { GH_API_getUser } from '@/server/lib/gh-api/users'
+import { chunkArr } from '@/server/utils/chunkArr'
 import {
     SHARED_CommitData,
     SHARED_CountCommitsResponse,
@@ -32,16 +33,23 @@ const countCommitsInRepos = async (
     authUser: string,
     repos: SHARED_RepoData[],
 ): Promise<number> => {
-    const promises: Promise<SHARED_CountCommitsResponse>[] = []
+    const countCommitsPromises: Promise<SHARED_CountCommitsResponse>[] = []
+    // TODO: chunking
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
         const { login: ownerLogin } = owner
-        promises.push(countCommitsForRepo(accessToken, ownerLogin, repoName, authUser))
+        countCommitsPromises.push(countCommitsForRepo(accessToken, ownerLogin, repoName, authUser))
     }
+
+    const chunkedCountCommitsPromises = chunkArr(countCommitsPromises)
 
     // TODO: Promise.all throws error?
     try {
-        const counts = await Promise.all(promises)
+        const counts: SHARED_CountCommitsResponse[] = []
+        for (let i = 0; i < chunkedCountCommitsPromises.length; i++) {
+            counts.push(...(await Promise.all(chunkedCountCommitsPromises[i])))
+        }
+
         let ct = 0
         for (let i = 0; i < counts.length; i++) {
             const { owner, name } = repos[i]
