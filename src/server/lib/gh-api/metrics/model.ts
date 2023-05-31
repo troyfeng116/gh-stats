@@ -28,3 +28,5 @@ export interface GH_API_ContributorActivity {
         c: number
     }[]
 }
+
+export type GH_API_AllContributorActivity = GH_API_ContributorActivity[]

@@ -1,13 +1,13 @@
 import { getGitHubAPI } from '..'
 
-import { GH_API_ContributorActivity } from './model'
+import { GH_API_AllContributorActivity } from './model'
 
 // https://docs.github.com/en/rest/metrics/statistics?apiVersion=2022-11-28#get-all-contributor-commit-activity
 export const GH_API_getAllContributorActivity = async (
     accessToken: string,
     owner: string,
     repo: string,
-): Promise<{ success: boolean; error?: string; activity?: GH_API_ContributorActivity }> => {
+): Promise<{ success: boolean; error?: string; allActivity?: GH_API_AllContributorActivity }> => {
     const url = `/repos/${owner}/${repo}/stats/contributors`
 
     const res = await getGitHubAPI(url, accessToken)
@@ -25,12 +25,11 @@ export const GH_API_getAllContributorActivity = async (
     }
 
     if (status !== 200) {
-        return { activity: undefined, success: false, error: `error ${status}: ${statusText}` }
+        return { allActivity: undefined, success: false, error: `error ${status}: ${statusText}` }
     }
 
-    // for some reason, returns array containing one object (see GitHub documentation)
-    const resJson: GH_API_ContributorActivity[] = (await res.json()) as GH_API_ContributorActivity[]
+    const resJson: GH_API_AllContributorActivity = (await res.json()) as GH_API_AllContributorActivity
     // console.log(resJson)
 
-    return { activity: resJson[0], success: true }
+    return { allActivity: resJson, success: true }
 }

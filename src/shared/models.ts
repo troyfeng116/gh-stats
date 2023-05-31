@@ -144,7 +144,7 @@ export interface SHARED_CountReposAPIResponse extends SHARED_BaseAPIResponse {
 
 /* ======== metrics ======== */
 
-export interface SHARED_AllContributorActivityData {
+export interface SHARED_ContributorActivityData {
     author: {
         login: string
     }
@@ -157,8 +157,8 @@ export interface SHARED_AllContributorActivityData {
     }[]
 }
 
-export interface SHARED_GetAllContributorActivityResponse extends SHARED_BaseAPIResponse {
-    activity?: SHARED_AllContributorActivityData
+export interface SHARED_GetContributorActivityResponse extends SHARED_BaseAPIResponse {
+    activity?: SHARED_ContributorActivityData
 }
 
 /* ======== lines of code ======== */
