@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 
-import { SHARED_GetTokenAPIResponse } from '@/models/shared'
 import { exchangeCodeForAccessToken } from '@/server/services/getTokenService'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
+import { SHARED_GetTokenAPIResponse } from '@/shared/models'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('POST /api/get-token')

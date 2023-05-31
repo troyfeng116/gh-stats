@@ -1,4 +1,4 @@
-import { SHARED_BaseAPIResponse } from '@/models/shared'
+import { SHARED_BaseAPIResponse } from '@/shared/models'
 
 export const AUTH_NO_TOKEN_ERROR_RES: SHARED_BaseAPIResponse = {
     success: false,

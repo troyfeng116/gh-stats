@@ -1,7 +1,3 @@
-import { getGitHubAPI } from '.'
-
-import { objToQueryParamsString } from '@/server/utils/objToQueryParams'
-
 // https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-commits
 export interface GH_API_Commit {
     url: string
@@ -30,8 +26,8 @@ export interface GH_API_Commit {
         verification: {
             verified: boolean
             reason: string
-            signature: string
-            payload: string
+            signature: string | null
+            payload: string | null
         }
     }
     author: {
@@ -82,46 +78,21 @@ export interface GH_API_Commit {
     ]
 }
 
-export interface GH_API_listCommitsQueryParams {
-    sha?: string
-    path?: string
-    author?: string
-    since?: string // ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
-    until?: string
-    per_page?: number
-    page?: number
-}
-
-// https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-commits
-export const GH_API_listCommits = async (
-    accessToken: string,
-    owner: string,
-    repo: string,
-    params?: GH_API_listCommitsQueryParams,
-): Promise<{ success: boolean; error?: string; commits?: GH_API_Commit[] }> => {
-    let url = `/repos/${owner}/${repo}/commits`
-    if (params !== undefined) {
-        url = `${url}?${objToQueryParamsString(params)}`
+// https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#get-a-commit
+export interface GH_API_CommitWithDiff extends GH_API_Commit {
+    stats: {
+        additions: number
+        deletions: number
+        total: number
     }
-
-    console.log(url)
-    const res = await getGitHubAPI(url, accessToken)
-    // console.log(res)
-
-    const { status, statusText } = res
-    if (status !== 200) {
-        return {
-            commits: undefined,
-            success: false,
-            error: `error ${status}: ${statusText}`,
-        }
-    }
-
-    const resJson = (await res.json()) as GH_API_Commit[]
-    // console.log(resJson)
-
-    return {
-        commits: resJson,
-        success: true,
-    }
+    files: {
+        filename: string
+        additions: number
+        deletions: number
+        changes: number
+        status: string
+        raw_url: string
+        blob_url: string
+        patch: string
+    }[]
 }

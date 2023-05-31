@@ -1,7 +1,5 @@
-import { getGitHubAPI } from '.'
-
 // https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-the-authenticated-user
-export interface GH_API_GetAuthUserResponse {
+export interface GH_API_User {
     login: string
     id: number
     node_id: string
@@ -45,29 +43,5 @@ export interface GH_API_GetAuthUserResponse {
         space: number
         private_repos: number
         collaborators: number
-    }
-}
-
-export const GH_API_getUser = async (
-    accessToken: string,
-): Promise<{ success: boolean; error?: string; user?: GH_API_GetAuthUserResponse }> => {
-    const res = await getGitHubAPI('/user', accessToken)
-
-    const { status, statusText } = res
-    // TODO: how to handle 304?
-    if (status !== 200 && status !== 304) {
-        return {
-            user: undefined,
-            success: false,
-            error: `error ${status}: ${statusText}`,
-        }
-    }
-
-    const resJson = (await res.json()) as GH_API_GetAuthUserResponse
-    console.log(resJson)
-
-    return {
-        user: resJson,
-        success: true,
     }
 }
