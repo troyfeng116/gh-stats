@@ -3,12 +3,14 @@ import { GH_API_getUser } from '../lib/gh-api/users'
 import { listAllRepos } from './reposService'
 
 import { GH_API_getAllContributorActivity } from '@/server/lib/gh-api/metrics'
+import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
 // import { dummyAsyncFunction } from '@/server/utils/dummyAsyncFetch'
 import { chunkArr } from '@/server/utils/chunkArr'
 import {
     SHARED_ContributorActivityData,
-    SHARED_CountCommitsResponse,
     SHARED_GetContributorActivityResponse,
+    SHARED_GetLifetimeStatsAPIResponse,
+    SHARED_LifetimeStats,
     SHARED_RepoData,
 } from '@/shared/models'
 
@@ -41,13 +43,13 @@ export const getContributorActivity = async (
     }
 }
 
-/* ======== count commits ======== */
+/* ======== count aggregate stats ======== */
 
 const countCommitsInReposUsingMetrics = async (
     accessToken: string,
     authUser: string,
     repos: SHARED_RepoData[],
-): Promise<number> => {
+): Promise<SHARED_LifetimeStats> => {
     const activityPromises: Promise<SHARED_GetContributorActivityResponse>[] = []
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
@@ -64,7 +66,13 @@ const countCommitsInReposUsingMetrics = async (
             activities.push(...(await Promise.all(chunkedActivityPromises[i])))
         }
 
-        let ct = 0
+        const stats: SHARED_LifetimeStats = {
+            numRepos: repos.length,
+            numCommits: 0,
+            numLines: 0,
+            numAdditions: 0,
+            numDeletions: 0,
+        }
         for (let i = 0; i < activities.length; i++) {
             const { owner, name } = repos[i]
             const { success: activitySuccess, error: activityError, activity } = activities[i]
@@ -79,33 +87,46 @@ const countCommitsInReposUsingMetrics = async (
                 continue
             }
 
-            const { total } = activity
-            ct += total
+            const { total, weeks } = activity
+            const { numLines, numAdditions, numDeletions } = aggregateWeeklyContributorActivity(weeks)
+            stats.numCommits += total
+            stats.numLines += numLines
+            stats.numAdditions += numAdditions
+            stats.numDeletions += numDeletions
         }
-        return ct
+
+        return stats
     } catch (e) {
         console.error(
-            `[metricsService] countCommitsInReposUsingMetrics unable to count all commits across all repos: ${e}`,
+            `[metricsService] countCommitsInReposUsingMetrics unable to count all stats across all repos: ${e}`,
         )
-        return 0
+        return {
+            numRepos: 0,
+            numCommits: 0,
+            numLines: 0,
+            numAdditions: 0,
+            numDeletions: 0,
+        }
     }
 }
 
-export const countLifetimeCommitsUsingMetrics = async (accessToken: string): Promise<SHARED_CountCommitsResponse> => {
+export const countLifetimeCommitsUsingMetrics = async (
+    accessToken: string,
+): Promise<SHARED_GetLifetimeStatsAPIResponse> => {
     const [userRes, reposRes] = await Promise.all([GH_API_getUser(accessToken), listAllRepos(accessToken)])
 
     const { success: userSuccess, error: userError, user } = userRes
     if (!userSuccess || user === undefined) {
-        return { numCommits: undefined, success: false, error: userError }
+        return { stats: undefined, success: false, error: userError }
     }
 
     const { success: reposSuccess, error: reposError, repos } = reposRes
     if (!reposSuccess || repos === undefined) {
-        return { numCommits: undefined, success: false, error: reposError }
+        return { stats: undefined, success: false, error: reposError }
     }
 
     const { login: authUser } = user
-    const lifetimeCommits = await countCommitsInReposUsingMetrics(accessToken, authUser, repos)
+    const lifetimeStats = await countCommitsInReposUsingMetrics(accessToken, authUser, repos)
 
-    return { numCommits: lifetimeCommits, success: true }
+    return { stats: lifetimeStats, success: true }
 }

@@ -1,6 +1,6 @@
 import { getAPIWithAuth } from '../fetchAPI'
 
-import { SHARED_CountCommitsResponse, SHARED_GetUserCardAPIResponse } from '@/shared/models'
+import { SHARED_GetLifetimeStatsAPIResponse, SHARED_GetUserCardAPIResponse } from '@/shared/models'
 
 /*
 Authenticated APIs (must provide access token)
@@ -12,8 +12,8 @@ export const getUserCardAPI = async (accessToken: string): Promise<SHARED_GetUse
     return getUserCardRes
 }
 
-export const lifeTimeCommitsAPI = async (accessToken: string): Promise<SHARED_CountCommitsResponse> => {
-    const res = await getAPIWithAuth('/api/lifetime-commits', accessToken)
-    const lifetimeCommitsRes = res as SHARED_CountCommitsResponse
-    return lifetimeCommitsRes
+export const lifetimeStatsAPI = async (accessToken: string): Promise<SHARED_GetLifetimeStatsAPIResponse> => {
+    const res = await getAPIWithAuth('/api/lifetime-stats', accessToken)
+    const lifetimeStatsRes = res as SHARED_GetLifetimeStatsAPIResponse
+    return lifetimeStatsRes
 }

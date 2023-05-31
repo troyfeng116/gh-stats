@@ -144,21 +144,37 @@ export interface SHARED_CountReposAPIResponse extends SHARED_BaseAPIResponse {
 
 /* ======== metrics ======== */
 
+export interface SHARED_WeeklyContributionActivityData {
+    w: number
+    a: number
+    d: number
+    c: number
+}
+
 export interface SHARED_ContributorActivityData {
     author: {
         login: string
     }
     total: number
-    weeks: {
-        w: number
-        a: number
-        d: number
-        c: number
-    }[]
+    weeks: SHARED_WeeklyContributionActivityData[]
 }
 
 export interface SHARED_GetContributorActivityResponse extends SHARED_BaseAPIResponse {
     activity?: SHARED_ContributorActivityData
+}
+
+/* ======== aggregate ======== */
+
+export interface SHARED_LifetimeStats {
+    numRepos: number
+    numCommits: number
+    numLines: number
+    numAdditions: number
+    numDeletions: number
+}
+
+export interface SHARED_GetLifetimeStatsAPIResponse extends SHARED_BaseAPIResponse {
+    stats?: SHARED_LifetimeStats
 }
 
 /* ======== lines of code ======== */
