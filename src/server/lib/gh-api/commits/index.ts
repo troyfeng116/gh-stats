@@ -1,6 +1,6 @@
 import { getGitHubAPI } from '..'
 
-import { GH_API_Commit } from './model'
+import { GH_API_Commit, GH_API_CommitWithDiff } from './model'
 
 import { extractNumCommitsFromHeaders } from '@/server/utils/extractNumCommits'
 import { getURLWithQueryParams } from '@/server/utils/objToQueryParams'
@@ -62,7 +62,7 @@ export const GH_API_countCommits = async (
 
     // console.log(url)
     const res = await getGitHubAPI(url, accessToken)
-    // console.log(res)
+    // console.log(await res.json())
 
     const { status, statusText, headers } = res
     if (status !== 200) {
@@ -78,6 +78,42 @@ export const GH_API_countCommits = async (
 
     return {
         numCommits: numCommits,
+        success: true,
+    }
+}
+
+// if >300 files changed in diff, paginates up to 3000 files
+export interface GH_API_getCommitQueryParams {
+    per_page?: number
+    page?: number
+}
+
+// https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#get-a-commit
+export const GH_API_getCommit = async (
+    accessToken: string,
+    owner: string,
+    repo: string,
+    ref: string,
+    params?: GH_API_getCommitQueryParams,
+): Promise<{ success: boolean; error?: string; commit?: GH_API_CommitWithDiff }> => {
+    const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits/${ref}`, params)
+
+    const res = await getGitHubAPI(url, accessToken)
+
+    const { status, statusText } = res
+    if (status !== 200) {
+        return {
+            commit: undefined,
+            success: false,
+            error: `error ${status}: ${statusText}`,
+        }
+    }
+
+    const resJson = (await res.json()) as GH_API_CommitWithDiff
+    // console.log(resJson)
+
+    return {
+        commit: resJson,
         success: true,
     }
 }

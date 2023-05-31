@@ -26,8 +26,8 @@ export interface GH_API_Commit {
         verification: {
             verified: boolean
             reason: string
-            signature: string
-            payload: string
+            signature: string | null
+            payload: string | null
         }
     }
     author: {
@@ -76,4 +76,23 @@ export interface GH_API_Commit {
             sha: string
         },
     ]
+}
+
+// https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#get-a-commit
+export interface GH_API_CommitWithDiff extends GH_API_Commit {
+    stats: {
+        additions: number
+        deletions: number
+        total: number
+    }
+    files: {
+        filename: string
+        additions: number
+        deletions: number
+        changes: number
+        status: string
+        raw_url: string
+        blob_url: string
+        patch: string
+    }[]
 }

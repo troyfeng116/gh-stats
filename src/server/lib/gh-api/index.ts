@@ -19,6 +19,8 @@ export const getGitHubAPI = async (url: string, accessToken: string): Promise<Re
             Authorization: `Bearer ${accessToken}`,
             'X-GitHub-Api-Version': '2022-11-28',
             Accept: 'application/vnd.github+json',
+            // TODO: caching (rate limit)
+            // 'If-Modified-Since': new Date(Date.now() - 60 * 60 * 1000).toUTCString(),
         },
     })
 

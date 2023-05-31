@@ -8,7 +8,7 @@ export const GH_API_getUser = async (
     const res = await getGitHubAPI('/user', accessToken)
 
     const { status, statusText } = res
-    // TODO: how to handle 304?
+    // TODO: how to handle caching/304?
     if (status !== 200 && status !== 304) {
         return {
             user: undefined,
@@ -17,6 +17,7 @@ export const GH_API_getUser = async (
         }
     }
 
+    // console.log(res)
     const resJson = (await res.json()) as GH_API_User
     // console.log(resJson)
 

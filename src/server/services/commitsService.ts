@@ -1,12 +1,14 @@
 import { listAllRepos } from './reposService'
 
-import { GH_API_countCommits, GH_API_listCommits } from '@/server/lib/gh-api/commits'
+import { GH_API_countCommits, GH_API_getCommit, GH_API_listCommits } from '@/server/lib/gh-api/commits'
 import { GH_API_getUser } from '@/server/lib/gh-api/users'
 import { chunkArr } from '@/server/utils/chunkArr'
 import {
     SHARED_CommitData,
+    SHARED_CommitWithDiffData,
     SHARED_CountCommitsResponse,
     SHARED_ListCommitsAPIResponse,
+    SHARED_ListCommitWithDiffAPIResponse,
     SHARED_RepoData,
 } from '@/shared/models'
 
@@ -14,9 +16,10 @@ export const listCommits = async (
     accessToken: string,
     owner: string,
     repo: string,
+    perPage?: number,
 ): Promise<SHARED_ListCommitsAPIResponse> => {
     const { success, error, commits } = await GH_API_listCommits(accessToken, owner, repo, {
-        per_page: 1,
+        per_page: perPage,
     })
 
     if (!success || commits === undefined) {
@@ -24,6 +27,21 @@ export const listCommits = async (
     }
 
     return { commits: commits as SHARED_CommitData[], success: true }
+}
+
+export const getCommit = async (
+    accessToken: string,
+    owner: string,
+    repo: string,
+    ref: string,
+): Promise<SHARED_ListCommitWithDiffAPIResponse> => {
+    const { success, error, commit } = await GH_API_getCommit(accessToken, owner, repo, ref)
+
+    if (!success || commit === undefined) {
+        return { commit: undefined, success: false, error: error }
+    }
+
+    return { commit: commit as SHARED_CommitWithDiffData, success: true }
 }
 
 /* ======== count commits ======== */
@@ -34,7 +52,6 @@ const countCommitsInRepos = async (
     repos: SHARED_RepoData[],
 ): Promise<number> => {
     const countCommitsPromises: Promise<SHARED_CountCommitsResponse>[] = []
-    // TODO: chunking
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
         const { login: ownerLogin } = owner
@@ -112,3 +129,5 @@ export const countCommitsForRepo = async (
 
     return { numCommits: numCommits, success: true }
 }
+
+/* ======== retrieve all commits with diffs ======== */

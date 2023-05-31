@@ -62,8 +62,29 @@ export interface SHARED_CommitData {
     }
 }
 
+export interface SHARED_CommitWithDiffData extends SHARED_CommitData {
+    stats: {
+        additions: number
+        deletions: number
+        total: number
+    }
+    files: {
+        filename: string
+        additions: number
+        deletions: number
+        changes: number
+        status: string
+        blob_url: string
+        patch: string
+    }[]
+}
+
 export interface SHARED_ListCommitsAPIResponse extends SHARED_BaseAPIResponse {
     commits?: SHARED_CommitData[]
+}
+
+export interface SHARED_ListCommitWithDiffAPIResponse extends SHARED_BaseAPIResponse {
+    commit?: SHARED_CommitWithDiffData
 }
 
 export interface SHARED_CountCommitsResponse extends SHARED_BaseAPIResponse {
@@ -120,3 +141,5 @@ export interface SHARED_ListReposAPIResponse extends SHARED_BaseAPIResponse {
 export interface SHARED_CountReposAPIResponse extends SHARED_BaseAPIResponse {
     numRepos?: number
 }
+
+/* ======== lines of code ======== */
