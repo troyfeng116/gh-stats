@@ -29,6 +29,23 @@ export const listCommits = async (
     return { commits: commits as SHARED_CommitData[], success: true }
 }
 
+export const countCommitsForRepo = async (
+    accessToken: string,
+    owner: string,
+    repo: string,
+    user: string,
+): Promise<SHARED_CountCommitsResponse> => {
+    const { success, error, numCommits } = await GH_API_countCommits(accessToken, owner, repo, {
+        author: user,
+    })
+
+    if (!success || numCommits === undefined) {
+        return { numCommits: undefined, success: false, error: error }
+    }
+
+    return { numCommits: numCommits, success: true }
+}
+
 export const getCommit = async (
     accessToken: string,
     owner: string,
@@ -75,9 +92,7 @@ const countCommitsInRepos = async (
                 `[commitsService] countCommitsInRepos repo ${owner.login}/${name} -> authUser ${authUser} had ${numCommits} commits`,
             )
             if (!countSuccess || numCommits === undefined) {
-                console.error(
-                    `[commitsService] countCommitsInREpos: repo ${owner.login}/${name} -> error ${countError}`,
-                )
+                console.error(`[commitsService] countCommitsInRepos repo ${owner.login}/${name} -> error ${countError}`)
                 continue
             }
             ct += numCommits
@@ -111,23 +126,6 @@ export const countLifetimeCommits = async (accessToken: string): Promise<SHARED_
         console.error(`[commitsService] countLifetimeCommits unable to fetch user or get all repos ${e}`)
         return { success: false, error: 'internal server error', numCommits: undefined }
     }
-}
-
-export const countCommitsForRepo = async (
-    accessToken: string,
-    owner: string,
-    repo: string,
-    user: string,
-): Promise<SHARED_CountCommitsResponse> => {
-    const { success, error, numCommits } = await GH_API_countCommits(accessToken, owner, repo, {
-        author: user,
-    })
-
-    if (!success || numCommits === undefined) {
-        return { numCommits: undefined, success: false, error: error }
-    }
-
-    return { numCommits: numCommits, success: true }
 }
 
 /* ======== retrieve all commits with diffs ======== */

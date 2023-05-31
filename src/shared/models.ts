@@ -19,8 +19,8 @@ export type SHARED_ValidateTokenAPIResponse = SHARED_BaseAPIResponse
 
 export interface SHARED_UserCardData {
     userId: string
-    name: string
-    email: string
+    name: string | undefined
+    email: string | undefined
     followers: number
     following: number
     createdAt: string
@@ -140,6 +140,25 @@ export interface SHARED_ListReposAPIResponse extends SHARED_BaseAPIResponse {
 
 export interface SHARED_CountReposAPIResponse extends SHARED_BaseAPIResponse {
     numRepos?: number
+}
+
+/* ======== metrics ======== */
+
+export interface SHARED_AllContributorActivityData {
+    author: {
+        login: string
+    }
+    total: number
+    weeks: {
+        w: number
+        a: number
+        d: number
+        c: number
+    }[]
+}
+
+export interface SHARED_GetAllContributorActivityResponse extends SHARED_BaseAPIResponse {
+    activity?: SHARED_AllContributorActivityData
 }
 
 /* ======== lines of code ======== */

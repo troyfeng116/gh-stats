@@ -1,0 +1,36 @@
+import { getGitHubAPI } from '..'
+
+import { GH_API_ContributorActivity } from './model'
+
+// https://docs.github.com/en/rest/metrics/statistics?apiVersion=2022-11-28#get-all-contributor-commit-activity
+export const GH_API_getAllContributorActivity = async (
+    accessToken: string,
+    owner: string,
+    repo: string,
+): Promise<{ success: boolean; error?: string; activity?: GH_API_ContributorActivity }> => {
+    const url = `/repos/${owner}/${repo}/stats/contributors`
+
+    const res = await getGitHubAPI(url, accessToken)
+    const { status, statusText } = res
+
+    /*
+    If the data hasn't been cached when you query a repository's statistics, you'll receive a 202 response;
+    a background job is also fired to start compiling these statistics.
+    You should allow the job a short time to complete, and then submit the request again.
+    */
+    if (status === 202) {
+        await new Promise((r) => setTimeout(r, 500))
+        console.log('[GH_API_getAllContributorActivity] retry')
+        return await GH_API_getAllContributorActivity(accessToken, owner, repo)
+    }
+
+    if (status !== 200) {
+        return { activity: undefined, success: false, error: `error ${status}: ${statusText}` }
+    }
+
+    // for some reason, returns array containing one object (see GitHub documentation)
+    const resJson: GH_API_ContributorActivity[] = (await res.json()) as GH_API_ContributorActivity[]
+    // console.log(resJson)
+
+    return { activity: resJson[0], success: true }
+}

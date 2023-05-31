@@ -3,7 +3,8 @@ Requires authentication
 Returns total lifetime commits
 */
 
-import { countLifetimeCommits } from '@/server/services/commitsService'
+// import { countLifetimeCommits } from '@/server/services/commitsService'
+import { countLifetimeCommitsUsingMetrics } from '@/server/services/metricsService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 import { SHARED_CountCommitsResponse } from '@/shared/models'
 
@@ -17,7 +18,8 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const lifetimeCommitsRes: SHARED_CountCommitsResponse = await countLifetimeCommits(token)
+    // const lifetimeCommitsRes: SHARED_CountCommitsResponse = await countLifetimeCommits(token)
+    const lifetimeCommitsRes: SHARED_CountCommitsResponse = await countLifetimeCommitsUsingMetrics(token)
     const { success, numCommits } = lifetimeCommitsRes
 
     const status = !success || numCommits === undefined ? 400 : 200
