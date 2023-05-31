@@ -1,36 +1,10 @@
-import { GH_GQL_getUser } from '../lib/gh-gql/users'
-
 import { GH_API_getUser } from '@/server/lib/gh-api/users'
+import { GH_GQL_getViewer } from '@/server/lib/gh-gql/users'
+import { GH_GQL_GET_VIEWER_QUERY } from '@/server/lib/gh-gql/users/query'
 import { SHARED_GetUserCardAPIResponse } from '@/shared/models'
 
 export const getUserCardDataFromGQL = async (accessToken: string): Promise<SHARED_GetUserCardAPIResponse> => {
-    const query = {
-        query: `query User($login: String!) {
-    user(login: $login) {
-        id
-        login
-        name
-        email
-        createdAt
-        followers {
-            totalCount
-        }
-        following {
-            totalCount
-        }
-        repositories {
-            totalCount
-        }
-    }
-}
-`,
-        variables: {
-            login: 'troyfeng116',
-        },
-    }
-
-    // const query = 'query { viewer { login }}'
-    const { success, error, user } = await GH_GQL_getUser(accessToken, query)
+    const { success, error, user } = await GH_GQL_getViewer(accessToken, GH_GQL_GET_VIEWER_QUERY)
 
     if (!success || user === undefined) {
         return { success: false, error: error, userCard: undefined }

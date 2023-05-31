@@ -12,12 +12,13 @@ Return raw `Response` objects
 
 export const queryGitHubGraphQL_API = async (
     accessToken: string,
-    query: {
-        query: string
-        variables?: object
-    },
+    query: string,
+    variables?: object,
 ): Promise<Response> => {
-    const payload = query
+    const payload = {
+        query: query,
+        variables: variables,
+    }
     // console.log(JSON.stringify(payload))
     const res = await fetch(`${BASE_GH_GQL_API_URL}`, {
         method: 'POST',

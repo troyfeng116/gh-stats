@@ -1,4 +1,4 @@
-export interface GH_GQL_User {
+export interface GH_GQL_UserSchema {
     login: string
     name: string | null
     email: string | null
