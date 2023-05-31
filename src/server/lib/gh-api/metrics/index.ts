@@ -19,7 +19,7 @@ export const GH_API_getAllContributorActivity = async (
     You should allow the job a short time to complete, and then submit the request again.
     */
     if (status === 202) {
-        await new Promise((r) => setTimeout(r, 500))
+        await new Promise((r) => setTimeout(r, 1000))
         console.log('[GH_API_getAllContributorActivity] retry')
         return await GH_API_getAllContributorActivity(accessToken, owner, repo)
     }

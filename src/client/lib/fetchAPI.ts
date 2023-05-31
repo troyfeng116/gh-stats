@@ -4,7 +4,7 @@ Make fetch API call from client to /api server routes
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getAPI = async (url: string, headers?: any): Promise<any> => {
-    console.log(`GET ${url}, headers ${JSON.stringify(headers)}`)
+    console.log(`[fetchAPI] GET ${url}, headers ${JSON.stringify(headers)}`)
 
     headers = {
         ...headers,
@@ -17,13 +17,13 @@ export const getAPI = async (url: string, headers?: any): Promise<any> => {
     })
 
     const resJson = await res.json()
-    console.log(`GET ${url} complete: ${JSON.stringify(resJson)}`)
+    console.log(`[fetchAPI] GET ${url} complete: ${JSON.stringify(resJson)}`)
     return resJson
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const postAPI = async (url: string, headers?: any, body?: any): Promise<any> => {
-    console.log(`POST ${url}, headers ${JSON.stringify(headers)}, body ${JSON.stringify(body)}`)
+    console.log(`[fetchAPI] POST ${url}, headers ${JSON.stringify(headers)}, body ${JSON.stringify(body)}`)
 
     headers = {
         ...headers,
@@ -31,7 +31,7 @@ export const postAPI = async (url: string, headers?: any, body?: any): Promise<a
         Accept: 'application/json',
     }
     body = body === undefined ? {} : body
-    console.log(body)
+    // console.log(body)
     const res = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(body),
@@ -39,7 +39,7 @@ export const postAPI = async (url: string, headers?: any, body?: any): Promise<a
     })
 
     const resJson = await res.json()
-    console.log(`POST ${url} complete: ${JSON.stringify(resJson)}`)
+    console.log(`[fetchAPI] POST ${url} complete: ${JSON.stringify(resJson)}`)
     return resJson
 }
 
