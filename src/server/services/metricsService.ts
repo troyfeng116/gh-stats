@@ -43,9 +43,9 @@ export const getContributorActivity = async (
     }
 }
 
-/* ======== count aggregate stats ======== */
+/* ======== compute aggregate stats ======== */
 
-const countCommitsInReposUsingMetrics = async (
+const computeStatsAcrossReposUsingMetrics = async (
     accessToken: string,
     authUser: string,
     repos: SHARED_RepoData[],
@@ -77,12 +77,9 @@ const countCommitsInReposUsingMetrics = async (
             const { owner, name } = repos[i]
             const { success: activitySuccess, error: activityError, activity } = activities[i]
             // console.log(activities[i])
-            console.log(
-                `[metricsService] countCommitsInReposUsingMetrics repo ${owner.login}/${name} -> ${activity?.total} commits`,
-            )
             if (!activitySuccess || activity === undefined) {
                 console.error(
-                    `[metricsService] countCommitsInReposUsingMetrics repo ${owner.login}/${name} -> error ${activityError}`,
+                    `[metricsService] computeStatsAcrossReposUsingMetrics repo ${owner.login}/${name} -> error ${activityError}`,
                 )
                 continue
             }
@@ -93,12 +90,16 @@ const countCommitsInReposUsingMetrics = async (
             stats.numLines += numLines
             stats.numAdditions += numAdditions
             stats.numDeletions += numDeletions
+            console.log(
+                `[metricsService] computeStatsAcrossReposUsingMetrics repo ${owner.login}/${name} ->
+                ${total} commits, ${numLines} lines (${numAdditions - numDeletions})`,
+            )
         }
 
         return stats
     } catch (e) {
         console.error(
-            `[metricsService] countCommitsInReposUsingMetrics unable to count all stats across all repos: ${e}`,
+            `[metricsService] computeStatsAcrossReposUsingMetrics unable to compute all stats across all repos: ${e}`,
         )
         return {
             numRepos: 0,
@@ -110,7 +111,7 @@ const countCommitsInReposUsingMetrics = async (
     }
 }
 
-export const countLifetimeCommitsUsingMetrics = async (
+export const computeLifetimeStatsUsingMetrics = async (
     accessToken: string,
 ): Promise<SHARED_GetLifetimeStatsAPIResponse> => {
     const [userRes, reposRes] = await Promise.all([GH_API_getUser(accessToken), listAllRepos(accessToken)])
@@ -126,7 +127,7 @@ export const countLifetimeCommitsUsingMetrics = async (
     }
 
     const { login: authUser } = user
-    const lifetimeStats = await countCommitsInReposUsingMetrics(accessToken, authUser, repos)
+    const lifetimeStats = await computeStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
 
     return { stats: lifetimeStats, success: true }
 }
