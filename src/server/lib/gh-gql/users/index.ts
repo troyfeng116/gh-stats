@@ -1,6 +1,6 @@
 import { queryGitHubGraphQL_API } from '..'
 
-import { GH_GQL_UserSchema } from './model'
+import { GH_GQL_GetUserResponse, GH_GQL_GetViewerResponse, GH_GQL_UserSchema } from './model'
 import { GH_GQL_getUserQueryVariables } from './query'
 
 export const GH_GQL_getViewer = async (
@@ -14,9 +14,9 @@ export const GH_GQL_getViewer = async (
         return { user: undefined, success: false, error: `error ${status}: ${statusText}` }
     }
 
-    const resJson = (await res.json()) as { data?: { viewer: GH_GQL_UserSchema }; error?: { message: string }[] }
+    const resJson = (await res.json()) as GH_GQL_GetViewerResponse
     console.log(resJson)
-    const { data, error: queryErrors } = resJson
+    const { data, errors: queryErrors } = resJson
 
     if (data === undefined || queryErrors !== undefined) {
         return {
@@ -42,9 +42,9 @@ export const GH_GQL_getUser = async (
         return { user: undefined, success: false, error: `error ${status}: ${statusText}` }
     }
 
-    const resJson = (await res.json()) as { data?: { user: GH_GQL_UserSchema }; error?: { message: string }[] }
+    const resJson = (await res.json()) as GH_GQL_GetUserResponse
     console.log(resJson)
-    const { data, error: queryErrors } = resJson
+    const { data, errors: queryErrors } = resJson
 
     if (data === undefined || queryErrors !== undefined) {
         return {

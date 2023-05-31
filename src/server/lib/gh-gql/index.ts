@@ -10,6 +10,10 @@ Make authenticated calls to GitHub GraphQL API
 Return raw `Response` objects
 */
 
+export interface GH_GQL_BaseResponse {
+    errors?: { message: string }[]
+}
+
 export const queryGitHubGraphQL_API = async (
     accessToken: string,
     query: string,
