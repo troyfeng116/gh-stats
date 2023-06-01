@@ -8,14 +8,16 @@ import {
 
 interface GH_GQL_RawResponse__AllRepoCommitCounts extends GH_GQL_RawResponse_BASE {
     data?: {
-        repositories?: GH_GQL_Schema__RepoConnection
-        repositoriesContributedTo?: GH_GQL_Schema__RepoConnection
+        viewer: {
+            repositories: GH_GQL_Schema__RepoConnection
+            repositoriesContributedTo: GH_GQL_Schema__RepoConnection
+        }
     }
 }
 
 export interface GH_GQL_Response__AllRepoCommitCounts extends GH_GQL_Response__BASE {
-    repos?: GH_GQL_Schema__RepoConnection
-    reposContributed?: GH_GQL_Schema__RepoConnection
+    repoConn?: GH_GQL_Schema__RepoConnection
+    repoContributedConn?: GH_GQL_Schema__RepoConnection
 }
 
 export const GH_GQL_getReposWithCommitCounts = async (
@@ -26,20 +28,23 @@ export const GH_GQL_getReposWithCommitCounts = async (
 
     const { status, statusText } = res
     if (status !== 200) {
-        return { repos: undefined, success: false, error: `error ${status}: ${statusText}` }
+        return { repoConn: undefined, success: false, error: `error ${status}: ${statusText}` }
     }
 
     const resJson = (await res.json()) as GH_GQL_RawResponse__AllRepoCommitCounts
+    console.log(resJson)
 
     const { data, errors: queryErrors } = resJson
     if (queryErrors !== undefined || data === undefined) {
         return {
-            repos: undefined,
+            repoConn: undefined,
             success: false,
             error: `error: ${queryErrors !== undefined ? queryErrors[0].message : 'unknown (GraphQL)'}`,
         }
     }
 
-    const { repositories, repositoriesContributedTo } = data
-    return { success: true, repos: repositories, reposContributed: repositoriesContributedTo }
+    const {
+        viewer: { repositories, repositoriesContributedTo },
+    } = data
+    return { success: true, repoConn: repositories, repoContributedConn: repositoriesContributedTo }
 }

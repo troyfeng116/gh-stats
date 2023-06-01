@@ -147,6 +147,24 @@ export interface SHARED_APIFields__CountRepos extends SHARED_APIFields__BASE {
     numRepos?: number
 }
 
+export interface SHARED_Model__RepoWithCountCommits {
+    name: string
+    owner: {
+        login: string
+    }
+    totalCount: number
+}
+
+export interface SHARED_Model__RepoCommitCountStats {
+    numRepos: number
+    numCommits: number
+}
+
+export interface SHARED_APIFields__ReposWithCountCommitsAndTotalStats extends SHARED_APIFields__BASE {
+    repos?: SHARED_Model__RepoWithCountCommits[]
+    stats?: SHARED_Model__RepoCommitCountStats
+}
+
 /* ======== metrics ======== */
 
 export interface SHARED_Data__WeeklyContributionActivityData {
