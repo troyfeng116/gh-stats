@@ -3,18 +3,23 @@ This folder contains wrappers around raw requests to the GitHub GraphQL API
 https://docs.github.com/en/graphql
 */
 
-export const BASE_GH_GQL_API_URL = 'https://api.github.com/graphql'
+const BASE_GH_GQL_API_URL = 'https://api.github.com/graphql'
 
 /*
 Make authenticated calls to GitHub GraphQL API
 Return raw `Response` objects
 */
 
-export interface GH_GQL_BaseResponse {
+export interface GH_GQL_Response__BASE {
+    success: boolean
+    error?: string
+}
+
+export interface GH_GQL_RawResponse_BASE {
     errors?: { message: string }[]
 }
 
-export const queryGitHubGraphQL_API = async (
+export const BASE_GH_GQL_Call__makeQueryWithAuth = async (
     accessToken: string,
     query: string,
     variables?: object,
