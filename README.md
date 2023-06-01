@@ -35,3 +35,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## TODO:
 - GH_API_User model
+- rate limiting safety checks
