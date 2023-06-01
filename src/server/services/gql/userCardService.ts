@@ -1,7 +1,7 @@
 import { GH_GQL_getViewer } from '@/server/lib/gh-gql/users'
-import { SHARED_GetUserCardAPIResponse } from '@/shared/models'
+import { SHARED_APIFields_GetUserCard } from '@/shared/models'
 
-export const getUserCardDataFromGQL = async (accessToken: string): Promise<SHARED_GetUserCardAPIResponse> => {
+export const getUserCardDataFromGQL = async (accessToken: string): Promise<SHARED_APIFields_GetUserCard> => {
     const { success, error, user } = await GH_GQL_getViewer(accessToken)
 
     if (!success || user === undefined) {

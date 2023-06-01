@@ -1,7 +1,7 @@
 // import { countLifetimeCommits } from '@/server/services/commitsService'
 // import { computeLifetimeStatsUsingMetrics } from '@/server/services/metricsService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
-import { SHARED_GetLifetimeStatsAPIResponse } from '@/shared/models'
+import { SHARED_APIFields_GetLifetimeStats } from '@/shared/models'
 
 /*
 Requires authentication
@@ -19,7 +19,7 @@ export const GET = async (request: Request): Promise<Response> => {
     }
 
     // const lifetimeCommitsRes: SHARED_CountCommitsResponse = await countLifetimeCommits(token)
-    const lifetimeCommitsRes: SHARED_GetLifetimeStatsAPIResponse = {
+    const lifetimeCommitsRes: SHARED_APIFields_GetLifetimeStats = {
         success: true,
         stats: {
             numRepos: 9,

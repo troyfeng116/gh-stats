@@ -1,19 +1,19 @@
 import { getAPIWithAuth } from '../fetchAPI'
 
-import { SHARED_GetLifetimeStatsAPIResponse, SHARED_GetUserCardAPIResponse } from '@/shared/models'
+import { SHARED_APIFields_GetLifetimeStats, SHARED_APIFields_GetUserCard } from '@/shared/models'
 
 /*
 Authenticated APIs (must provide access token)
 */
 
-export const getUserCardAPI = async (accessToken: string): Promise<SHARED_GetUserCardAPIResponse> => {
+export const getUserCardAPI = async (accessToken: string): Promise<SHARED_APIFields_GetUserCard> => {
     const res = await getAPIWithAuth('/api/user-card', accessToken)
-    const getUserCardRes = res as SHARED_GetUserCardAPIResponse
+    const getUserCardRes = res as SHARED_APIFields_GetUserCard
     return getUserCardRes
 }
 
-export const lifetimeStatsAPI = async (accessToken: string): Promise<SHARED_GetLifetimeStatsAPIResponse> => {
+export const lifetimeStatsAPI = async (accessToken: string): Promise<SHARED_APIFields_GetLifetimeStats> => {
     const res = await getAPIWithAuth('/api/lifetime-stats', accessToken)
-    const lifetimeStatsRes = res as SHARED_GetLifetimeStatsAPIResponse
+    const lifetimeStatsRes = res as SHARED_APIFields_GetLifetimeStats
     return lifetimeStatsRes
 }

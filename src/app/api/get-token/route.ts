@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 
 import { exchangeCodeForAccessToken } from '@/server/services/getTokenService'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
-import { SHARED_GetTokenAPIResponse } from '@/shared/models'
+import { SHARED_APIFields_GetToken } from '@/shared/models'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('POST /api/get-token')
@@ -12,7 +12,7 @@ export const POST = async (request: Request): Promise<Response> => {
     const { code } = body
 
     if (code === undefined) {
-        const clientRes: SHARED_GetTokenAPIResponse = {
+        const clientRes: SHARED_APIFields_GetToken = {
             success: false,
             error: 'body must include client code',
         }
