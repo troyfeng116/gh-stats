@@ -30,5 +30,3 @@ export interface GH_API_Obj__ContributorActivity {
     total: number
     weeks: GH_API_Obj__WeeklyContributionActivity[]
 }
-
-export type GH_API_Obj__AllContributorActivity = GH_API_Obj__ContributorActivity[]

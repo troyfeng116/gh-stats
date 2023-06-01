@@ -1,13 +1,13 @@
 import { GH_GQL_getReposWithCommitCounts } from '@/server/lib/gh-gql/AllRepoCommitCounts'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
-import { SHARED_APIFields_GetLifetimeStats } from '@/shared/models'
+import { SHARED_APIFields__GetLifetimeStats } from '@/shared/models'
 
-// const processReposWithCommits = (repo: GH_GQL_RepoConnection): SHARED_Model_LifetimeStats => {
-//     const stats: SHARED_Model_LifetimeStats = makeLifeTimeStats()
+// const processReposWithCommits = (repo: GH_GQL_RepoConnection): SHARED_Model__LifetimeStats => {
+//     const stats: SHARED_Model__LifetimeStats = makeLifeTimeStats()
 //     return stats
 // }
 
-export const getReposWithCommitCounts = async (accessToken: string): Promise<SHARED_APIFields_GetLifetimeStats> => {
+export const getReposWithCommitCounts = async (accessToken: string): Promise<SHARED_APIFields__GetLifetimeStats> => {
     const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken)
 
     if (!viewerSuccess || viewer === undefined) {

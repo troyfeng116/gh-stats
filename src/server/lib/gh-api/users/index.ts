@@ -1,10 +1,8 @@
-import { BASE_GH_API_Call__getGitHubAPI } from '..'
+import { BASE_GH_API_Call__getGitHubAPI, GH_API_Response__BASE } from '..'
 
 import { GH_API_Obj__User } from './model'
 
-export interface GH_API_Response__getUser {
-    success: boolean
-    error?: string
+export interface GH_API_Response__getUser extends GH_API_Response__BASE {
     user?: GH_API_Obj__User
 }
 

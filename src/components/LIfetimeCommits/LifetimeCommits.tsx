@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
-import { SHARED_Model_LifetimeStats } from '@/shared/models'
+import { SHARED_Model__LifetimeStats } from '@/shared/models'
 
 interface LifetimeCommitsProps {
     accessToken: string
@@ -11,7 +11,7 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
     const { accessToken } = props
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>()
-    const [lifetimeStats, setLifetimeStats] = useState<SHARED_Model_LifetimeStats>()
+    const [lifetimeStats, setLifetimeStats] = useState<SHARED_Model__LifetimeStats>()
 
     useEffect(() => {
         const fetchUserCard = async (accessToken: string) => {

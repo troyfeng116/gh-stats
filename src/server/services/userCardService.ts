@@ -1,7 +1,7 @@
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
-import { SHARED_APIFields_GetUserCard } from '@/shared/models'
+import { SHARED_APIFields__GetUserCard } from '@/shared/models'
 
-export const getUserCardData = async (accessToken: string): Promise<SHARED_APIFields_GetUserCard> => {
+export const getUserCardData = async (accessToken: string): Promise<SHARED_APIFields__GetUserCard> => {
     const { user, success, error } = await GH_API_Call__getUser(accessToken)
 
     if (!success || user === undefined) {

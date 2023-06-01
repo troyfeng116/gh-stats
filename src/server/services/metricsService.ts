@@ -7,11 +7,11 @@ import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeek
 // import { dummyAsyncFunction } from '@/server/utils/dummyAsyncFetch'
 import { chunkArr } from '@/server/utils/chunkArr'
 import {
-    SHARED_APIFields_GetContributorActivity,
-    SHARED_APIFields_GetLifetimeStats,
-    SHARED_Data_ContributorActivity,
-    SHARED_Data_Repo,
-    SHARED_Model_LifetimeStats,
+    SHARED_APIFields__GetContributorActivity,
+    SHARED_APIFields__GetLifetimeStats,
+    SHARED_Data__ContributorActivity,
+    SHARED_Data__Repo,
+    SHARED_Model__LifetimeStats,
 } from '@/shared/models'
 
 export const getContributorActivity = async (
@@ -19,7 +19,7 @@ export const getContributorActivity = async (
     authUser: string,
     owner: string,
     repo: string,
-): Promise<SHARED_APIFields_GetContributorActivity> => {
+): Promise<SHARED_APIFields__GetContributorActivity> => {
     const { success, error, allActivity } = await GH_API_Call__getAllContributorActivity(accessToken, owner, repo)
     console.log(`[getContributorActivity] ${owner}/${repo} has ${allActivity?.length} contributors`)
 
@@ -32,7 +32,7 @@ export const getContributorActivity = async (
             author: { login },
         } = allActivity[i]
         if (login === authUser) {
-            return { activity: allActivity[i] as SHARED_Data_ContributorActivity, success: true }
+            return { activity: allActivity[i] as SHARED_Data__ContributorActivity, success: true }
         }
     }
 
@@ -48,9 +48,9 @@ export const getContributorActivity = async (
 const computeStatsAcrossReposUsingMetrics = async (
     accessToken: string,
     authUser: string,
-    repos: SHARED_Data_Repo[],
-): Promise<SHARED_Model_LifetimeStats> => {
-    const activityPromises: Promise<SHARED_APIFields_GetContributorActivity>[] = []
+    repos: SHARED_Data__Repo[],
+): Promise<SHARED_Model__LifetimeStats> => {
+    const activityPromises: Promise<SHARED_APIFields__GetContributorActivity>[] = []
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
         const { login: ownerLogin } = owner
@@ -61,12 +61,12 @@ const computeStatsAcrossReposUsingMetrics = async (
 
     // TODO: Promise.all throws error?
     try {
-        const activities: SHARED_APIFields_GetContributorActivity[] = []
+        const activities: SHARED_APIFields__GetContributorActivity[] = []
         for (let i = 0; i < chunkedActivityPromises.length; i++) {
             activities.push(...(await Promise.all(chunkedActivityPromises[i])))
         }
 
-        const stats: SHARED_Model_LifetimeStats = {
+        const stats: SHARED_Model__LifetimeStats = {
             numRepos: repos.length,
             numCommits: 0,
             numLines: 0,
@@ -113,7 +113,7 @@ const computeStatsAcrossReposUsingMetrics = async (
 
 export const computeLifetimeStatsUsingMetrics = async (
     accessToken: string,
-): Promise<SHARED_APIFields_GetLifetimeStats> => {
+): Promise<SHARED_APIFields__GetLifetimeStats> => {
     const [userRes, reposRes] = await Promise.all([GH_API_Call__getUser(accessToken), listAllRepos(accessToken)])
 
     const { success: userSuccess, error: userError, user } = userRes

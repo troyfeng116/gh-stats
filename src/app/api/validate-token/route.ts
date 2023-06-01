@@ -1,6 +1,6 @@
 import { validateAccessToken } from '@/server/services/validateTokenService'
 import { AUTH_NO_TOKEN_ERROR_RES } from '@/server/utils/authHeaders'
-import { SHARED_APIFields_ValidateToken } from '@/shared/models'
+import { SHARED_APIFields__ValidateToken } from '@/shared/models'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('POST /api/validate-token')
@@ -13,7 +13,7 @@ export const POST = async (request: Request): Promise<Response> => {
         })
     }
 
-    const validateRes: SHARED_APIFields_ValidateToken = await validateAccessToken(accessToken)
+    const validateRes: SHARED_APIFields__ValidateToken = await validateAccessToken(accessToken)
     return new Response(JSON.stringify(validateRes), {
         status: 200,
     })

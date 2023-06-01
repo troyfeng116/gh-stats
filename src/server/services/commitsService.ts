@@ -8,12 +8,12 @@ import {
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { chunkArr } from '@/server/utils/chunkArr'
 import {
-    SHARED_APIFields_CountCommitsResponse,
-    SHARED_APIFields_ListCommits,
-    SHARED_APIFields_ListCommitWithDiff,
-    SHARED_Data_Commit,
-    SHARED_Data_CommitWithDiff,
-    SHARED_Data_Repo,
+    SHARED_APIFields__CountCommitsResponse,
+    SHARED_APIFields__ListCommits,
+    SHARED_APIFields__ListCommitWithDiff,
+    SHARED_Data__Commit,
+    SHARED_Data__CommitWithDiff,
+    SHARED_Data__Repo,
 } from '@/shared/models'
 
 export const listCommits = async (
@@ -21,7 +21,7 @@ export const listCommits = async (
     owner: string,
     repo: string,
     perPage?: number,
-): Promise<SHARED_APIFields_ListCommits> => {
+): Promise<SHARED_APIFields__ListCommits> => {
     const { success, error, commits } = await GH_API_Call__listCommits(accessToken, owner, repo, {
         per_page: perPage,
     })
@@ -30,7 +30,7 @@ export const listCommits = async (
         return { commits: undefined, success: false, error: error }
     }
 
-    return { commits: commits as SHARED_Data_Commit[], success: true }
+    return { commits: commits as SHARED_Data__Commit[], success: true }
 }
 
 export const countCommitsForRepo = async (
@@ -38,7 +38,7 @@ export const countCommitsForRepo = async (
     owner: string,
     repo: string,
     user: string,
-): Promise<SHARED_APIFields_CountCommitsResponse> => {
+): Promise<SHARED_APIFields__CountCommitsResponse> => {
     const { success, error, numCommits } = await GH_API_Call__countCommits(accessToken, owner, repo, {
         author: user,
     })
@@ -55,14 +55,14 @@ export const getCommit = async (
     owner: string,
     repo: string,
     ref: string,
-): Promise<SHARED_APIFields_ListCommitWithDiff> => {
+): Promise<SHARED_APIFields__ListCommitWithDiff> => {
     const { success, error, commit } = await GH_API_Call__getCommit(accessToken, owner, repo, ref)
 
     if (!success || commit === undefined) {
         return { commit: undefined, success: false, error: error }
     }
 
-    return { commit: commit as SHARED_Data_CommitWithDiff, success: true }
+    return { commit: commit as SHARED_Data__CommitWithDiff, success: true }
 }
 
 /* ======== count commits ======== */
@@ -70,9 +70,9 @@ export const getCommit = async (
 const countCommitsInRepos = async (
     accessToken: string,
     authUser: string,
-    repos: SHARED_Data_Repo[],
+    repos: SHARED_Data__Repo[],
 ): Promise<number> => {
-    const countCommitsPromises: Promise<SHARED_APIFields_CountCommitsResponse>[] = []
+    const countCommitsPromises: Promise<SHARED_APIFields__CountCommitsResponse>[] = []
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
         const { login: ownerLogin } = owner
@@ -83,7 +83,7 @@ const countCommitsInRepos = async (
 
     // TODO: Promise.all throws error?
     try {
-        const counts: SHARED_APIFields_CountCommitsResponse[] = []
+        const counts: SHARED_APIFields__CountCommitsResponse[] = []
         for (let i = 0; i < chunkedCountCommitsPromises.length; i++) {
             counts.push(...(await Promise.all(chunkedCountCommitsPromises[i])))
         }
@@ -108,7 +108,7 @@ const countCommitsInRepos = async (
     }
 }
 
-export const countLifetimeCommits = async (accessToken: string): Promise<SHARED_APIFields_CountCommitsResponse> => {
+export const countLifetimeCommits = async (accessToken: string): Promise<SHARED_APIFields__CountCommitsResponse> => {
     try {
         const [userRes, reposRes] = await Promise.all([GH_API_Call__getUser(accessToken), listAllRepos(accessToken)])
 

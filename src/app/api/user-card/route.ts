@@ -1,7 +1,7 @@
 // import { getUserCardData } from '@/server/services/userCardService'
 import { getUserCardDataFromGQL } from '@/server/services/gql/userCardService'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
-import { SHARED_APIFields_GetUserCard } from '@/shared/models'
+import { SHARED_APIFields__GetUserCard } from '@/shared/models'
 
 /*
 Requires authentication
@@ -19,7 +19,7 @@ export const GET = async (request: Request): Promise<Response> => {
     }
 
     // const userCardRes: SHARED_GetUserCardAPIResponse = await getUserCardData(token)
-    const userCardRes: SHARED_APIFields_GetUserCard = await getUserCardDataFromGQL(token)
+    const userCardRes: SHARED_APIFields__GetUserCard = await getUserCardDataFromGQL(token)
     // const userCardRes: SHARED_GetUserCardAPIResponse = {
     //     success: true,
     //     userCard: {

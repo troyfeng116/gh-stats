@@ -1,4 +1,4 @@
-import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse_BASE } from '..'
+import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse_BASE, GH_GQL_Response__BASE } from '..'
 
 import {
     GH_GQL_Query__ReposAndCommitCounts,
@@ -13,9 +13,7 @@ interface GH_GQL_RawResponse__AllRepoCommitCounts extends GH_GQL_RawResponse_BAS
     }
 }
 
-export interface GH_GQL_Response__AllRepoCommitCounts {
-    success: boolean
-    error?: string
+export interface GH_GQL_Response__AllRepoCommitCounts extends GH_GQL_Response__BASE {
     repos?: GH_GQL_Schema__RepoConnection
     reposContributed?: GH_GQL_Schema__RepoConnection
 }

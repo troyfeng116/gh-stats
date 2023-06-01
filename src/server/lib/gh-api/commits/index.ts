@@ -1,4 +1,4 @@
-import { BASE_GH_API_Call__getGitHubAPI } from '..'
+import { BASE_GH_API_Call__getGitHubAPI, GH_API_Response__BASE } from '..'
 
 import { GH_API_Obj__Commit, GH_API_Obj__CommitWithDiff } from './model'
 
@@ -15,9 +15,7 @@ export interface GH_API_Params__listCommits {
     page?: number
 }
 
-export interface GH_API_Response__listCommits {
-    success: boolean
-    error?: string
+export interface GH_API_Response__listCommits extends GH_API_Response__BASE {
     commits?: GH_API_Obj__Commit[]
 }
 
@@ -52,9 +50,7 @@ export const GH_API_Call__listCommits = async (
     }
 }
 
-export interface GH_API_Response__countCommits {
-    success: boolean
-    error?: string
+export interface GH_API_Response__countCommits extends GH_API_Response__BASE {
     numCommits?: number
 }
 
@@ -100,9 +96,7 @@ export interface GH_API_Params__getCommit {
     page?: number
 }
 
-export interface GH_API_Response__getCommit {
-    success: boolean
-    error?: string
+export interface GH_API_Response__getCommit extends GH_API_Response__BASE {
     commit?: GH_API_Obj__CommitWithDiff
 }
 
