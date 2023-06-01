@@ -1,0 +1,7 @@
+.nav {
+    padding: 6px 12px;
+    border-bottom: 1px solid white;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+}

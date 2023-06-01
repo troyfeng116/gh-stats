@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { CLIENT_AUTH_ROUTES, CLIENT_UNAUTH_ROUTES } from '@/client/constants'
+import { CLIENT_AUTH_ROUTES, CLIENT_UNAUTH_ROUTES } from '@/client/routes'
 import { AuthStatus, useAuth } from '@/components/Auth'
 
 /*
@@ -24,32 +24,33 @@ const isUnauthAllowedOnRoute = (pathname: string): boolean => {
 export const AuthWrapper: React.FC<AuthWrapperProps> = (props) => {
     const { children } = props
 
-    const [shouldBlockRender, setShouldBlockRender] = useState<boolean>(true)
-
     const { authStatus } = useAuth()
     const router = useRouter()
     const pathname = usePathname()
 
     useEffect(() => {
         if (authStatus === AuthStatus.UNAUTH && !isUnauthAllowedOnRoute(pathname)) {
-            setShouldBlockRender(true)
             router.push('/login')
         } else if (authStatus === AuthStatus.AUTH && !isAuthAllowedOnRoute(pathname)) {
-            setShouldBlockRender(true)
             router.push('/')
-        } else {
-            setShouldBlockRender(false)
         }
-    }, [authStatus, router, pathname])
+    }, [router, pathname, authStatus])
 
     // TODO: loading state
+    // remember this is immediately returned from server before hydration
     if (authStatus === AuthStatus.INITIALIZING) {
         return <div>Auth loading...</div>
     }
 
-    if (shouldBlockRender) {
+    if (authStatus === AuthStatus.UNAUTH && !isUnauthAllowedOnRoute(pathname)) {
         return null
     }
+
+    if (authStatus === AuthStatus.AUTH && !isAuthAllowedOnRoute(pathname)) {
+        return null
+    }
+
+    console.log(`[AuthWrapper] rendering ${pathname} with ${authStatus}`)
 
     return <>{children}</>
 }

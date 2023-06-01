@@ -1,5 +1,6 @@
 import {
     AUTH_COOKIE_VALIDATED,
+    AUTH_LOADING,
     AUTH_LOGIN_FAILED,
     AUTH_LOGIN_START,
     AUTH_LOGIN_SUCCESS,
@@ -11,6 +12,8 @@ import { AuthState, AuthStatus } from './AuthProvider'
 
 export const reducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
+        case AUTH_LOADING:
+            return { ...state, authStatus: AuthStatus.INITIALIZING }
         case AUTH_LOGIN_START:
             return { ...state }
         case AUTH_NO_COOKIE:

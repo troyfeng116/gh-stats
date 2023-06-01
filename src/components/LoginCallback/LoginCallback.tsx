@@ -9,24 +9,22 @@ export const LoginCallback: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const params = useSearchParams()
-    const { accessToken, login } = useAuth()
+    const { login } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
         if (params !== undefined) {
             const code = params.get('code')
             console.log(code)
-            if (typeof code === 'object') {
-                setIsLoading(false)
+            if (code === null) {
+                router.push('/login')
             } else {
                 login(code, (success: boolean, error?: string) => {
                     setIsLoading(false)
                     if (success) {
-                        router.push('/')
                         console.log('success!')
                     } else {
                         // TODO: better error messaging
-                        router.push('/login')
                         console.log(error)
                     }
                 })
@@ -35,12 +33,8 @@ export const LoginCallback: React.FC = () => {
     }, [router, params, login])
 
     if (isLoading) {
-        return <div>Loading</div>
+        return <div>Logging in...</div>
     }
 
-    if (accessToken === undefined) {
-        return <div>token not found</div>
-    }
-
-    return <div>AUTH! {accessToken}</div>
+    return null
 }

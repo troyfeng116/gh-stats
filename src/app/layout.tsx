@@ -2,7 +2,6 @@ import './globals.css'
 
 import React from 'react'
 import { Inter } from 'next/font/google'
-import Link from 'next/link'
 
 import ClientWrapper from '@/components/Wrappers'
 
@@ -17,14 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={inter.className}>
-                <ClientWrapper>
-                    <nav>
-                        <Link href="/">Home</Link>
-                        <Link href="/repos">Repos</Link>
-                        <Link href="/login">Login</Link>
-                    </nav>
-                    {children}
-                </ClientWrapper>
+                <ClientWrapper>{children}</ClientWrapper>
             </body>
         </html>
     )

@@ -1,6 +1,13 @@
 import React, { createContext, useCallback, useContext, useEffect, useReducer } from 'react'
 
-import { AUTH_COOKIE_VALIDATED, AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_NO_COOKIE } from './actions'
+import {
+    AUTH_COOKIE_VALIDATED,
+    AUTH_LOADING,
+    AUTH_LOGIN_FAILED,
+    AUTH_LOGIN_SUCCESS,
+    AUTH_LOGOUT,
+    AUTH_NO_COOKIE,
+} from './actions'
 import { reducer } from './reducer'
 
 import { getTokenAPI, validateTokenAPI } from '@/client/lib/unauthAPI'
@@ -61,6 +68,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
 
     useEffect(() => {
         const attemptToValidateCookies = async () => {
+            dispatch({ type: AUTH_LOADING })
+
             // TODO: merge into single getTokens
             const accessToken = getAccessTokenCookie()
             if (accessToken === undefined) {
@@ -83,12 +92,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = (props: AuthProviderPro
     }, [])
 
     useEffect(() => {
-        console.log(authStatus)
+        console.log(`[AuthProvider] ${authStatus}`)
     }, [authStatus])
 
     const login = useCallback(async (code: string, callback: (success: boolean, error?: string) => void) => {
         console.log('[AuthProvider] login')
 
+        // dispatch({ type: AUTH_LOADING })
         const tokenResponse = await getTokenAPI(code)
         console.log(tokenResponse)
         const { success, error, accessToken } = tokenResponse

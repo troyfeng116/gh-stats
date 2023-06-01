@@ -1,3 +1,4 @@
+export const AUTH_LOADING = 'AUTH_LOADING'
 export const AUTH_NO_COOKIE = 'AUTH_NO_COOKIE'
 export const AUTH_COOKIE_VALIDATED = 'AUTH_COOKIE_VALIDATED'
 
@@ -6,6 +7,10 @@ export const AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED'
 export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS'
 
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
+
+interface AuthLoading {
+    type: typeof AUTH_LOADING
+}
 
 interface AuthNoCookie {
     type: typeof AUTH_NO_COOKIE
@@ -34,6 +39,7 @@ interface AuthLogout {
 }
 
 export type AuthAction =
+    | AuthLoading
     | AuthNoCookie
     | AuthCookieValidated
     | AuthLoginStart
