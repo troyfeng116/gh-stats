@@ -20,7 +20,7 @@ export interface GH_GQL_Response__AllRepoCommitCounts extends GH_GQL_Response__B
     repoContributedConn?: GH_GQL_Schema__RepoConnection
 }
 
-export const GH_GQL_getReposWithCommitCounts = async (
+export const GH_GQL_Call__AllRepoCommitCounts = async (
     accessToken: string,
     variables: GH_GQL_QueryVars__AllRepoCommitCounts,
 ): Promise<GH_GQL_Response__AllRepoCommitCounts> => {

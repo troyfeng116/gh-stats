@@ -10,6 +10,8 @@ Make authenticated calls to GitHub GraphQL API
 Return raw `Response` objects
 */
 
+export const PAGE_SIZE = 100
+
 export interface GH_GQL_Response__BASE {
     success: boolean
     error?: string

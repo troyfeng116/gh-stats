@@ -1,4 +1,5 @@
-import { GH_GQL_getReposWithCommitCounts } from '@/server/lib/gh-gql/AllRepoCommitCounts'
+import { PAGE_SIZE } from '@/server/lib/gh-gql'
+import { GH_GQL_Call__AllRepoCommitCounts } from '@/server/lib/gh-gql/AllRepoCommitCounts'
 import {
     GH_GQL_Schema__RepoConnection,
     GH_GQL_Schema__RepoWithCommitCounts,
@@ -60,7 +61,7 @@ export const getAllReposWithCommitCounts = async (
     const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken)
 
     if (!viewerSuccess || viewer === undefined) {
-        return { repos: undefined, stats: undefined, success: false, error: viewerError }
+        return { repos: undefined, rc_stats: undefined, success: false, error: viewerError }
     }
 
     const { id } = viewer
@@ -78,23 +79,23 @@ export const getAllReposWithCommitCounts = async (
             error: repoError,
             repoConn,
             repoContributedConn,
-        } = await GH_GQL_getReposWithCommitCounts(accessToken, {
+        } = await GH_GQL_Call__AllRepoCommitCounts(accessToken, {
             author: {
                 id: id,
             },
             includeRepos: !isReposDone,
             includeReposContributed: !isReposContributedDone,
-            first: 3,
+            first: PAGE_SIZE,
             reposAfter: reposCursor,
             reposContributedAfter: reposContributedCursor,
         })
 
         if (!repoSuccess) {
-            console.error(repoError)
+            console.error(`[services/gql/countCommitsService] getAllReposWithCommitCounts ${repoError}`)
             // isReposDone = true
             // isReposContributedDone = true
             // break
-            return { repos: undefined, stats: undefined, success: false, error: repoError }
+            return { repos: undefined, rc_stats: undefined, success: false, error: repoError }
         }
 
         const { endCursor: newReposCursor, repos: newRepos } = processAndCheckIfMore(repoConn)
@@ -123,5 +124,5 @@ export const getAllReposWithCommitCounts = async (
         numRepos: sharedRepos.length,
     }
 
-    return { success: true, repos: sharedRepos, stats: stats }
+    return { success: true, repos: sharedRepos, rc_stats: stats }
 }

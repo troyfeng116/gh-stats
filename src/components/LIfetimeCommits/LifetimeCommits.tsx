@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
-import {
-    SHARED_Model__RepoCommitCountStats,
-    SHARED_Model__RepoWithCountCommits as SHARED_Model__RepoWithCommitCount,
-} from '@/shared/models'
+import { SHARED_Model__LifetimeStats } from '@/shared/models'
 
 interface LifetimeCommitsProps {
     accessToken: string
@@ -14,19 +11,17 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
     const { accessToken } = props
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>()
-    const [repos, setRepos] = useState<SHARED_Model__RepoWithCommitCount[]>()
-    const [lifetimeStats, setLifetimeStats] = useState<SHARED_Model__RepoCommitCountStats>()
+    const [lifetimeStats, setLifetimeStats] = useState<SHARED_Model__LifetimeStats>()
 
     useEffect(() => {
         const fetchUserCard = async (accessToken: string) => {
             setError(undefined)
-            const { success, error, stats: updatedStats, repos: updatedRepos } = await lifetimeStatsAPI(accessToken)
+            const { success, error, lifetimeStats } = await lifetimeStatsAPI(accessToken)
             setIsLoading(false)
-            if (!success || updatedStats === undefined || updatedRepos === undefined) {
+            if (!success || lifetimeStats === undefined) {
                 setError(error)
             } else {
-                setLifetimeStats(updatedStats)
-                setRepos(updatedRepos)
+                setLifetimeStats(lifetimeStats)
             }
         }
 
@@ -41,16 +36,25 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
         return <div>{error}</div>
     }
 
-    if (lifetimeStats === undefined || repos === undefined) {
+    if (lifetimeStats === undefined) {
         return <div>no lifetime stats found</div>
     }
 
-    const { numRepos, numCommits } = lifetimeStats
+    const { repos, rc_stats, l_stats } = lifetimeStats
+    const { numRepos, numCommits } = rc_stats
+    const { numLines, numAdditions, numDeletions } = l_stats
+
     return (
         <div>
             LIFETIME STATS
             <p>repos: {numRepos}</p>
             <p>commits: {numCommits}</p>
+            <p>
+                lines of code: {numLines}
+                {numAdditions !== undefined && numDeletions !== undefined
+                    ? ` (${numAdditions} additions - ${numDeletions} deletions)`
+                    : ''}
+            </p>
             <div>
                 {repos.map((repo, idx) => {
                     const {
