@@ -1,5 +1,3 @@
-'use client'
-
 import React, { createContext, useCallback, useContext, useEffect, useReducer } from 'react'
 
 import { AUTH_COOKIE_VALIDATED, AUTH_LOGIN_FAILED, AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_NO_COOKIE } from './actions'
