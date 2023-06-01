@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 
-import { exchangeCodeForAccessToken } from '@/server/services/getTokenService'
+import { exchangeCodeForAccessToken } from '@/server/services/getToken'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
 import { SHARED_APIFields__GetToken } from '@/shared/models'
 
