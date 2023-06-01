@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
+import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { CLIENT_AUTH_ROUTES, CLIENT_UNAUTH_ROUTES } from '@/client/routes'
-import { AuthStatus, useAuth } from '@/components/Auth'
 
 /*
 Handles client-side authentication redirects by comparing current route against auth/unauth routes

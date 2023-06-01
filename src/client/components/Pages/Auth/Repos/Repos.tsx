@@ -3,8 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { AuthStatus, useAuth } from '@/components/Auth'
-import LifetimeCommits from '@/components/LIfetimeStats'
+import LifetimeCommits from '@/client/components/Pages/Auth/Repos/LIfetimeStats'
+import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 
 export const Repos: React.FC = () => {
     const { authStatus, accessToken, logout } = useAuth()

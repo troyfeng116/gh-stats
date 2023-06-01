@@ -4,8 +4,8 @@ import React from 'react'
 
 import { AuthWrapper } from './AuthWrapper/AuthWrapper'
 
-import { AuthProvider } from '@/components/Auth'
-import Nav from '@/components/Nav'
+import { AuthProvider } from '@/client/components/Wrappers/AuthProvider'
+import Nav from '@/client/components/Wrappers/Nav'
 
 interface ClientWrapperProps {
     children: React.ReactNode

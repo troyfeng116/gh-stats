@@ -3,8 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { AuthStatus, useAuth } from '@/components/Auth'
-import UserCard from '@/components/UserCard'
+import UserCard from '@/client/components/Pages/Auth/Home/UserCard'
+import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 
 export const Home: React.FC = () => {
     const { authStatus, accessToken, logout } = useAuth()

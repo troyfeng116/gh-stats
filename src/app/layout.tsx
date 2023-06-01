@@ -3,7 +3,7 @@ import './globals.css'
 import React from 'react'
 import { Inter } from 'next/font/google'
 
-import ClientWrapper from '@/components/Wrappers'
+import ClientWrapper from '@/client/components/Wrappers'
 
 const inter = Inter({ subsets: ['latin'] })
 

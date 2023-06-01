@@ -3,8 +3,8 @@ import styles from './Nav.module.css'
 import React from 'react'
 import Link from 'next/link'
 
+import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { NAV_AUTH_ROUTES, NAV_UNAUTH_ROUTES } from '@/client/routes'
-import { AuthStatus, useAuth } from '@/components/Auth'
 
 export const Nav: React.FC = () => {
     const { authStatus, logout } = useAuth()

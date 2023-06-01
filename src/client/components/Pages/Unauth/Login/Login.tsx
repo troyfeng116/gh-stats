@@ -3,8 +3,8 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
+import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { NEXT_PUBLIC_GH_CLIENT_ID } from '@/client/constants'
-import { AuthStatus, useAuth } from '@/components/Auth'
 
 export const Login: React.FC = () => {
     const router = useRouter()

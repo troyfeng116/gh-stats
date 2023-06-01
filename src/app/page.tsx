@@ -2,7 +2,7 @@ import styles from './page.module.css'
 
 import React from 'react'
 
-import Home from '@/components/Home'
+import Home from '@/client/components/Pages/Auth/Home'
 import { VERSION_NUMBER } from '@/config/constants'
 
 export default function HomePage() {
