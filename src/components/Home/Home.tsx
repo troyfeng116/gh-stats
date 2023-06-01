@@ -3,9 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 
-import LifetimeCommits from '../LIfetimeCommits'
-
 import { AuthStatus, useAuth } from '@/components/Auth'
+import LifetimeCommits from '@/components/LIfetimeCommits'
 import UserCard from '@/components/UserCard'
 
 export const Home: React.FC = () => {

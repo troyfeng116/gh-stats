@@ -1,7 +1,6 @@
 import { CHUNK_SIZE } from '@/server/constants'
 import { GH_API_Call__getAllContributorActivity } from '@/server/lib/gh-api/metrics'
 import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
-// import { dummyAsyncFunction } from '@/server/utils/dummyAsyncFetch'
 import {
     SHARED_APIFields__GetContributorCommitActivity,
     SHARED_Data__ContributorCommitActivity,

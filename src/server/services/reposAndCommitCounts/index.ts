@@ -11,11 +11,6 @@ import {
     SHARED_Model__RepoWithCountCommits as SHARED_Model__RepoWithCommitCounts,
 } from '@/shared/models'
 
-// const processReposWithCommits = (repo: GH_GQL_RepoConnection): SHARED_Model__LifetimeStats => {
-//     const stats: SHARED_Model__LifetimeStats = makeLifeTimeStats()
-//     return stats
-// }
-
 // `endCursor = undefined` => no more pages
 const processAndCheckIfMore = (
     repoConn: GH_GQL_Schema__RepoConnection | undefined,

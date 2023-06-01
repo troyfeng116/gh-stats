@@ -1,7 +1,6 @@
-import { getAllReposWithCommitCounts } from '../gql/countCommitsService'
-import { computeLinesStatsAcrossReposUsingMetrics } from '../linesStats'
-
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
+import { computeLinesStatsAcrossReposUsingMetrics } from '@/server/services/linesStats'
+import { getAllReposWithCommitCounts } from '@/server/services/reposAndCommitCounts'
 import { SHARED_APIFields__LifetimeStats, SHARED_Model__LifetimeStats } from '@/shared/models'
 
 export const computeLifetimeStats = async (accessToken: string): Promise<SHARED_APIFields__LifetimeStats> => {

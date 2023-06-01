@@ -1,11 +1,10 @@
-import { listAllRepos } from './reposService'
-
 import {
     GH_API_Call__countCommits,
     GH_API_Call__getCommit,
     GH_API_Call__listCommits,
 } from '@/server/lib/gh-api/commits'
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
+import { listAllRepos } from '@/server/services/allRepos'
 import { chunkArr } from '@/server/utils/chunkArr'
 import {
     SHARED_APIFields__CountCommitsResponse,
