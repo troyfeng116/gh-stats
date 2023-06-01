@@ -1,8 +1,8 @@
-import { GH_API_getUser } from '../lib/gh-api/users'
+import { GH_API_Call__getUser } from '../lib/gh-api/users'
 
 import { listAllRepos } from './reposService'
 
-import { GH_API_getAllContributorActivity } from '@/server/lib/gh-api/metrics'
+import { GH_API_Call__getAllContributorActivity } from '@/server/lib/gh-api/metrics'
 import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
 // import { dummyAsyncFunction } from '@/server/utils/dummyAsyncFetch'
 import { chunkArr } from '@/server/utils/chunkArr'
@@ -20,7 +20,7 @@ export const getContributorActivity = async (
     owner: string,
     repo: string,
 ): Promise<SHARED_APIFields_GetContributorActivity> => {
-    const { success, error, allActivity } = await GH_API_getAllContributorActivity(accessToken, owner, repo)
+    const { success, error, allActivity } = await GH_API_Call__getAllContributorActivity(accessToken, owner, repo)
     console.log(`[getContributorActivity] ${owner}/${repo} has ${allActivity?.length} contributors`)
 
     if (!success || allActivity === undefined) {
@@ -114,7 +114,7 @@ const computeStatsAcrossReposUsingMetrics = async (
 export const computeLifetimeStatsUsingMetrics = async (
     accessToken: string,
 ): Promise<SHARED_APIFields_GetLifetimeStats> => {
-    const [userRes, reposRes] = await Promise.all([GH_API_getUser(accessToken), listAllRepos(accessToken)])
+    const [userRes, reposRes] = await Promise.all([GH_API_Call__getUser(accessToken), listAllRepos(accessToken)])
 
     const { success: userSuccess, error: userError, user } = userRes
     if (!userSuccess || user === undefined) {

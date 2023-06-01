@@ -12,7 +12,7 @@ Make authenticated calls to GitHub API
 Return raw `Response` objects
 */
 
-export const getGitHubAPI = async (url: string, accessToken: string): Promise<Response> => {
+export const BASE_GH_API_Call__getGitHubAPI = async (url: string, accessToken: string): Promise<Response> => {
     const res = await fetch(`${BASE_GH_API_URL}${url}`, {
         method: 'GET',
         headers: {

@@ -1,7 +1,11 @@
 import { listAllRepos } from './reposService'
 
-import { GH_API_countCommits, GH_API_getCommit, GH_API_listCommits } from '@/server/lib/gh-api/commits'
-import { GH_API_getUser } from '@/server/lib/gh-api/users'
+import {
+    GH_API_Call__countCommits,
+    GH_API_Call__getCommit,
+    GH_API_Call__listCommits,
+} from '@/server/lib/gh-api/commits'
+import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { chunkArr } from '@/server/utils/chunkArr'
 import {
     SHARED_APIFields_CountCommitsResponse,
@@ -18,7 +22,7 @@ export const listCommits = async (
     repo: string,
     perPage?: number,
 ): Promise<SHARED_APIFields_ListCommits> => {
-    const { success, error, commits } = await GH_API_listCommits(accessToken, owner, repo, {
+    const { success, error, commits } = await GH_API_Call__listCommits(accessToken, owner, repo, {
         per_page: perPage,
     })
 
@@ -35,7 +39,7 @@ export const countCommitsForRepo = async (
     repo: string,
     user: string,
 ): Promise<SHARED_APIFields_CountCommitsResponse> => {
-    const { success, error, numCommits } = await GH_API_countCommits(accessToken, owner, repo, {
+    const { success, error, numCommits } = await GH_API_Call__countCommits(accessToken, owner, repo, {
         author: user,
     })
 
@@ -52,7 +56,7 @@ export const getCommit = async (
     repo: string,
     ref: string,
 ): Promise<SHARED_APIFields_ListCommitWithDiff> => {
-    const { success, error, commit } = await GH_API_getCommit(accessToken, owner, repo, ref)
+    const { success, error, commit } = await GH_API_Call__getCommit(accessToken, owner, repo, ref)
 
     if (!success || commit === undefined) {
         return { commit: undefined, success: false, error: error }
@@ -106,7 +110,7 @@ const countCommitsInRepos = async (
 
 export const countLifetimeCommits = async (accessToken: string): Promise<SHARED_APIFields_CountCommitsResponse> => {
     try {
-        const [userRes, reposRes] = await Promise.all([GH_API_getUser(accessToken), listAllRepos(accessToken)])
+        const [userRes, reposRes] = await Promise.all([GH_API_Call__getUser(accessToken), listAllRepos(accessToken)])
 
         const { success: userSuccess, error: userError, user } = userRes
         if (!userSuccess || user === undefined) {

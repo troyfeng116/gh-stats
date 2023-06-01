@@ -1,5 +1,5 @@
 // https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-commits
-export interface GH_API_Commit {
+export interface GH_API_Obj__Commit {
     url: string
     sha: string
     node_id: string
@@ -79,7 +79,7 @@ export interface GH_API_Commit {
 }
 
 // https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#get-a-commit
-export interface GH_API_CommitWithDiff extends GH_API_Commit {
+export interface GH_API_Obj__CommitWithDiff extends GH_API_Obj__Commit {
     stats: {
         additions: number
         deletions: number

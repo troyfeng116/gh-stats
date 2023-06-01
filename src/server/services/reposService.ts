@@ -1,11 +1,11 @@
 import { PAGE_SIZE } from '@/server/lib/gh-api'
-import { GH_API_countRepos, GH_API_listRepos } from '@/server/lib/gh-api/repos'
+import { GH_API_Call__countRepos, GH_API_Call__listRepos } from '@/server/lib/gh-api/repos'
 import { chunkArr } from '@/server/utils/chunkArr'
 import { SHARED_APIFields_CountRepos, SHARED_APIFields_ListRepos, SHARED_Data_Repo } from '@/shared/models'
 
 // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
 export const listRepos = async (accessToken: string): Promise<SHARED_APIFields_ListRepos> => {
-    const { success, error, repos } = await GH_API_listRepos(accessToken)
+    const { success, error, repos } = await GH_API_Call__listRepos(accessToken)
 
     if (!success || repos === undefined) {
         return { repos: undefined, success: false, error: error }
@@ -17,7 +17,7 @@ export const listRepos = async (accessToken: string): Promise<SHARED_APIFields_L
 /* ======== count/fetch all repos ======== */
 
 export const countAllRepos = async (accessToken: string): Promise<SHARED_APIFields_CountRepos> => {
-    const { success, error, numRepos } = await GH_API_countRepos(accessToken)
+    const { success, error, numRepos } = await GH_API_Call__countRepos(accessToken)
 
     if (!success || numRepos === undefined) {
         return { numRepos: undefined, success: false, error: error }
@@ -37,7 +37,7 @@ export const listAllRepos = async (accessToken: string): Promise<SHARED_APIField
     const repoResPromises: Promise<SHARED_APIFields_ListRepos>[] = []
     for (let page = 1; (page - 1) * PAGE_SIZE < numRepos; page++) {
         repoResPromises.push(
-            GH_API_listRepos(accessToken, {
+            GH_API_Call__listRepos(accessToken, {
                 page: page,
                 per_page: PAGE_SIZE,
             }),
