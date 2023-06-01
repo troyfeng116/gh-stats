@@ -1,4 +1,4 @@
-import { BASE_GH_API_Call__getGitHubAPI, GH_API_Response__BASE } from '..'
+import { BASE_GH_API_Call__getWithAuth, GH_API_Response__BASE } from '..'
 
 import { GH_API_Obj__Commit, GH_API_Obj__CommitWithDiff } from './model'
 
@@ -29,7 +29,7 @@ export const GH_API_Call__listCommits = async (
     const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits`, params)
 
     // console.log(url)
-    const res = await BASE_GH_API_Call__getGitHubAPI(url, accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth(url, accessToken)
     // console.log(res)
 
     const { status, statusText } = res
@@ -69,7 +69,7 @@ export const GH_API_Call__countCommits = async (
     const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits`, fullParams)
 
     // console.log(url)
-    const res = await BASE_GH_API_Call__getGitHubAPI(url, accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth(url, accessToken)
     // console.log(await res.json())
 
     const { status, statusText, headers } = res
@@ -110,7 +110,7 @@ export const GH_API_Call__getCommit = async (
 ): Promise<GH_API_Response__getCommit> => {
     const url = getURLWithQueryParams(`/repos/${owner}/${repo}/commits/${ref}`, params)
 
-    const res = await BASE_GH_API_Call__getGitHubAPI(url, accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth(url, accessToken)
 
     const { status, statusText } = res
     if (status !== 200) {

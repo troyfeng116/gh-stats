@@ -1,4 +1,4 @@
-import { BASE_GH_API_Call__getGitHubAPI, GH_API_Response__BASE } from '..'
+import { BASE_GH_API_Call__getWithAuth, GH_API_Response__BASE } from '..'
 
 import { GH_API_Obj__Repo } from './model'
 
@@ -28,7 +28,7 @@ export const GH_API_Call__listRepos = async (
 ): Promise<GH_API_Response__listRepos> => {
     const url = getURLWithQueryParams('/user/repos', params)
 
-    const res = await BASE_GH_API_Call__getGitHubAPI(url, accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth(url, accessToken)
     const { status, statusText } = res
     if (status !== 200) {
         return { repos: undefined, success: false, error: `error ${status}: ${statusText}` }
@@ -58,7 +58,7 @@ export const GH_API_Call__countRepos = async (
     }
     const url = getURLWithQueryParams('/user/repos', fullParams)
 
-    const res = await BASE_GH_API_Call__getGitHubAPI(url, accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth(url, accessToken)
     const { status, statusText, headers } = res
     if (status !== 200) {
         return { numRepos: undefined, success: false, error: `error ${status}: ${statusText}` }

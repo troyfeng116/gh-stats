@@ -1,4 +1,4 @@
-import { BASE_GH_API_Call__getGitHubAPI, GH_API_Response__BASE } from '..'
+import { BASE_GH_API_Call__getWithAuth, GH_API_Response__BASE } from '..'
 
 import { GH_API_Obj__User } from './model'
 
@@ -7,7 +7,7 @@ export interface GH_API_Response__getUser extends GH_API_Response__BASE {
 }
 
 export const GH_API_Call__getUser = async (accessToken: string): Promise<GH_API_Response__getUser> => {
-    const res = await BASE_GH_API_Call__getGitHubAPI('/user', accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth('/user', accessToken)
 
     const { status, statusText } = res
     // TODO: how to handle caching/304?

@@ -1,4 +1,4 @@
-import { BASE_GH_API_Call__getGitHubAPI, GH_API_Response__BASE } from '..'
+import { BASE_GH_API_Call__getWithAuth, GH_API_Response__BASE } from '..'
 
 import { GH_API_Obj__ContributorActivity } from './model'
 
@@ -14,7 +14,7 @@ export const GH_API_Call__getAllContributorActivity = async (
 ): Promise<GH_API_Response__getAllContributorActivity> => {
     const url = `/repos/${owner}/${repo}/stats/contributors`
 
-    const res = await BASE_GH_API_Call__getGitHubAPI(url, accessToken)
+    const res = await BASE_GH_API_Call__getWithAuth(url, accessToken)
     const { status, statusText } = res
 
     /*
