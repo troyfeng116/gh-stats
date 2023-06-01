@@ -1,4 +1,4 @@
-import { computeLifetimeStats } from '@/server/services/lifetimeStats'
+import { SERVICE_Call__computeLifetimeStats } from '@/server/services/lifetimeStats'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 import { SHARED_APIFields__LifetimeStats } from '@/shared/models'
 
@@ -17,7 +17,7 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const lifetimeCommitsRes: SHARED_APIFields__LifetimeStats = await computeLifetimeStats(token)
+    const lifetimeCommitsRes: SHARED_APIFields__LifetimeStats = await SERVICE_Call__computeLifetimeStats(token)
     const { success, lifetimeStats } = lifetimeCommitsRes
 
     const status = !success || lifetimeStats === undefined ? 400 : 200

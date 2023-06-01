@@ -147,12 +147,21 @@ export interface SHARED_APIFields__CountRepos extends SHARED_APIFields__BASE {
     numRepos?: number
 }
 
-export interface SHARED_Model__RepoWithCountCommits {
+export interface SHARED_Model__RepoWithCommitCounts {
     name: string
     owner: {
         login: string
     }
     totalCount: number
+}
+
+export interface SHARED_Model__RepoWithCommitCountsAndLanguages extends SHARED_Model__RepoWithCommitCounts {
+    totalCount: number
+    languageData: {
+        size: number
+        color: string
+        name: string
+    }[]
 }
 
 export interface SHARED_Model__RepoCommitCountStats {
@@ -161,7 +170,7 @@ export interface SHARED_Model__RepoCommitCountStats {
 }
 
 export interface SHARED_APIFields__ReposWithCountCommitsAndTotalStats extends SHARED_APIFields__BASE {
-    repos?: SHARED_Model__RepoWithCountCommits[]
+    repos?: SHARED_Model__RepoWithCommitCounts[]
     rc_stats?: SHARED_Model__RepoCommitCountStats
 }
 
@@ -186,6 +195,13 @@ export interface SHARED_APIFields__GetContributorCommitActivity extends SHARED_A
     activity?: SHARED_Data__ContributorCommitActivity
 }
 
+/* ======== languages ======== */
+
+export interface SHARED_Model__AllLanguageStats {
+    totalDiskUsage: number
+    languageToDisk: { [key: string]: number }
+}
+
 /* ======== aggregate ======== */
 
 export const makeLinesStats = (): SHARED_Model__LinesStats => {
@@ -203,8 +219,9 @@ export interface SHARED_Model__LinesStats {
 }
 
 export interface SHARED_Model__LifetimeStats {
-    l_stats: SHARED_Model__LinesStats
-    repos: SHARED_Model__RepoWithCountCommits[]
+    lines_stats: SHARED_Model__LinesStats
+    language_stats: SHARED_Model__AllLanguageStats
+    repos: SHARED_Model__RepoWithCommitCounts[]
     rc_stats: SHARED_Model__RepoCommitCountStats
 }
 

@@ -40,9 +40,15 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
         return <div>no lifetime stats found</div>
     }
 
-    const { repos, rc_stats, l_stats } = lifetimeStats
+    const { repos, rc_stats, lines_stats, language_stats } = lifetimeStats
     const { numRepos, numCommits } = rc_stats
-    const { numLines, numAdditions, numDeletions } = l_stats
+    const { numLines, numAdditions, numDeletions } = lines_stats
+    const { totalDiskUsage, languageToDisk } = language_stats
+
+    const languageDiskArr: { name: string; diskSpace: number }[] = []
+    for (const name in languageToDisk) {
+        languageDiskArr.push({ name: name, diskSpace: languageToDisk[name] })
+    }
 
     return (
         <div>
@@ -55,6 +61,18 @@ export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
                     ? ` (${numAdditions} additions - ${numDeletions} deletions)`
                     : ''}
             </p>
+            <div>
+                <p>total disk usage: {totalDiskUsage}</p>
+                <div>
+                    {languageDiskArr.map(({ name, diskSpace }) => {
+                        return (
+                            <p key={name}>
+                                {name}: {diskSpace} bytes
+                            </p>
+                        )
+                    })}
+                </div>
+            </div>
             <div>
                 {repos.map((repo, idx) => {
                     const {

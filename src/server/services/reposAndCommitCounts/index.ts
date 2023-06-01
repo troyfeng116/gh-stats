@@ -1,20 +1,18 @@
+import { SERVICE_Response__BASE } from '..'
+
 import { PAGE_SIZE } from '@/server/lib/gh-gql'
 import { GH_GQL_Call__AllRepoCommitCounts } from '@/server/lib/gh-gql/AllRepoCommitCounts'
 import {
     GH_GQL_Schema__RepoConnection,
-    GH_GQL_Schema__RepoWithCommitCounts,
+    GH_GQL_Schema__RepoWithCommitCountAndLanguages,
 } from '@/server/lib/gh-gql/AllRepoCommitCounts/query'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
-import {
-    SHARED_APIFields__ReposWithCountCommitsAndTotalStats,
-    SHARED_Model__RepoCommitCountStats,
-    SHARED_Model__RepoWithCountCommits as SHARED_Model__RepoWithCommitCounts,
-} from '@/shared/models'
+import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models'
 
 // `endCursor = undefined` => no more pages
 const processAndCheckIfMore = (
     repoConn: GH_GQL_Schema__RepoConnection | undefined,
-): { endCursor?: string; totalCountRepos?: number; repos: GH_GQL_Schema__RepoWithCommitCounts[] } => {
+): { endCursor?: string; totalCountRepos?: number; repos: GH_GQL_Schema__RepoWithCommitCountAndLanguages[] } => {
     if (repoConn === undefined) {
         return { repos: [], endCursor: undefined }
     }
@@ -23,7 +21,9 @@ const processAndCheckIfMore = (
     return { repos: nodes, totalCountRepos: totalCount, endCursor: hasNextPage ? endCursor : undefined }
 }
 
-const repoSchemaToShared = (repo: GH_GQL_Schema__RepoWithCommitCounts): SHARED_Model__RepoWithCommitCounts => {
+const repoSchemaToShared = (
+    repo: GH_GQL_Schema__RepoWithCommitCountAndLanguages,
+): SHARED_Model__RepoWithCommitCountsAndLanguages => {
     const {
         name,
         owner,
@@ -32,31 +32,34 @@ const repoSchemaToShared = (repo: GH_GQL_Schema__RepoWithCommitCounts): SHARED_M
                 history: { totalCount },
             },
         },
+        languages: { edges },
     } = repo
 
     return {
         name: name,
         owner: owner,
         totalCount: totalCount,
+        languageData: edges.map((edge) => {
+            const {
+                size,
+                node: { color, name },
+            } = edge
+            return { size: size, color: color, name: name }
+        }),
     }
 }
 
-const sharedRepoReduceCommits = (repos: SHARED_Model__RepoWithCommitCounts[]): number => {
-    let totalCommits = 0
-    for (let i = 0; i < repos.length; i++) {
-        const { totalCount } = repos[i]
-        totalCommits += totalCount
-    }
-    return totalCommits
+interface SERVICE_Response__getAllReposWithCommitCounts extends SERVICE_Response__BASE {
+    repos?: SHARED_Model__RepoWithCommitCountsAndLanguages[]
 }
 
-export const getAllReposWithCommitCounts = async (
+export const SERVICE_Call__getAllReposWithCommitCounts = async (
     accessToken: string,
-): Promise<SHARED_APIFields__ReposWithCountCommitsAndTotalStats> => {
+): Promise<SERVICE_Response__getAllReposWithCommitCounts> => {
     const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken)
 
     if (!viewerSuccess || viewer === undefined) {
-        return { repos: undefined, rc_stats: undefined, success: false, error: viewerError }
+        return { repos: undefined, success: false, error: viewerError }
     }
 
     const { id } = viewer
@@ -65,8 +68,8 @@ export const getAllReposWithCommitCounts = async (
     let reposCursor: string | undefined = undefined
     let reposContributedCursor: string | undefined = undefined
 
-    const repos: GH_GQL_Schema__RepoWithCommitCounts[] = []
-    const reposContributed: GH_GQL_Schema__RepoWithCommitCounts[] = []
+    const repos: GH_GQL_Schema__RepoWithCommitCountAndLanguages[] = []
+    const reposContributed: GH_GQL_Schema__RepoWithCommitCountAndLanguages[] = []
 
     while (!isReposDone || !isReposContributedDone) {
         const {
@@ -90,7 +93,7 @@ export const getAllReposWithCommitCounts = async (
             // isReposDone = true
             // isReposContributedDone = true
             // break
-            return { repos: undefined, rc_stats: undefined, success: false, error: repoError }
+            return { repos: undefined, success: false, error: repoError }
         }
 
         const { endCursor: newReposCursor, repos: newRepos } = processAndCheckIfMore(repoConn)
@@ -111,13 +114,9 @@ export const getAllReposWithCommitCounts = async (
         }
     }
 
-    const sharedRepos: SHARED_Model__RepoWithCommitCounts[] = [...repos, ...reposContributed].map((repo) =>
+    const sharedRepos: SHARED_Model__RepoWithCommitCountsAndLanguages[] = [...repos, ...reposContributed].map((repo) =>
         repoSchemaToShared(repo),
     )
-    const stats: SHARED_Model__RepoCommitCountStats = {
-        numCommits: sharedRepoReduceCommits(sharedRepos),
-        numRepos: sharedRepos.length,
-    }
 
-    return { success: true, repos: sharedRepos, rc_stats: stats }
+    return { success: true, repos: sharedRepos }
 }

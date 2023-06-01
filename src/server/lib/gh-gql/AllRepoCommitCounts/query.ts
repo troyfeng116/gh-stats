@@ -1,6 +1,21 @@
-export interface GH_GQL_Schema__RepoWithCommitCounts {
+export interface GH_GQL_Schema__RepoWithCommitCountAndLanguages {
     id: string
     name: string
+    diskUsage: number
+    languages: {
+        totalCount: number
+        pageInfo: {
+            endCursor: string
+            hasNextPage: boolean
+        }
+        edges: {
+            size: number
+            node: {
+                color: string
+                name: string
+            }
+        }[]
+    }
     owner: {
         login: string
     }
@@ -14,6 +29,7 @@ export interface GH_GQL_Schema__RepoWithCommitCounts {
 }
 
 export interface GH_GQL_Schema__RepoConnection {
+    totalDiskUsage: number
     totalCount: number
     pageInfo: {
         hasPreviousPage: boolean
@@ -21,7 +37,7 @@ export interface GH_GQL_Schema__RepoConnection {
         startCursor: string
         endCursor: string
     }
-    nodes: GH_GQL_Schema__RepoWithCommitCounts[]
+    nodes: GH_GQL_Schema__RepoWithCommitCountAndLanguages[]
 }
 
 export interface GH_GQL_QueryVars__AllRepoCommitCounts {
@@ -53,7 +69,40 @@ export const GH_GQL_Query__ReposAndCommitCounts = `query AllRepoCommitCounts(
     }
 }
 
+fragment repo on Repository {
+    id
+    name
+    diskUsage
+    languages(first: 100) {
+        totalCount
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        edges {
+            size
+            node {
+                color
+                name
+            }
+        }
+    }
+    owner {
+        login
+    }
+    defaultBranchRef {
+        target {
+            ... on Commit {
+                history(author: $author) {
+                    totalCount
+                }
+            }
+        }
+    }
+}
+
 fragment repoConn on RepositoryConnection {
+    totalDiskUsage
     totalCount
     pageInfo {
         hasPreviousPage
@@ -62,19 +111,7 @@ fragment repoConn on RepositoryConnection {
         endCursor
     }
     nodes {
-        id
-        name
-        owner {
-            login
-        }
-        defaultBranchRef {
-            target {
-                ... on Commit {
-                    history(author: $author) {
-                        totalCount
-                    }
-                }
-            }
-        }
+        ...repo
     }
-}`
+}
+`

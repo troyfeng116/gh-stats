@@ -5,7 +5,7 @@ import {
     SHARED_APIFields__GetContributorCommitActivity,
     SHARED_Data__ContributorCommitActivity,
     SHARED_Model__LinesStats,
-    SHARED_Model__RepoWithCountCommits,
+    SHARED_Model__RepoWithCommitCounts,
 } from '@/shared/models'
 
 export const getContributorActivity = async (
@@ -39,10 +39,11 @@ export const getContributorActivity = async (
 
 /* ======== compute aggregate stats ======== */
 
+// TODO: this should return success/error
 export const computeLinesStatsAcrossReposUsingMetrics = async (
     accessToken: string,
     authUser: string,
-    repos: SHARED_Model__RepoWithCountCommits[],
+    repos: SHARED_Model__RepoWithCommitCounts[],
 ): Promise<SHARED_Model__LinesStats> => {
     try {
         const activities: SHARED_APIFields__GetContributorCommitActivity[] = []
