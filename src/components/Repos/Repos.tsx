@@ -4,9 +4,9 @@ import React from 'react'
 import Link from 'next/link'
 
 import { AuthStatus, useAuth } from '@/components/Auth'
-import UserCard from '@/components/UserCard'
+import LifetimeCommits from '@/components/LIfetimeStats'
 
-export const Home: React.FC = () => {
+export const Repos: React.FC = () => {
     const { authStatus, accessToken, logout } = useAuth()
 
     if (authStatus === AuthStatus.INITIALIZING) {
@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
 
     return (
         <div>
-            <UserCard accessToken={accessToken} />
+            <LifetimeCommits accessToken={accessToken} />
             <button onClick={() => logout()}>Log out</button>
         </div>
     )

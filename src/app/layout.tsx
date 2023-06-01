@@ -20,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <AuthProvider>
                     <nav>
                         <Link href="/">Home</Link>
+                        <Link href="/repos">Repos</Link>
                         <Link href="/login">Login</Link>
                     </nav>
                     {children}
