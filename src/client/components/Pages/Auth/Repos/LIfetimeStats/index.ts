@@ -1,2 +1,2 @@
-import { LifetimeCommits } from './LifetimeStats'
-export default LifetimeCommits
+import { LifetimeStats } from './LifetimeStats'
+export default LifetimeStats

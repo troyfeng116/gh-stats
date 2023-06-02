@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
 import { SHARED_Model__LifetimeStats } from '@/shared/models'
 
-interface LifetimeCommitsProps {
+interface LifetimeStatsProps {
     accessToken: string
 }
 
-export const LifetimeCommits: React.FC<LifetimeCommitsProps> = (props) => {
+export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
     const { accessToken } = props
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>()

@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import LifetimeCommits from '@/client/components/Pages/Auth/Repos/LIfetimeStats'
+import LifetimeStats from '@/client/components/Pages/Auth/Repos/LifetimeStats'
 import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 
 export const Repos: React.FC = () => {
@@ -23,7 +23,7 @@ export const Repos: React.FC = () => {
 
     return (
         <div>
-            <LifetimeCommits accessToken={accessToken} />
+            <LifetimeStats accessToken={accessToken} />
             <button onClick={() => logout()}>Log out</button>
         </div>
     )
