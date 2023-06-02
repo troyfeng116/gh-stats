@@ -2,6 +2,7 @@ import styles from './LifetimeStats.module.css'
 
 import React, { useEffect, useState } from 'react'
 
+import LanguageData from './LanguageData'
 import RepoCell from './RepoCell'
 
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
@@ -49,6 +50,8 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
     const { numLines, numAdditions, numDeletions } = lines_stats
     const { totalDiskUsage, allLanguageData } = language_stats
 
+    allLanguageData.sort((a, b) => b.size - a.size)
+
     return (
         <div>
             <h1>Lifetime stats</h1>
@@ -58,22 +61,14 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
                 <h3>
                     lines of code: {numLines}
                     {numAdditions !== undefined && numDeletions !== undefined
-                        ? ` (${numAdditions} additions - ${numDeletions} deletions)`
+                        ? ` (+${numAdditions}, -${numDeletions})`
                         : ''}
                 </h3>
             </div>
 
             <div className={styles.card}>
                 <p>total disk usage: {totalDiskUsage}</p>
-                <div>
-                    {allLanguageData.map(({ name, color, size: diskSpace }) => {
-                        return (
-                            <p style={{ color: color }} key={name}>
-                                {name}: {diskSpace} bytes
-                            </p>
-                        )
-                    })}
-                </div>
+                <LanguageData languageData={allLanguageData} />
             </div>
 
             <div className={styles.card}>
