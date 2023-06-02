@@ -79,10 +79,13 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
                         name,
                         owner: { login },
                         totalCount,
+                        languageData,
+                        lineInfo,
                     } = repo
+
                     return (
                         <p key={idx}>
-                            {login}/{name}: {totalCount} commits
+                            {login}/{name}: {totalCount} commits, {languageData.toString()}, {lineInfo.toString()}
                         </p>
                     )
                 })}

@@ -155,6 +155,10 @@ export interface SHARED_Model__RepoWithCommitCounts {
     totalCount: number
 }
 
+export interface SHARED_Model__RepoWithCommitCountsAndLineInfo extends SHARED_Model__RepoWithCommitCounts {
+    lineInfo: SHARED_Model__LinesStats
+}
+
 export interface SHARED_Model__RepoWithCommitCountsAndLanguages extends SHARED_Model__RepoWithCommitCounts {
     totalCount: number
     languageData: {
@@ -163,6 +167,9 @@ export interface SHARED_Model__RepoWithCommitCountsAndLanguages extends SHARED_M
         name: string
     }[]
 }
+
+export type SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo = SHARED_Model__RepoWithCommitCountsAndLineInfo &
+    SHARED_Model__RepoWithCommitCountsAndLanguages
 
 export interface SHARED_Model__RepoCommitCountStats {
     numRepos: number
@@ -221,7 +228,7 @@ export interface SHARED_Model__LinesStats {
 export interface SHARED_Model__LifetimeStats {
     lines_stats: SHARED_Model__LinesStats
     language_stats: SHARED_Model__AllLanguageStats
-    repos: SHARED_Model__RepoWithCommitCounts[]
+    repos: SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo[]
     rc_stats: SHARED_Model__RepoCommitCountStats
 }
 

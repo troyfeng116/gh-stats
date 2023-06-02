@@ -56,22 +56,30 @@ export const SERVICE_Call__computeLifetimeStats = async (
     }
 
     const { login: authUser } = user
-    const linesStats = await computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
+    const {
+        success: linesSuccess,
+        error: linesError,
+        data: linesData,
+    } = await computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
+    if (!linesSuccess || linesData === undefined) {
+        return { lifetimeStats: undefined, success: false, error: linesError }
+    }
+
+    const { reposWithLinesStats, totalLinesStats } = linesData
 
     const rcStats: SHARED_Model__RepoCommitCountStats = {
-        numRepos: repos.length,
-        numCommits: sharedRepoReduceCommits(repos),
+        numRepos: reposWithLinesStats.length,
+        numCommits: sharedRepoReduceCommits(reposWithLinesStats),
     }
-
-    const languageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(repos)
+    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(reposWithLinesStats)
 
     const lifetimeStats: SHARED_Model__LifetimeStats = {
-        repos: repos,
+        repos: reposWithLinesStats,
         rc_stats: rcStats,
-        lines_stats: linesStats,
-        language_stats: languageStats,
+        lines_stats: totalLinesStats,
+        language_stats: totalLanguageStats,
     }
 
-    console.log(languageStats)
+    console.log(totalLanguageStats)
     return { lifetimeStats: lifetimeStats, success: true }
 }

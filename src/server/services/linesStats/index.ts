@@ -1,3 +1,5 @@
+import { SERVICE_Response__BASE } from '..'
+
 import { CHUNK_SIZE } from '@/server/constants'
 import { GH_API_Call__getAllContributorActivity } from '@/server/lib/gh-api/metrics'
 import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
@@ -5,7 +7,8 @@ import {
     SHARED_APIFields__GetContributorCommitActivity,
     SHARED_Data__ContributorCommitActivity,
     SHARED_Model__LinesStats,
-    SHARED_Model__RepoWithCommitCounts,
+    SHARED_Model__RepoWithCommitCountsAndLanguages,
+    SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo,
 } from '@/shared/models'
 
 export const getContributorActivity = async (
@@ -39,12 +42,19 @@ export const getContributorActivity = async (
 
 /* ======== compute aggregate stats ======== */
 
+interface SERVICE_Response__computeLinesStatsAcrossReposUsingMetrics extends SERVICE_Response__BASE {
+    data?: {
+        reposWithLinesStats: SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo[]
+        totalLinesStats: SHARED_Model__LinesStats
+    }
+}
+
 // TODO: this should return success/error
 export const computeLinesStatsAcrossReposUsingMetrics = async (
     accessToken: string,
     authUser: string,
-    repos: SHARED_Model__RepoWithCommitCounts[],
-): Promise<SHARED_Model__LinesStats> => {
+    repos: SHARED_Model__RepoWithCommitCountsAndLanguages[],
+): Promise<SERVICE_Response__computeLinesStatsAcrossReposUsingMetrics> => {
     try {
         const activities: SHARED_APIFields__GetContributorCommitActivity[] = []
         let idx = 0
@@ -60,6 +70,7 @@ export const computeLinesStatsAcrossReposUsingMetrics = async (
             activities.push(...(await Promise.all(activityPromiseChunk)))
         }
 
+        const updatedRepos: SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo[] = []
         let totalNumLines = 0,
             totalNumAdditions = 0,
             totalNumDeletions = 0
@@ -87,21 +98,35 @@ export const computeLinesStatsAcrossReposUsingMetrics = async (
             totalNumLines += numLines
             totalNumAdditions += numAdditions
             totalNumDeletions += numDeletions
+
+            updatedRepos.push({
+                ...repos[i],
+                lineInfo: {
+                    numLines: numLines,
+                    numAdditions: numAdditions,
+                    numDeletions: numDeletions,
+                },
+            })
         }
 
         return {
-            numLines: totalNumLines,
-            numAdditions: totalNumAdditions,
-            numDeletions: totalNumDeletions,
+            success: true,
+            data: {
+                reposWithLinesStats: updatedRepos,
+                totalLinesStats: {
+                    numLines: totalNumLines,
+                    numAdditions: totalNumAdditions,
+                    numDeletions: totalNumDeletions,
+                },
+            },
         }
     } catch (e) {
         console.error(
             `[services/lineStats] computeStatsAcrossReposUsingMetrics unable to compute all stats across all repos: ${e}`,
         )
         return {
-            numLines: 0,
-            numAdditions: 0,
-            numDeletions: 0,
+            success: true,
+            data: undefined,
         }
     }
 }
