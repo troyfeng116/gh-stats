@@ -1,4 +1,8 @@
+import styles from './LifetimeStats.module.css'
+
 import React, { useEffect, useState } from 'react'
+
+import RepoCell from './RepoCell'
 
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
 import { SHARED_Model__LifetimeStats } from '@/shared/models'
@@ -43,51 +47,39 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
     const { repos, rc_stats, lines_stats, language_stats } = lifetimeStats
     const { numRepos, numCommits } = rc_stats
     const { numLines, numAdditions, numDeletions } = lines_stats
-    const { totalDiskUsage, languageToDisk } = language_stats
-
-    const languageDiskArr: { name: string; diskSpace: number }[] = []
-    for (const name in languageToDisk) {
-        languageDiskArr.push({ name: name, diskSpace: languageToDisk[name] })
-    }
+    const { totalDiskUsage, allLanguageData } = language_stats
 
     return (
         <div>
-            LIFETIME STATS
-            <p>repos: {numRepos}</p>
-            <p>commits: {numCommits}</p>
-            <p>
-                lines of code: {numLines}
-                {numAdditions !== undefined && numDeletions !== undefined
-                    ? ` (${numAdditions} additions - ${numDeletions} deletions)`
-                    : ''}
-            </p>
-            <div>
+            <h1>Lifetime stats</h1>
+            <div className={styles.card}>
+                <h3>repos: {numRepos}</h3>
+                <h3>commits: {numCommits}</h3>
+                <h3>
+                    lines of code: {numLines}
+                    {numAdditions !== undefined && numDeletions !== undefined
+                        ? ` (${numAdditions} additions - ${numDeletions} deletions)`
+                        : ''}
+                </h3>
+            </div>
+
+            <div className={styles.card}>
                 <p>total disk usage: {totalDiskUsage}</p>
                 <div>
-                    {languageDiskArr.map(({ name, diskSpace }) => {
+                    {allLanguageData.map(({ name, color, size: diskSpace }) => {
                         return (
-                            <p key={name}>
+                            <p style={{ color: color }} key={name}>
                                 {name}: {diskSpace} bytes
                             </p>
                         )
                     })}
                 </div>
             </div>
-            <div>
-                {repos.map((repo, idx) => {
-                    const {
-                        name,
-                        owner: { login },
-                        totalCount,
-                        languageData,
-                        lineInfo,
-                    } = repo
 
-                    return (
-                        <p key={idx}>
-                            {login}/{name}: {totalCount} commits, {languageData.toString()}, {lineInfo.toString()}
-                        </p>
-                    )
+            <div className={styles.card}>
+                {repos.map((repo, idx) => {
+                    const { name } = repo
+                    return <RepoCell key={`${name}-${idx}`} repo={repo} />
                 })}
             </div>
         </div>

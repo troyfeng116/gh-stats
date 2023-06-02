@@ -27,6 +27,7 @@ const repoSchemaToShared = (
     const {
         name,
         owner,
+        diskUsage,
         defaultBranchRef: {
             target: {
                 history: { totalCount },
@@ -38,6 +39,7 @@ const repoSchemaToShared = (
     return {
         name: name,
         owner: owner,
+        diskUsage: diskUsage,
         totalCount: totalCount,
         languageData: edges.map((edge) => {
             const {

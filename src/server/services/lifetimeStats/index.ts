@@ -13,22 +13,34 @@ const sharedRepoReduceLanguageStats = (
     repos: SHARED_Model__RepoWithCommitCountsAndLanguages[],
 ): SHARED_Model__AllLanguageStats => {
     let totalDiskUsage = 0
-    const languageToDisk: { [key: string]: number } = {}
+    const languageToDisk: { [key: string]: { totalSize: number; color: string } } = {}
 
     for (let i = 0; i < repos.length; i++) {
         const { languageData } = repos[i]
         for (let j = 0; j < languageData.length; j++) {
-            const { size, name } = languageData[j]
+            const { size, color, name } = languageData[j]
             totalDiskUsage += size
             if (languageToDisk[name] === undefined) {
-                languageToDisk[name] = 0
+                languageToDisk[name] = { totalSize: 0, color: color }
             }
-            languageToDisk[name] += size
+            languageToDisk[name].totalSize += size
         }
     }
+
+    const allLanguageData: {
+        size: number
+        color: string
+        name: string
+    }[] = []
+
+    for (const name in languageToDisk) {
+        const { totalSize, color } = languageToDisk[name]
+        allLanguageData.push({ size: totalSize, color: color, name: name })
+    }
+
     return {
         totalDiskUsage: totalDiskUsage,
-        languageToDisk: languageToDisk,
+        allLanguageData: allLanguageData,
     }
 }
 

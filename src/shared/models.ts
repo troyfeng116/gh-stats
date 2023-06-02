@@ -152,6 +152,7 @@ export interface SHARED_Model__RepoWithCommitCounts {
     owner: {
         login: string
     }
+    diskUsage: number
     totalCount: number
 }
 
@@ -206,7 +207,11 @@ export interface SHARED_APIFields__GetContributorCommitActivity extends SHARED_A
 
 export interface SHARED_Model__AllLanguageStats {
     totalDiskUsage: number
-    languageToDisk: { [key: string]: number }
+    allLanguageData: {
+        size: number
+        color: string
+        name: string
+    }[]
 }
 
 /* ======== aggregate ======== */
