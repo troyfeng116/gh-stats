@@ -5,6 +5,7 @@ import React from 'react'
 import LanguageData from '../LanguageData'
 
 import { SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo } from '@/shared/models'
+import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface RepoCellProps {
     repo: SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo
@@ -32,7 +33,7 @@ export const RepoCell: React.FC<RepoCellProps> = (props) => {
             <h4>
                 {login}/{name}
             </h4>
-            <p>repo disk usage: {diskUsage}KB</p>
+            <p>repo disk usage: {kbToStr(diskUsage)}</p>
             <p>{repoCommitCount} commits</p>
             <p>
                 {numLines} lines of code contributed{changesStr !== undefined && ` ${changesStr}`}

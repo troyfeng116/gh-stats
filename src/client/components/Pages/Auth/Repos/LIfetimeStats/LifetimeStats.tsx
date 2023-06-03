@@ -7,6 +7,7 @@ import RepoCell from './RepoCell'
 
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
 import { SHARED_Model__LifetimeStats } from '@/shared/models'
+import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface LifetimeStatsProps {
     accessToken: string
@@ -48,7 +49,13 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
     const { repos, rc_stats, lines_stats, language_stats } = lifetimeStats
     const { numRepos, numCommits } = rc_stats
     const { numLines, numAdditions, numDeletions } = lines_stats
-    const { totalDiskUsage, allLanguageData } = language_stats
+    const { allLanguageData } = language_stats
+
+    let totalRepoDiskUsage = 0
+    for (let i = 0; i < repos.length; i++) {
+        const { diskUsage } = repos[i]
+        totalRepoDiskUsage += diskUsage
+    }
 
     allLanguageData.sort((a, b) => b.size - a.size)
 
@@ -67,8 +74,8 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
             </div>
 
             <div className={styles.section}>
-                <p>total disk usage: {totalDiskUsage}</p>
-                <LanguageData languageData={allLanguageData} />
+                <p>total disk usage: {kbToStr(totalRepoDiskUsage)}</p>
+                <LanguageData languageData={allLanguageData} shouldShowBytes={false} />
             </div>
 
             <div className={styles.section}>
