@@ -55,7 +55,7 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
     return (
         <div>
             <h1>Lifetime stats</h1>
-            <div className={styles.card}>
+            <div className={styles.section}>
                 <h3>repos: {numRepos}</h3>
                 <h3>commits: {numCommits}</h3>
                 <h3>
@@ -66,16 +66,18 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
                 </h3>
             </div>
 
-            <div className={styles.card}>
+            <div className={styles.section}>
                 <p>total disk usage: {totalDiskUsage}</p>
                 <LanguageData languageData={allLanguageData} />
             </div>
 
-            <div className={styles.card}>
-                {repos.map((repo, idx) => {
-                    const { name } = repo
-                    return <RepoCell key={`${name}-${idx}`} repo={repo} />
-                })}
+            <div className={styles.section}>
+                <div className={styles.card_container}>
+                    {repos.map((repo, idx) => {
+                        const { name } = repo
+                        return <RepoCell key={`${name}-${idx}`} repo={repo} />
+                    })}
+                </div>
             </div>
         </div>
     )

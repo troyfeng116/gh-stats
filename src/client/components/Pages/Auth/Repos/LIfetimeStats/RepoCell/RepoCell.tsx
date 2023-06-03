@@ -1,3 +1,5 @@
+import styles from './RepoCell.module.css'
+
 import React from 'react'
 
 import LanguageData from '../LanguageData'
@@ -26,7 +28,7 @@ export const RepoCell: React.FC<RepoCellProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className={styles.card}>
             <h4>
                 {login}/{name}
             </h4>
