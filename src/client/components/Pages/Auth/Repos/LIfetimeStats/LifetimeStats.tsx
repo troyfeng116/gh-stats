@@ -75,7 +75,8 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
             </div>
 
             <div className={styles.section}>
-                <LanguageData languageData={allLanguageData} shouldShowBytes={false} />
+                <h3>language data across all contributed repos:</h3>
+                <LanguageData languageData={allLanguageData} shouldShowBytes={true} />
             </div>
 
             <div className={styles.section}>
