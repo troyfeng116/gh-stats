@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 import { NEXT_PUBLIC_GH_CLIENT_ID } from '@/client/constants'
