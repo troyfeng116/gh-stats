@@ -39,6 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Short-term:
 - clean up SHARED and other models
+- finish renaming stuff according to conventions (client, server/shared)
 - /repos page with per-repo info and clickable on each repo?
 - split repos into owned(public/private)/contributed
 - don't fetch total lines of code in /repos initially? (add option to view as background call)
