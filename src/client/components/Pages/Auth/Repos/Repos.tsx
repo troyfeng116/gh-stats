@@ -3,7 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 
-import LifetimeStats from '@/client/components/Pages/Auth/Repos/LifetimeStats'
+import LifetimeStats from './LifetimeStats'
+
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 
 export const Repos: React.FC = () => {
