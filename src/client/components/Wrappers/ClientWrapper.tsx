@@ -3,6 +3,7 @@
 import React from 'react'
 
 import { AuthWrapper } from './AuthWrapper/AuthWrapper'
+import Main from './MainWrapper'
 
 import { AuthProvider } from '@/client/components/Wrappers/AuthProvider'
 import Nav from '@/client/components/Wrappers/Nav'
@@ -17,7 +18,9 @@ export const ClientWrapper: React.FC<ClientWrapperProps> = (props: ClientWrapper
     return (
         <AuthProvider>
             <Nav />
-            <AuthWrapper>{children}</AuthWrapper>
+            <Main>
+                <AuthWrapper>{children}</AuthWrapper>
+            </Main>
         </AuthProvider>
     )
 }
