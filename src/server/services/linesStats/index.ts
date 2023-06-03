@@ -33,10 +33,18 @@ export const getContributorActivity = async (
         }
     }
 
+    console.log(
+        `[services/lineStats] getContributorActivity user ${authUser} didn't contribute to repo ${owner}/${repo}`,
+    )
     return {
-        activity: undefined,
-        success: false,
-        error: `[services/lineStats] getContributorActivity user ${authUser} didn't contribute to repo ${owner}/${repo}`,
+        activity: {
+            author: {
+                login: authUser,
+            },
+            total: 0,
+            weeks: [],
+        },
+        success: true,
     }
 }
 
