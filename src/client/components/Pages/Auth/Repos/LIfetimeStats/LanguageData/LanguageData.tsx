@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { bytesToStr } from '@/shared/utils/toBytesStr'
-import { toPercent } from '@/shared/utils/toPercent'
+import LanguageInfo from './LanguageInfo'
 
 interface LanguageDataProps {
     languageData: { size: number; color: string; name: string }[]
@@ -35,11 +34,14 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
     return (
         <div>
             {languageDataCopy.map((language, idx) => {
-                const { size, color, name } = language
+                const { name } = language
                 return (
-                    <p key={`${name}-${idx}`} style={{ color: color }}>
-                        {name} ({toPercent(size, totalLanguageBytes)}%{shouldShowBytes && `, ${bytesToStr(size, 2)}`})
-                    </p>
+                    <LanguageInfo
+                        key={`${name}-${idx}`}
+                        language={language}
+                        totalBytes={totalLanguageBytes}
+                        shouldShowBytes={shouldShowBytes}
+                    />
                 )
             })}
         </div>

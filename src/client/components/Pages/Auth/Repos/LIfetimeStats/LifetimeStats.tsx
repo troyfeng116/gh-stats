@@ -64,6 +64,7 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
             <h1>Lifetime stats</h1>
             <div className={styles.section}>
                 <h3>repos: {numRepos}</h3>
+                <p>total disk usage: {kbToStr(totalRepoDiskUsage)}</p>
                 <h3>commits: {numCommits}</h3>
                 <h3>
                     lines of code: {numLines}
@@ -74,7 +75,6 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
             </div>
 
             <div className={styles.section}>
-                <p>total disk usage: {kbToStr(totalRepoDiskUsage)}</p>
                 <LanguageData languageData={allLanguageData} shouldShowBytes={false} />
             </div>
 
