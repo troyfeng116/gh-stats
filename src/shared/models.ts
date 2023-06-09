@@ -230,10 +230,13 @@ export interface SHARED_Model__LinesStats {
     numDeletions?: number
 }
 
-export interface SHARED_Model__LifetimeStats {
+export interface SHARED_APIFields__LinesStats extends SHARED_APIFields__BASE {
     lines_stats: SHARED_Model__LinesStats
+}
+
+export interface SHARED_Model__LifetimeStats {
     language_stats: SHARED_Model__AllLanguageStats
-    repos: SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo[]
+    repos: SHARED_Model__RepoWithCommitCountsAndLanguages[]
     rc_stats: SHARED_Model__RepoCommitCountStats
 }
 

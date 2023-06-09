@@ -4,11 +4,11 @@ import React from 'react'
 
 import LanguageData from '../LanguageData'
 
-import { SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo } from '@/shared/models'
+import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface RepoCellProps {
-    repo: SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo
+    repo: SHARED_Model__RepoWithCommitCountsAndLanguages
 }
 
 export const RepoCell: React.FC<RepoCellProps> = (props) => {
@@ -19,14 +19,9 @@ export const RepoCell: React.FC<RepoCellProps> = (props) => {
         totalCount: repoCommitCount,
         languageData,
         diskUsage,
-        lineInfo,
     } = repo
 
-    const { numLines, numAdditions, numDeletions } = lineInfo
-    let changesStr: string | undefined = undefined
-    if (numAdditions !== undefined && numDeletions !== undefined) {
-        changesStr = `(+${numAdditions}, -${numDeletions})`
-    }
+    // const changesStr: string | undefined = undefined
 
     return (
         <div className={styles.card}>
@@ -35,9 +30,9 @@ export const RepoCell: React.FC<RepoCellProps> = (props) => {
             </h4>
             <p>repo disk usage: {kbToStr(diskUsage)}</p>
             <p>{repoCommitCount} commits</p>
-            <p>
+            {/* <p>
                 {numLines} lines of code contributed{changesStr !== undefined && ` ${changesStr}`}
-            </p>
+            </p> */}
             <div>
                 <LanguageData languageData={languageData} />
             </div>

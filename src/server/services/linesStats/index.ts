@@ -57,6 +57,35 @@ interface SERVICE_Response__computeLinesStatsAcrossReposUsingMetrics extends SER
     }
 }
 
+// const { success: userSuccess, error: userError, user } = await GH_API_Call__getUser(accessToken)
+// if (!userSuccess || user === undefined) {
+//     return { lifetimeStats: undefined, success: false, error: userError }
+// }
+
+// const { login: authUser } = user
+// const {
+//     success: linesSuccess,
+//     error: linesError,
+//     data: linesData,
+// } = await SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
+// if (!linesSuccess || linesData === undefined) {
+//     return { lifetimeStats: undefined, success: false, error: linesError }
+// }
+
+// const { reposWithLinesStats, totalLinesStats } = linesData
+
+// const rcStats: SHARED_Model__RepoCommitCountStats = {
+//     numRepos: reposWithLinesStats.length,
+//     numCommits: sharedRepoReduceCommits(reposWithLinesStats),
+// }
+
+// const lifetimeStats: SHARED_Model__LifetimeStats = {
+//     repos: reposWithLinesStats,
+//     rc_stats: rcStats,
+//     lines_stats: totalLinesStats,
+//     language_stats: totalLanguageStats,
+// }
+
 // TODO: this should return success/error
 export const SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics = async (
     accessToken: string,

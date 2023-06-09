@@ -46,9 +46,9 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
         return <div>no lifetime stats found</div>
     }
 
-    const { repos, rc_stats, lines_stats, language_stats } = lifetimeStats
+    const { repos, rc_stats, language_stats } = lifetimeStats
     const { numRepos, numCommits } = rc_stats
-    const { numLines, numAdditions, numDeletions } = lines_stats
+    // const { numLines, numAdditions, numDeletions } = lines_stats
     const { allLanguageData } = language_stats
 
     let totalRepoDiskUsage = 0
@@ -66,12 +66,12 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
                 <h3>repos: {numRepos}</h3>
                 <p>total disk usage: {kbToStr(totalRepoDiskUsage)}</p>
                 <h3>commits: {numCommits}</h3>
-                <h3>
+                {/* <h3>
                     lines of code: {numLines}
                     {numAdditions !== undefined && numDeletions !== undefined
                         ? ` (+${numAdditions}, -${numDeletions})`
                         : ''}
-                </h3>
+                </h3> */}
             </div>
 
             <div className={styles.section}>

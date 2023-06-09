@@ -1,5 +1,3 @@
-import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
-import { SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics } from '@/server/services/linesStats'
 import { SERVICE_Call__getAllReposWithCommitCounts } from '@/server/services/reposAndCommitCounts'
 import {
     SHARED_APIFields__LifetimeStats,
@@ -62,33 +60,15 @@ export const SERVICE_Call__computeLifetimeStats = async (
         return { lifetimeStats: undefined, success: false, error: rcError }
     }
 
-    const { success: userSuccess, error: userError, user } = await GH_API_Call__getUser(accessToken)
-    if (!userSuccess || user === undefined) {
-        return { lifetimeStats: undefined, success: false, error: userError }
-    }
-
-    const { login: authUser } = user
-    const {
-        success: linesSuccess,
-        error: linesError,
-        data: linesData,
-    } = await SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
-    if (!linesSuccess || linesData === undefined) {
-        return { lifetimeStats: undefined, success: false, error: linesError }
-    }
-
-    const { reposWithLinesStats, totalLinesStats } = linesData
-
     const rcStats: SHARED_Model__RepoCommitCountStats = {
-        numRepos: reposWithLinesStats.length,
-        numCommits: sharedRepoReduceCommits(reposWithLinesStats),
+        numRepos: repos.length,
+        numCommits: sharedRepoReduceCommits(repos),
     }
-    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(reposWithLinesStats)
+    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(repos)
 
     const lifetimeStats: SHARED_Model__LifetimeStats = {
-        repos: reposWithLinesStats,
+        repos: repos,
         rc_stats: rcStats,
-        lines_stats: totalLinesStats,
         language_stats: totalLanguageStats,
     }
 
