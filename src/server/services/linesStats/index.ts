@@ -11,7 +11,7 @@ import {
     SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo,
 } from '@/shared/models'
 
-export const getContributorActivity = async (
+const getContributorActivity = async (
     accessToken: string,
     authUser: string,
     owner: string,
@@ -58,7 +58,7 @@ interface SERVICE_Response__computeLinesStatsAcrossReposUsingMetrics extends SER
 }
 
 // TODO: this should return success/error
-export const computeLinesStatsAcrossReposUsingMetrics = async (
+export const SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics = async (
     accessToken: string,
     authUser: string,
     repos: SHARED_Model__RepoWithCommitCountsAndLanguages[],

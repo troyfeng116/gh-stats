@@ -1,5 +1,5 @@
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
-import { computeLinesStatsAcrossReposUsingMetrics } from '@/server/services/linesStats'
+import { SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics } from '@/server/services/linesStats'
 import { SERVICE_Call__getAllReposWithCommitCounts } from '@/server/services/reposAndCommitCounts'
 import {
     SHARED_APIFields__LifetimeStats,
@@ -72,7 +72,7 @@ export const SERVICE_Call__computeLifetimeStats = async (
         success: linesSuccess,
         error: linesError,
         data: linesData,
-    } = await computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
+    } = await SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
     if (!linesSuccess || linesData === undefined) {
         return { lifetimeStats: undefined, success: false, error: linesError }
     }

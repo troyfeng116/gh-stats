@@ -107,7 +107,9 @@ const countCommitsInRepos = async (
     }
 }
 
-export const countLifetimeCommits = async (accessToken: string): Promise<SHARED_APIFields__CountCommitsResponse> => {
+export const SERVICE_Call__countLifetimeCommits = async (
+    accessToken: string,
+): Promise<SHARED_APIFields__CountCommitsResponse> => {
     try {
         const [userRes, reposRes] = await Promise.all([GH_API_Call__getUser(accessToken), listAllRepos(accessToken)])
 
