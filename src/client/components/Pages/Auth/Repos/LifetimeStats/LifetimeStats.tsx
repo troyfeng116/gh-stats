@@ -66,12 +66,6 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
                 <h3>repos: {numRepos}</h3>
                 <p>total disk usage: {kbToStr(totalRepoDiskUsage)}</p>
                 <h3>commits: {numCommits}</h3>
-                {/* <h3>
-                    lines of code: {numLines}
-                    {numAdditions !== undefined && numDeletions !== undefined
-                        ? ` (+${numAdditions}, -${numDeletions})`
-                        : ''}
-                </h3> */}
             </div>
 
             <div className={styles.section}>
