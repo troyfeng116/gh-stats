@@ -69,7 +69,7 @@ export const GH_GQL_Query__ReposAndCommitCounts = `query AllRepoCommitCounts(
     }
 }
 
-fragment repo on Repository {
+fragment repoWithLanguagesAndCommitCount on Repository {
     id
     name
     diskUsage
@@ -111,7 +111,7 @@ fragment repoConn on RepositoryConnection {
         endCursor
     }
     nodes {
-        ...repo
+        ...repoWithLanguagesAndCommitCount
     }
 }
 `
