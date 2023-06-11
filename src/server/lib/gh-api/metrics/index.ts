@@ -1,9 +1,9 @@
 import { BASE_GH_API_Call__getWithAuth, GH_API_Response__BASE } from '..'
 
-import { GH_API_Obj__ContributorActivity } from './model'
+import { GH_API_Obj__ContributorActivityOnRepo } from './model'
 
 export interface GH_API_Response__getAllContributorActivity extends GH_API_Response__BASE {
-    allActivity?: GH_API_Obj__ContributorActivity[]
+    allActivity?: GH_API_Obj__ContributorActivityOnRepo[]
 }
 
 // https://docs.github.com/en/rest/metrics/statistics?apiVersion=2022-11-28#get-all-contributor-commit-activity
@@ -33,7 +33,7 @@ export const GH_API_Call__getAllContributorActivity = async (
         return { allActivity: undefined, success: false, error: `error ${status}: ${statusText}` }
     }
 
-    const resJson: GH_API_Obj__ContributorActivity[] = (await res.json()) as GH_API_Obj__ContributorActivity[]
+    const resJson: GH_API_Obj__ContributorActivityOnRepo[] = (await res.json()) as GH_API_Obj__ContributorActivityOnRepo[]
     // console.log(resJson)
 
     return { allActivity: resJson, success: true }

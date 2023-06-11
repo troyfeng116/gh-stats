@@ -1,12 +1,12 @@
 // https://docs.github.com/en/rest/metrics/statistics?apiVersion=2022-11-28#get-all-contributor-commit-activity
-export interface GH_API_Obj__WeeklyContributionActivity {
+export interface GH_API_Obj__WeeklyContributionActivityOnRepo {
     w: number
     a: number
     d: number
     c: number
 }
 
-export interface GH_API_Obj__ContributorActivity {
+export interface GH_API_Obj__ContributorActivityOnRepo {
     author: {
         login: string
         id: number
@@ -28,5 +28,5 @@ export interface GH_API_Obj__ContributorActivity {
         site_admin: boolean
     }
     total: number
-    weeks: GH_API_Obj__WeeklyContributionActivity[]
+    weeks: GH_API_Obj__WeeklyContributionActivityOnRepo[]
 }
