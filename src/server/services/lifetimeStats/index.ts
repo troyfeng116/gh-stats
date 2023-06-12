@@ -3,9 +3,11 @@ import {
     SHARED_APIFields__LifetimeStats,
     SHARED_Model__AllLanguageStats,
     SHARED_Model__LifetimeStats,
+} from '@/shared/models'
+import {
     SHARED_Model__RepoCommitCountStats,
     SHARED_Model__RepoWithCommitCountsAndLanguages,
-} from '@/shared/models'
+} from '@/shared/models/models/Repos'
 
 const sharedRepoReduceLanguageStats = (
     repos: SHARED_Model__RepoWithCommitCountsAndLanguages[],

@@ -7,7 +7,7 @@ import {
     GH_GQL_Schema__RepoWithCommitCountAndLanguages,
 } from '@/server/lib/gh-gql/AllRepoCommitCounts/query'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
-import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models'
+import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models/models/Repos'
 
 // `endCursor = undefined` => no more pages
 const processAndCheckIfMore = (

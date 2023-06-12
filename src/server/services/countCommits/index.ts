@@ -8,8 +8,8 @@ import {
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { listAllRepos } from '@/server/services/allRepos'
 import { chunkArr } from '@/server/utils/chunkArr'
-import { SHARED_Data__Repo } from '@/shared/models'
 import { SHARED_Model__Commit, SHARED_Model__CommitWithDiff } from '@/shared/models/models/Commits'
+import { SHARED_Data__Repo } from '@/shared/models/models/Repos'
 
 interface SERVICE_Response__listCommits extends SERVICE_Response__BASE {
     commits?: SHARED_Model__Commit[]

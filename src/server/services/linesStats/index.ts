@@ -7,9 +7,11 @@ import {
     SHARED_APIFields__GetContributorCommitActivity,
     SHARED_Data__ContributorCommitActivity,
     SHARED_Model__LinesStats,
+} from '@/shared/models'
+import {
     SHARED_Model__RepoWithCommitCountsAndLanguages,
     SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo,
-} from '@/shared/models'
+} from '@/shared/models/models/Repos'
 
 const getContributorActivity = async (
     accessToken: string,
