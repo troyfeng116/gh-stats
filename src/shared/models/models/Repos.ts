@@ -1,4 +1,4 @@
-import { SHARED_Model__LinesStats } from '@/shared/models'
+import { SHARED_Model__LinesStats } from './Stats'
 
 export interface SHARED_Data__Repo {
     id: number
@@ -65,8 +65,3 @@ export interface SHARED_Model__RepoWithCommitCountsAndLanguages extends SHARED_M
 
 export type SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo = SHARED_Model__RepoWithCommitCountsAndLineInfo &
     SHARED_Model__RepoWithCommitCountsAndLanguages
-
-export interface SHARED_Model__RepoCommitCountStats {
-    numRepos: number
-    numCommits: number
-}

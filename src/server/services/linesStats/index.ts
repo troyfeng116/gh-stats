@@ -3,12 +3,12 @@ import { SERVICE_Response__BASE } from '..'
 import { CHUNK_SIZE } from '@/server/constants'
 import { GH_API_Call__getAllContributorActivity } from '@/server/lib/gh-api/metrics'
 import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
-import { SHARED_Model__LinesStats } from '@/shared/models'
 import { SHARED_Data__ContributorCommitActivity } from '@/shared/models/models/Metrics'
 import {
     SHARED_Model__RepoWithCommitCountsAndLanguages,
     SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo,
 } from '@/shared/models/models/Repos'
+import { SHARED_Model__LinesStats } from '@/shared/models/models/Stats'
 
 /* ======== fetch one user's contributions to one repo ======== */
 

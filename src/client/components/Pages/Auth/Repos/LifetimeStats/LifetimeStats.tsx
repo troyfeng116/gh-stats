@@ -6,7 +6,7 @@ import LanguageData from './LanguageData'
 import RepoCell from './RepoCell'
 
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
-import { SHARED_Model__LifetimeStats } from '@/shared/models'
+import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface LifetimeStatsProps {

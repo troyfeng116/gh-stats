@@ -1,7 +1,6 @@
 import { getAPIWithAuth } from '../fetchAPI'
 
-import { SHARED_APIFields__LifetimeStats } from '@/shared/models'
-import { SHARED_APIFields__GetUserCard } from '@/shared/models/apiFields'
+import { SHARED_APIFields__GetUserCard, SHARED_APIFields__LifetimeStats } from '@/shared/models/apiFields'
 
 /*
 Authenticated APIs (must provide access token)
