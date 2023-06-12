@@ -1,6 +1,4 @@
-import { SHARED_APIFields__BASE } from '../apiFields'
-
-export interface SHARED_Data__Commit {
+export interface SHARED_Model__Commit {
     sha: string
     commit: {
         author: {
@@ -27,7 +25,7 @@ export interface SHARED_Data__Commit {
     }
 }
 
-export interface SHARED_Data__CommitWithDiff extends SHARED_Data__Commit {
+export interface SHARED_Model__CommitWithDiff extends SHARED_Model__Commit {
     stats: {
         additions: number
         deletions: number
@@ -42,16 +40,4 @@ export interface SHARED_Data__CommitWithDiff extends SHARED_Data__Commit {
         blob_url: string
         patch: string
     }[]
-}
-
-export interface SHARED_APIFields__ListCommits extends SHARED_APIFields__BASE {
-    commits?: SHARED_Data__Commit[]
-}
-
-export interface SHARED_APIFields__ListCommitWithDiff extends SHARED_APIFields__BASE {
-    commit?: SHARED_Data__CommitWithDiff
-}
-
-export interface SHARED_APIFields__CountCommitsResponse extends SHARED_APIFields__BASE {
-    numCommits?: number
 }
