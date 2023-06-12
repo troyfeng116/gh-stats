@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 
-import { exchangeCodeForAccessToken } from '@/server/services/getTokenService'
+import { SERVICE_Call__exchangeCodeForAccessToken } from '@/server/services/getToken'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
-import { SHARED_GetTokenAPIResponse } from '@/shared/models'
+import { SHARED_APIFields__GetToken } from '@/shared/models/apiFields'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('POST /api/get-token')
@@ -12,7 +12,7 @@ export const POST = async (request: Request): Promise<Response> => {
     const { code } = body
 
     if (code === undefined) {
-        const clientRes: SHARED_GetTokenAPIResponse = {
+        const clientRes: SHARED_APIFields__GetToken = {
             success: false,
             error: 'body must include client code',
         }
@@ -21,7 +21,7 @@ export const POST = async (request: Request): Promise<Response> => {
         })
     }
 
-    const res = await exchangeCodeForAccessToken(code)
+    const res = await SERVICE_Call__exchangeCodeForAccessToken(code)
     const { success, error, accessToken } = res
     if (!success || accessToken === undefined) {
         return new Response(JSON.stringify(res), {

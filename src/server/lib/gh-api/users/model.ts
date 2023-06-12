@@ -1,5 +1,5 @@
 // https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-the-authenticated-user
-export interface GH_API_User {
+export interface GH_API_Obj__User {
     login: string
     id: number
     node_id: string

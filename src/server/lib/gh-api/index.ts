@@ -2,7 +2,7 @@
 This folder contains wrappers around raw requests to the GitHub API.
 */
 
-export const BASE_GH_API_URL = 'https://api.github.com'
+const BASE_GH_API_URL = 'https://api.github.com'
 
 // max `per_page` query param for listing repos/commits from GitHub API
 export const PAGE_SIZE = 100
@@ -12,7 +12,12 @@ Make authenticated calls to GitHub API
 Return raw `Response` objects
 */
 
-export const getGitHubAPI = async (url: string, accessToken: string): Promise<Response> => {
+export interface GH_API_Response__BASE {
+    success: boolean
+    error?: string
+}
+
+export const BASE_GH_API_Call__getWithAuth = async (url: string, accessToken: string): Promise<Response> => {
     const res = await fetch(`${BASE_GH_API_URL}${url}`, {
         method: 'GET',
         headers: {

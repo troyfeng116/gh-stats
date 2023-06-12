@@ -1,11 +1,13 @@
-import { getGitHubAPI } from '..'
+import { BASE_GH_API_Call__getWithAuth, GH_API_Response__BASE } from '..'
 
-import { GH_API_User } from './model'
+import { GH_API_Obj__User } from './model'
 
-export const GH_API_getUser = async (
-    accessToken: string,
-): Promise<{ success: boolean; error?: string; user?: GH_API_User }> => {
-    const res = await getGitHubAPI('/user', accessToken)
+export interface GH_API_Response__getUser extends GH_API_Response__BASE {
+    user?: GH_API_Obj__User
+}
+
+export const GH_API_Call__getUser = async (accessToken: string): Promise<GH_API_Response__getUser> => {
+    const res = await BASE_GH_API_Call__getWithAuth('/user', accessToken)
 
     const { status, statusText } = res
     // TODO: how to handle caching/304?
@@ -18,7 +20,7 @@ export const GH_API_getUser = async (
     }
 
     // console.log(res)
-    const resJson = (await res.json()) as GH_API_User
+    const resJson = (await res.json()) as GH_API_Obj__User
     // console.log(resJson)
 
     return {

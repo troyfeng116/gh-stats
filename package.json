@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint && eslint --ext .js,.ts .",
-        "pretty": "prettier --write ."
+        "pretty": "prettier --write .",
+        "nuke": "rm -rf node_modules && npm i"
     },
     "dependencies": {
         "@types/node": "20.2.3",

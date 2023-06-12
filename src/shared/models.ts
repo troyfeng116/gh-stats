@@ -1,41 +1,17 @@
+import { SHARED_APIFields__BASE } from './models/apiFields'
+
 /*
-Shared interfaces for client-server interactions
+
+======== CONVENTIONS ========
+
+- `SHARED_APIFields` extends `SHARED_APIFields__BASE`, used in client-server interactions (i.e. bridge from /api/routes to client)
+- `SHARED_Data` is truncated version of server data (such as `GH_API_Obj` or `GH_GQL_Schema`)
+- `SHARED_Model` is completely custom-defined
 */
-
-export interface SHARED_BaseAPIResponse {
-    success: boolean
-    error?: string
-}
-
-/* ======== OAuth ======== */
-
-export interface SHARED_GetTokenAPIResponse extends SHARED_BaseAPIResponse {
-    accessToken?: string
-}
-
-export type SHARED_ValidateTokenAPIResponse = SHARED_BaseAPIResponse
-
-/* ======== user ======== */
-
-export interface SHARED_UserCardData {
-    userId: string
-    name: string | undefined
-    email: string | undefined
-    followers: number
-    following: number
-    createdAt: string
-    publicRepos: number
-    privateRepos: number
-    totalRepos: number
-}
-
-export interface SHARED_GetUserCardAPIResponse extends SHARED_BaseAPIResponse {
-    userCard?: SHARED_UserCardData
-}
 
 /* ======== commits ======== */
 
-export interface SHARED_CommitData {
+export interface SHARED_Data__Commit {
     sha: string
     commit: {
         author: {
@@ -62,7 +38,7 @@ export interface SHARED_CommitData {
     }
 }
 
-export interface SHARED_CommitWithDiffData extends SHARED_CommitData {
+export interface SHARED_Data__CommitWithDiff extends SHARED_Data__Commit {
     stats: {
         additions: number
         deletions: number
@@ -79,21 +55,21 @@ export interface SHARED_CommitWithDiffData extends SHARED_CommitData {
     }[]
 }
 
-export interface SHARED_ListCommitsAPIResponse extends SHARED_BaseAPIResponse {
-    commits?: SHARED_CommitData[]
+export interface SHARED_APIFields__ListCommits extends SHARED_APIFields__BASE {
+    commits?: SHARED_Data__Commit[]
 }
 
-export interface SHARED_ListCommitWithDiffAPIResponse extends SHARED_BaseAPIResponse {
-    commit?: SHARED_CommitWithDiffData
+export interface SHARED_APIFields__ListCommitWithDiff extends SHARED_APIFields__BASE {
+    commit?: SHARED_Data__CommitWithDiff
 }
 
-export interface SHARED_CountCommitsResponse extends SHARED_BaseAPIResponse {
+export interface SHARED_APIFields__CountCommitsResponse extends SHARED_APIFields__BASE {
     numCommits?: number
 }
 
 /* ======== repos ======== */
 
-export interface SHARED_RepoData {
+export interface SHARED_Data__Repo {
     id: number
     node_id: string
     name: string
@@ -134,47 +110,109 @@ export interface SHARED_RepoData {
     watchers: number
 }
 
-export interface SHARED_ListReposAPIResponse extends SHARED_BaseAPIResponse {
-    repos?: SHARED_RepoData[]
+export interface SHARED_APIFields__ListRepos extends SHARED_APIFields__BASE {
+    repos?: SHARED_Data__Repo[]
 }
 
-export interface SHARED_CountReposAPIResponse extends SHARED_BaseAPIResponse {
+export interface SHARED_APIFields__CountRepos extends SHARED_APIFields__BASE {
     numRepos?: number
+}
+
+export interface SHARED_Model__RepoWithCommitCounts {
+    name: string
+    owner: {
+        login: string
+    }
+    diskUsage: number
+    totalCount: number
+}
+
+export interface SHARED_Model__RepoWithCommitCountsAndLineInfo extends SHARED_Model__RepoWithCommitCounts {
+    lineInfo: SHARED_Model__LinesStats
+}
+
+export interface SHARED_Model__RepoWithCommitCountsAndLanguages extends SHARED_Model__RepoWithCommitCounts {
+    totalCount: number
+    languageData: {
+        size: number
+        color: string
+        name: string
+    }[]
+}
+
+export type SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo = SHARED_Model__RepoWithCommitCountsAndLineInfo &
+    SHARED_Model__RepoWithCommitCountsAndLanguages
+
+export interface SHARED_Model__RepoCommitCountStats {
+    numRepos: number
+    numCommits: number
+}
+
+export interface SHARED_APIFields__ReposWithCountCommitsAndTotalStats extends SHARED_APIFields__BASE {
+    repos?: SHARED_Model__RepoWithCommitCounts[]
+    rc_stats?: SHARED_Model__RepoCommitCountStats
 }
 
 /* ======== metrics ======== */
 
-export interface SHARED_WeeklyContributionActivityData {
+export interface SHARED_Data__WeeklyContributionCommitActivityData {
     w: number
     a: number
     d: number
     c: number
 }
 
-export interface SHARED_ContributorActivityData {
+export interface SHARED_Data__ContributorCommitActivity {
     author: {
         login: string
     }
     total: number
-    weeks: SHARED_WeeklyContributionActivityData[]
+    weeks: SHARED_Data__WeeklyContributionCommitActivityData[]
 }
 
-export interface SHARED_GetContributorActivityResponse extends SHARED_BaseAPIResponse {
-    activity?: SHARED_ContributorActivityData
+export interface SHARED_APIFields__GetContributorCommitActivity extends SHARED_APIFields__BASE {
+    activity?: SHARED_Data__ContributorCommitActivity
+}
+
+/* ======== languages ======== */
+
+export interface SHARED_Model__AllLanguageStats {
+    totalDiskUsage: number
+    allLanguageData: {
+        size: number
+        color: string
+        name: string
+    }[]
 }
 
 /* ======== aggregate ======== */
 
-export interface SHARED_LifetimeStats {
-    numRepos: number
-    numCommits: number
-    numLines: number
-    numAdditions: number
-    numDeletions: number
+export const makeLinesStats = (): SHARED_Model__LinesStats => {
+    return {
+        numAdditions: 0,
+        numDeletions: 0,
+        numLines: 0,
+    }
 }
 
-export interface SHARED_GetLifetimeStatsAPIResponse extends SHARED_BaseAPIResponse {
-    stats?: SHARED_LifetimeStats
+export interface SHARED_Model__LinesStats {
+    numLines: number
+    numAdditions?: number
+    numDeletions?: number
+}
+
+export interface SHARED_APIFields__LinesStats extends SHARED_APIFields__BASE {
+    lines_stats: SHARED_Model__LinesStats
+}
+
+export interface SHARED_Model__LifetimeStats {
+    language_stats: SHARED_Model__AllLanguageStats
+    repos: SHARED_Model__RepoWithCommitCountsAndLanguages[]
+    rc_stats: SHARED_Model__RepoCommitCountStats
+}
+
+export interface SHARED_APIFields__LifetimeStats extends SHARED_APIFields__BASE {
+    lifetimeStats?: SHARED_Model__LifetimeStats
 }
 
 /* ======== lines of code ======== */

@@ -1,13 +1,7 @@
 import React from 'react'
 
-import LoginCallback from '@/components/LoginCallback'
-import { VERSION_NUMBER } from '@/config/constants'
+import LoginCallback from '@/client/components/Pages/Unauth/LoginCallback'
 
 export default function LoginCallbackPage() {
-    return (
-        <main>
-            <LoginCallback />
-            <p>{VERSION_NUMBER}</p>
-        </main>
-    )
+    return <LoginCallback />
 }
