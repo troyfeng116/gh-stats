@@ -2,15 +2,12 @@ import styles from './LanguageInfo.module.css'
 
 import React from 'react'
 
+import { SHARED_Model__Language } from '@/shared/models/models/Language'
 import { bytesToStr } from '@/shared/utils/toBytesStr'
 import { toPercent } from '@/shared/utils/toPercent'
 
 interface LanguageInfoProps {
-    language: {
-        size: number
-        color: string
-        name: string
-    }
+    language: SHARED_Model__Language
     totalBytes: number
     shouldShowBytes: boolean
 }

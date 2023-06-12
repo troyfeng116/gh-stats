@@ -1,19 +1,9 @@
 import { SHARED_APIFields__BASE } from './models/apiFields'
+import { SHARED_Model__AllLanguageStats } from './models/models/Language'
 import {
     SHARED_Model__RepoCommitCountStats,
     SHARED_Model__RepoWithCommitCountsAndLanguages,
 } from './models/models/Repos'
-
-/* ======== languages ======== */
-
-export interface SHARED_Model__AllLanguageStats {
-    totalDiskUsage: number
-    allLanguageData: {
-        size: number
-        color: string
-        name: string
-    }[]
-}
 
 /* ======== aggregate ======== */
 

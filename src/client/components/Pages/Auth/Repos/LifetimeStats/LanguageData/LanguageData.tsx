@@ -2,8 +2,10 @@ import React from 'react'
 
 import LanguageInfo from './LanguageInfo'
 
+import { SHARED_Model__Language } from '@/shared/models/models/Language'
+
 interface LanguageDataProps {
-    languageData: { size: number; color: string; name: string }[]
+    languageData: SHARED_Model__Language[]
     shouldShowBytes?: boolean
     shouldSortMostFirst?: boolean
 }
@@ -15,11 +17,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         return null
     }
 
-    const languageDataCopy: {
-        size: number
-        color: string
-        name: string
-    }[] = JSON.parse(JSON.stringify(languageData))
+    const languageDataCopy: SHARED_Model__Language[] = JSON.parse(JSON.stringify(languageData))
 
     if (shouldSortMostFirst) {
         languageDataCopy.sort((a, b) => b.size - a.size)
