@@ -1,4 +1,4 @@
-import { SHARED_APIFields__BASE } from '@/shared/models'
+import { SHARED_APIFields__BASE } from '@/shared/models/apiFields'
 
 export const AUTH_NO_TOKEN_ERROR_RES: SHARED_APIFields__BASE = {
     success: false,

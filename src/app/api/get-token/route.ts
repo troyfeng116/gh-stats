@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 
 import { SERVICE_Call__exchangeCodeForAccessToken } from '@/server/services/getToken'
 import { setAccessTokenCookie } from '@/server/utils/serverCookies'
-import { SHARED_APIFields__GetToken } from '@/shared/models'
+import { SHARED_APIFields__GetToken } from '@/shared/models/apiFields'
 
 export const POST = async (request: Request): Promise<Response> => {
     console.log('POST /api/get-token')

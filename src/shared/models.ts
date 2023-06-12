@@ -1,3 +1,5 @@
+import { SHARED_APIFields__BASE } from './models/apiFields'
+
 /*
 
 ======== CONVENTIONS ========
@@ -6,19 +8,6 @@
 - `SHARED_Data` is truncated version of server data (such as `GH_API_Obj` or `GH_GQL_Schema`)
 - `SHARED_Model` is completely custom-defined
 */
-
-export interface SHARED_APIFields__BASE {
-    success: boolean
-    error?: string
-}
-
-/* ======== OAuth ======== */
-
-export interface SHARED_APIFields__GetToken extends SHARED_APIFields__BASE {
-    accessToken?: string
-}
-
-export type SHARED_APIFields__ValidateToken = SHARED_APIFields__BASE
 
 /* ======== user ======== */
 
