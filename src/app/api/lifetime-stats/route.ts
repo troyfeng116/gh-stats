@@ -1,6 +1,6 @@
 import { SERVICE_Call__computeLifetimeStats } from '@/server/services/lifetimeStats'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
-import { SHARED_APIFields__LifetimeStats } from '@/shared/models'
+import { SHARED_APIFields__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
 
 /*
 Requires authentication

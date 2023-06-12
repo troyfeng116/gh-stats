@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { getUserCardAPI } from '@/client/lib/authAPI'
-import { SHARED_Model__UserCardData } from '@/shared/models/models/UserCard'
+import { SHARED_Model__UserCard } from '@/shared/models/models/UserCard'
 
 interface UserCardProps {
     accessToken: string
@@ -11,7 +11,7 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
     const { accessToken } = props
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>()
-    const [userCard, setUserCard] = useState<SHARED_Model__UserCardData>()
+    const [userCard, setUserCard] = useState<SHARED_Model__UserCard>()
 
     useEffect(() => {
         const fetchUserCard = async (accessToken: string) => {

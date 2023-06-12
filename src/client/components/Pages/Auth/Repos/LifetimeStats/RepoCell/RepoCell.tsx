@@ -4,7 +4,7 @@ import React from 'react'
 
 import LanguageData from '../LanguageData'
 
-import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models'
+import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models/models/Repos'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface RepoCellProps {

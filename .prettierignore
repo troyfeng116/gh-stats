@@ -32,3 +32,5 @@ next-env.d.ts
 
 README.md
 src/server/server.md
+src/client/client.md
+src/models/models.md

@@ -3,20 +3,25 @@ import { SERVICE_Response__BASE } from '..'
 import { CHUNK_SIZE } from '@/server/constants'
 import { GH_API_Call__getAllContributorActivity } from '@/server/lib/gh-api/metrics'
 import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
+import { SHARED_Model__ContributorCommitActivity } from '@/shared/models/models/Metrics'
 import {
-    SHARED_APIFields__GetContributorCommitActivity,
-    SHARED_Data__ContributorCommitActivity,
-    SHARED_Model__LinesStats,
     SHARED_Model__RepoWithCommitCountsAndLanguages,
     SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo,
-} from '@/shared/models'
+} from '@/shared/models/models/Repos'
+import { SHARED_Model__LinesStats } from '@/shared/models/models/Stats'
 
-const getContributorActivity = async (
+/* ======== fetch one user's contributions to one repo ======== */
+
+interface SERVICE_Response__getContributorActivity extends SERVICE_Response__BASE {
+    activity?: SHARED_Model__ContributorCommitActivity
+}
+
+export const getContributorActivity = async (
     accessToken: string,
     authUser: string,
     owner: string,
     repo: string,
-): Promise<SHARED_APIFields__GetContributorCommitActivity> => {
+): Promise<SERVICE_Response__getContributorActivity> => {
     const { success, error, allActivity } = await GH_API_Call__getAllContributorActivity(accessToken, owner, repo)
     console.log(`[services/lineStats] getContributorActivity ${owner}/${repo} has ${allActivity?.length} contributors`)
 
@@ -29,7 +34,7 @@ const getContributorActivity = async (
             author: { login },
         } = allActivity[i]
         if (login === authUser) {
-            return { activity: allActivity[i] as SHARED_Data__ContributorCommitActivity, success: true }
+            return { activity: allActivity[i] as SHARED_Model__ContributorCommitActivity, success: true }
         }
     }
 
@@ -57,35 +62,6 @@ interface SERVICE_Response__computeLinesStatsAcrossReposUsingMetrics extends SER
     }
 }
 
-// const { success: userSuccess, error: userError, user } = await GH_API_Call__getUser(accessToken)
-// if (!userSuccess || user === undefined) {
-//     return { lifetimeStats: undefined, success: false, error: userError }
-// }
-
-// const { login: authUser } = user
-// const {
-//     success: linesSuccess,
-//     error: linesError,
-//     data: linesData,
-// } = await SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics(accessToken, authUser, repos)
-// if (!linesSuccess || linesData === undefined) {
-//     return { lifetimeStats: undefined, success: false, error: linesError }
-// }
-
-// const { reposWithLinesStats, totalLinesStats } = linesData
-
-// const rcStats: SHARED_Model__RepoCommitCountStats = {
-//     numRepos: reposWithLinesStats.length,
-//     numCommits: sharedRepoReduceCommits(reposWithLinesStats),
-// }
-
-// const lifetimeStats: SHARED_Model__LifetimeStats = {
-//     repos: reposWithLinesStats,
-//     rc_stats: rcStats,
-//     lines_stats: totalLinesStats,
-//     language_stats: totalLanguageStats,
-// }
-
 // TODO: this should return success/error
 export const SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics = async (
     accessToken: string,
@@ -93,10 +69,10 @@ export const SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics = async (
     repos: SHARED_Model__RepoWithCommitCountsAndLanguages[],
 ): Promise<SERVICE_Response__computeLinesStatsAcrossReposUsingMetrics> => {
     try {
-        const activities: SHARED_APIFields__GetContributorCommitActivity[] = []
+        const activities: SERVICE_Response__getContributorActivity[] = []
         let idx = 0
         while (idx < repos.length) {
-            const activityPromiseChunk: Promise<SHARED_APIFields__GetContributorCommitActivity>[] = []
+            const activityPromiseChunk: Promise<SERVICE_Response__getContributorActivity>[] = []
             const startIdx = idx
             for (; idx < repos.length && idx < startIdx + CHUNK_SIZE; idx++) {
                 const { owner, name: repoName } = repos[idx]
