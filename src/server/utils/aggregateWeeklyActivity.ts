@@ -1,7 +1,7 @@
-import { SHARED_Data__WeeklyContributionCommitActivityData } from '@/shared/models/models/Metrics'
+import { SHARED_Model__WeeklyContributionCommitActivityData } from '@/shared/models/models/Metrics'
 
 export const aggregateWeeklyContributorActivity = (
-    weeks: SHARED_Data__WeeklyContributionCommitActivityData[],
+    weeks: SHARED_Model__WeeklyContributionCommitActivityData[],
 ): {
     numLines: number
     numAdditions: number

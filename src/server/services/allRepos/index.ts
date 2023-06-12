@@ -3,10 +3,10 @@ import { SERVICE_Response__BASE } from '..'
 import { PAGE_SIZE } from '@/server/lib/gh-api'
 import { GH_API_Call__countRepos, GH_API_Call__listRepos } from '@/server/lib/gh-api/repos'
 import { chunkArr } from '@/server/utils/chunkArr'
-import { SHARED_Data__Repo } from '@/shared/models/models/Repos'
+import { SHARED_Model__Repo } from '@/shared/models/models/Repos'
 
 interface SERVICE_Response__listRepos extends SERVICE_Response__BASE {
-    repos?: SHARED_Data__Repo[]
+    repos?: SHARED_Model__Repo[]
 }
 
 // https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-the-authenticated-user
@@ -64,7 +64,7 @@ export const listAllRepos = async (accessToken: string): Promise<SERVICE_Respons
             repoResArr.push(...(await Promise.all(chunkedRepoResPromises[i])))
         }
 
-        const allRepos: SHARED_Data__Repo[] = []
+        const allRepos: SHARED_Model__Repo[] = []
         for (let i = 0; i < repoResArr.length; i++) {
             const { success: reposSuccess, error: reposError, repos } = repoResArr[i]
             if (!reposSuccess || repos === undefined) {

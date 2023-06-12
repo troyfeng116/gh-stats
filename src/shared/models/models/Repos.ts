@@ -1,6 +1,6 @@
 import { SHARED_Model__LinesStats } from './Stats'
 
-export interface SHARED_Data__Repo {
+export interface SHARED_Model__Repo {
     id: number
     node_id: string
     name: string

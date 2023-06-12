@@ -9,7 +9,7 @@ import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { listAllRepos } from '@/server/services/allRepos'
 import { chunkArr } from '@/server/utils/chunkArr'
 import { SHARED_Model__Commit, SHARED_Model__CommitWithDiff } from '@/shared/models/models/Commits'
-import { SHARED_Data__Repo } from '@/shared/models/models/Repos'
+import { SHARED_Model__Repo } from '@/shared/models/models/Repos'
 
 interface SERVICE_Response__listCommits extends SERVICE_Response__BASE {
     commits?: SHARED_Model__Commit[]
@@ -81,7 +81,7 @@ interface SERVICE_Response__countLifetimeCommits extends SERVICE_Response__BASE 
 const countCommitsInRepos = async (
     accessToken: string,
     authUser: string,
-    repos: SHARED_Data__Repo[],
+    repos: SHARED_Model__Repo[],
 ): Promise<number> => {
     const countCommitsPromises: Promise<SERVICE_Response__countCommitsForRepo>[] = []
     for (let i = 0; i < repos.length; i++) {

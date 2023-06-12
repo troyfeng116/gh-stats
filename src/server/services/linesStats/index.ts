@@ -3,7 +3,7 @@ import { SERVICE_Response__BASE } from '..'
 import { CHUNK_SIZE } from '@/server/constants'
 import { GH_API_Call__getAllContributorActivity } from '@/server/lib/gh-api/metrics'
 import { aggregateWeeklyContributorActivity } from '@/server/utils/aggregateWeeklyActivity'
-import { SHARED_Data__ContributorCommitActivity } from '@/shared/models/models/Metrics'
+import { SHARED_Model__ContributorCommitActivity } from '@/shared/models/models/Metrics'
 import {
     SHARED_Model__RepoWithCommitCountsAndLanguages,
     SHARED_Model__RepoWithCommitCountsAndLanguagesAndLineInfo,
@@ -13,7 +13,7 @@ import { SHARED_Model__LinesStats } from '@/shared/models/models/Stats'
 /* ======== fetch one user's contributions to one repo ======== */
 
 interface SERVICE_Response__getContributorActivity extends SERVICE_Response__BASE {
-    activity?: SHARED_Data__ContributorCommitActivity
+    activity?: SHARED_Model__ContributorCommitActivity
 }
 
 export const getContributorActivity = async (
@@ -34,7 +34,7 @@ export const getContributorActivity = async (
             author: { login },
         } = allActivity[i]
         if (login === authUser) {
-            return { activity: allActivity[i] as SHARED_Data__ContributorCommitActivity, success: true }
+            return { activity: allActivity[i] as SHARED_Model__ContributorCommitActivity, success: true }
         }
     }
 
