@@ -1,23 +1,3 @@
-export interface GH_GQL_Schema__Viewer {
-    id: string
-    login: string
-    name: string | null
-    email: string | null
-    createdAt: string
-    followers: {
-        totalCount: number
-    }
-    following: {
-        totalCount: number
-    }
-    repositories: {
-        totalCount: number
-    }
-    repositoriesContributedTo: {
-        totalCount: number
-    }
-}
-
 export const GH_GQL_Query__Viewer = `query Viewer {
     viewer {
         id
@@ -40,3 +20,23 @@ export const GH_GQL_Query__Viewer = `query Viewer {
     }
 }
 `
+
+export interface GH_GQL_Schema__Viewer {
+    id: string
+    login: string
+    name: string | null
+    email: string | null
+    createdAt: string
+    followers: {
+        totalCount: number
+    }
+    following: {
+        totalCount: number
+    }
+    repositories: {
+        totalCount: number
+    }
+    repositoriesContributedTo: {
+        totalCount: number
+    }
+}

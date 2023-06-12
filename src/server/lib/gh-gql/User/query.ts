@@ -1,3 +1,23 @@
+export const GH_GQL_Query__User = `query User($login: String!) {
+    user(login: $login) {
+        id
+        login
+        name
+        email
+        createdAt
+        followers {
+            totalCount
+        }
+        following {
+            totalCount
+        }
+        repositories {
+            totalCount
+        }
+    }
+}
+`
+
 export interface GH_GQL_Schema__User {
     id: string
     login: string
@@ -21,23 +41,3 @@ export interface GH_GQL_Schema__User {
 export interface GH_GQL_QueryVars__getUser {
     login: string
 }
-
-export const GH_GQL_Query__User = `query User($login: String!) {
-    user(login: $login) {
-        id
-        login
-        name
-        email
-        createdAt
-        followers {
-            totalCount
-        }
-        following {
-            totalCount
-        }
-        repositories {
-            totalCount
-        }
-    }
-}
-`

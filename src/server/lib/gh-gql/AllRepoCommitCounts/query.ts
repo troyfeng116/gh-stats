@@ -1,56 +1,3 @@
-export interface GH_GQL_Schema__RepoWithCommitCountAndLanguages {
-    id: string
-    name: string
-    diskUsage: number
-    languages: {
-        totalCount: number
-        pageInfo: {
-            endCursor: string
-            hasNextPage: boolean
-        }
-        edges: {
-            size: number
-            node: {
-                color: string
-                name: string
-            }
-        }[]
-    }
-    owner: {
-        login: string
-    }
-    defaultBranchRef: {
-        target: {
-            history: {
-                totalCount: number
-            }
-        }
-    }
-}
-
-export interface GH_GQL_Schema__RepoConnection {
-    totalDiskUsage: number
-    totalCount: number
-    pageInfo: {
-        hasPreviousPage: boolean
-        hasNextPage: boolean
-        startCursor: string
-        endCursor: string
-    }
-    nodes: GH_GQL_Schema__RepoWithCommitCountAndLanguages[]
-}
-
-export interface GH_GQL_QueryVars__AllRepoCommitCounts {
-    author: {
-        id: string
-    }
-    includeRepos: boolean
-    includeReposContributed: boolean
-    first?: number
-    reposAfter?: string
-    reposContributedAfter?: string
-}
-
 export const GH_GQL_Query__ReposAndCommitCounts = `query AllRepoCommitCounts(
     $author: CommitAuthor!,
     $includeRepos: Boolean!,
@@ -115,3 +62,56 @@ fragment repoConn on RepositoryConnection {
     }
 }
 `
+
+export interface GH_GQL_Schema__RepoWithCommitCountAndLanguages {
+    id: string
+    name: string
+    diskUsage: number
+    languages: {
+        totalCount: number
+        pageInfo: {
+            endCursor: string
+            hasNextPage: boolean
+        }
+        edges: {
+            size: number
+            node: {
+                color: string
+                name: string
+            }
+        }[]
+    }
+    owner: {
+        login: string
+    }
+    defaultBranchRef: {
+        target: {
+            history: {
+                totalCount: number
+            }
+        }
+    }
+}
+
+export interface GH_GQL_Schema__RepoConnection {
+    totalDiskUsage: number
+    totalCount: number
+    pageInfo: {
+        hasPreviousPage: boolean
+        hasNextPage: boolean
+        startCursor: string
+        endCursor: string
+    }
+    nodes: GH_GQL_Schema__RepoWithCommitCountAndLanguages[]
+}
+
+export interface GH_GQL_QueryVars__AllRepoCommitCounts {
+    author: {
+        id: string
+    }
+    includeRepos: boolean
+    includeReposContributed: boolean
+    first?: number
+    reposAfter?: string
+    reposContributedAfter?: string
+}
