@@ -1,6 +1,6 @@
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
-import { SHARED_APIFields__GetUserCard } from '@/shared/models'
+import { SHARED_APIFields__GetUserCard } from '@/shared/models/apiFields'
 
 export const SERVICE_Call__getUserCardDataFromGQL = async (
     accessToken: string,

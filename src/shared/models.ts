@@ -9,22 +9,6 @@ import { SHARED_APIFields__BASE } from './models/apiFields'
 - `SHARED_Model` is completely custom-defined
 */
 
-/* ======== user ======== */
-
-export interface SHARED_Data__UserCardData {
-    userId: string
-    name: string | undefined
-    email: string | undefined
-    followers: number
-    following: number
-    createdAt: string
-    totalRepos: number
-}
-
-export interface SHARED_APIFields__GetUserCard extends SHARED_APIFields__BASE {
-    userCard?: SHARED_Data__UserCardData
-}
-
 /* ======== commits ======== */
 
 export interface SHARED_Data__Commit {
