@@ -6,14 +6,14 @@ import {
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { listAllRepos } from '@/server/services/allRepos'
 import { chunkArr } from '@/server/utils/chunkArr'
+import { SHARED_Data__Repo } from '@/shared/models'
 import {
     SHARED_APIFields__CountCommitsResponse,
     SHARED_APIFields__ListCommits,
     SHARED_APIFields__ListCommitWithDiff,
     SHARED_Data__Commit,
     SHARED_Data__CommitWithDiff,
-    SHARED_Data__Repo,
-} from '@/shared/models'
+} from '@/shared/models/models/Commits'
 
 export const listCommits = async (
     accessToken: string,
