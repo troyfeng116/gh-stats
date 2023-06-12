@@ -40,16 +40,14 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
         return <div></div>
     }
 
-    const { userId, name, email, followers, following, createdAt, publicRepos, privateRepos, totalRepos } = userCard
+    const { userId, name, email, followers, following, createdAt, totalRepos } = userCard
     return (
         <div>
             <h2>{userId}</h2>
             {name && <p>{name}</p>}
             {email && <p>{email}</p>}
             {createdAt !== undefined && <p>Account created: {new Date(Date.parse(createdAt)).toLocaleString()}</p>}
-            <p>
-                Total repos: {totalRepos} ({publicRepos} public, {privateRepos} private)
-            </p>
+            <p>Total repos: {totalRepos}</p>
             <p>
                 {followers} followers, {following} following
             </p>

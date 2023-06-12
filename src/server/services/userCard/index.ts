@@ -30,8 +30,6 @@ export const SERVICE_Call__getUserCardDataFromGQL = async (
             followers: followers,
             following: following,
             createdAt: createdAt,
-            publicRepos: 0,
-            privateRepos: 0,
             totalRepos: totalRepos,
         },
     }
@@ -55,8 +53,6 @@ export const getUserCardDataFromAPI = async (accessToken: string): Promise<SHARE
             followers: followers,
             following: following,
             createdAt: created_at,
-            publicRepos: public_repos,
-            privateRepos: total_private_repos,
             totalRepos: public_repos + total_private_repos,
         },
     }

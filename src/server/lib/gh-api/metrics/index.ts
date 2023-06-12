@@ -33,7 +33,8 @@ export const GH_API_Call__getAllContributorActivity = async (
         return { allActivity: undefined, success: false, error: `error ${status}: ${statusText}` }
     }
 
-    const resJson: GH_API_Obj__ContributorActivityOnRepo[] = (await res.json()) as GH_API_Obj__ContributorActivityOnRepo[]
+    const resJson: GH_API_Obj__ContributorActivityOnRepo[] =
+        (await res.json()) as GH_API_Obj__ContributorActivityOnRepo[]
     // console.log(resJson)
 
     return { allActivity: resJson, success: true }

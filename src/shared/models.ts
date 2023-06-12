@@ -29,8 +29,6 @@ export interface SHARED_Data__UserCardData {
     followers: number
     following: number
     createdAt: string
-    publicRepos: number
-    privateRepos: number
     totalRepos: number
 }
 
