@@ -1,7 +1,7 @@
 // import { test } from '@/server/lib/git-spawn'
 import { SERVICE_Call__getUserCardDataFromGQL } from '@/server/services/userCard'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
-import { SHARED_APIFields__GetUserCard } from '@/shared/models/apiFields'
+import { SHARED_APIFields__GetUserCard } from '@/shared/models/apiFields/userCard'
 
 /*
 Requires authentication

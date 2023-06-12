@@ -1,4 +1,4 @@
-export interface SHARED_Model__UserCardData {
+export interface SHARED_Model__UserCard {
     userId: string
     name: string | undefined
     email: string | undefined
