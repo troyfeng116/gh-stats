@@ -1,6 +1,7 @@
 import { postAPI } from '../fetchAPI'
 
-import { SHARED_APIFields__GetToken, SHARED_APIFields__ValidateToken } from '@/shared/models/apiFields'
+import { SHARED_APIFields__GetToken } from '@/shared/models/apiFields/getToken'
+import { SHARED_APIFields__ValidateToken } from '@/shared/models/apiFields/validateToken'
 
 /*
 Unauthenticated APIs (no access token needed)
