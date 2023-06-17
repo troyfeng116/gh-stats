@@ -17,6 +17,9 @@ export const GH_GQL_Query__Viewer = `query Viewer {
         repositoriesContributedTo {
             totalCount
         }
+        pullRequests(states: MERGED) {
+            totalCount
+        }
     }
 }
 `
@@ -37,6 +40,9 @@ export interface GH_GQL_Schema__Viewer {
         totalCount: number
     }
     repositoriesContributedTo: {
+        totalCount: number
+    }
+    pullRequests: {
         totalCount: number
     }
 }

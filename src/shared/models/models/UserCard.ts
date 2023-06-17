@@ -6,4 +6,5 @@ export interface SHARED_Model__UserCard {
     following: number
     createdAt: string
     totalRepos: number
+    totalPRs: number
 }

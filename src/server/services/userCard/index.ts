@@ -19,6 +19,7 @@ export const SERVICE_Call__getUserCardDataFromGQL = async (
         following: { totalCount: following },
         createdAt,
         repositories: { totalCount: totalRepos },
+        pullRequests: { totalCount: totalPRs },
     } = viewer
 
     return {
@@ -31,6 +32,7 @@ export const SERVICE_Call__getUserCardDataFromGQL = async (
             following: following,
             createdAt: createdAt,
             totalRepos: totalRepos,
+            totalPRs: totalPRs,
         },
     }
 }
@@ -54,6 +56,7 @@ export const getUserCardDataFromAPI = async (accessToken: string): Promise<SHARE
             following: following,
             createdAt: created_at,
             totalRepos: public_repos + total_private_repos,
+            totalPRs: 0,
         },
     }
 }

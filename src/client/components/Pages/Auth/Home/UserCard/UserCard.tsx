@@ -40,7 +40,7 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
         return <div></div>
     }
 
-    const { userId, name, email, followers, following, createdAt, totalRepos } = userCard
+    const { userId, name, email, followers, following, createdAt, totalRepos, totalPRs } = userCard
     return (
         <div>
             <h2>{userId}</h2>
@@ -48,6 +48,7 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
             {email && <p>{email}</p>}
             {createdAt !== undefined && <p>Account created: {new Date(Date.parse(createdAt)).toLocaleString()}</p>}
             <p>Total repos: {totalRepos}</p>
+            <p>Total PRs merged: {totalPRs}</p>
             <p>
                 {followers} followers, {following} following
             </p>
