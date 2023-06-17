@@ -5,7 +5,7 @@ import { SHARED_APIFields__UserCard } from '@/shared/models/apiFields/userCard'
 export const SERVICE_Call__getUserCardDataFromGQL = async (
     accessToken: string,
 ): Promise<SHARED_APIFields__UserCard> => {
-    const { success, error, viewer } = await GH_GQL_Call__Viewer(accessToken)
+    const { success, error, viewer } = await GH_GQL_Call__Viewer(accessToken, {})
 
     if (!success || viewer === undefined) {
         return { success: false, error: error, userCard: undefined }
