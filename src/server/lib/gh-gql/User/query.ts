@@ -38,6 +38,6 @@ export interface GH_GQL_Schema__User {
     }
 }
 
-export interface GH_GQL_QueryVars__getUser {
+export interface GH_GQL_QueryVars__User {
     login: string
 }

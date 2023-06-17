@@ -1,6 +1,6 @@
 import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse_BASE, GH_GQL_Response__BASE } from '..'
 
-import { GH_GQL_Query__User, GH_GQL_QueryVars__getUser, GH_GQL_Schema__User } from './query'
+import { GH_GQL_Query__User, GH_GQL_QueryVars__User, GH_GQL_Schema__User } from './query'
 
 interface GH_GQL_RawResponse__User extends GH_GQL_RawResponse_BASE {
     data?: {
@@ -14,7 +14,7 @@ export interface GH_GQL_Response__User extends GH_GQL_Response__BASE {
 
 export const GH_GQL_Call__User = async (
     accessToken: string,
-    variables: GH_GQL_QueryVars__getUser,
+    variables: GH_GQL_QueryVars__User,
 ): Promise<GH_GQL_Response__User> => {
     const res = await BASE_GH_GQL_Call__makeQueryWithAuth(accessToken, GH_GQL_Query__User, variables)
     const { status, statusText } = res
