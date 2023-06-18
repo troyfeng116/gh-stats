@@ -1,0 +1,4 @@
+.contribution_week {
+    display: flex;
+    flex-direction: column;
+}

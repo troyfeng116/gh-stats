@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+import WeekContainer from './WeekContainer'
+
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { contributionsAPI } from '@/client/lib/authAPI'
 import { SHARED_Model__Contributions } from '@/shared/models/models/Contributions'
-import { weekdayIntToName } from '@/shared/utils/weekdayIntToName'
 
 export const Contributions: React.FC = () => {
     const { accessToken } = useAuth()
@@ -56,37 +57,7 @@ export const Contributions: React.FC = () => {
             <h2>Last year of contributions</h2>
             <div>{contributionYears}</div>
             <p>Total contributions: {totalContributions}</p>
-            <div>
-                {weeks.map((week, weekIdx) => {
-                    const { contributionDays } = week
-                    return (
-                        <div key={`week-${weekIdx}`}>
-                            {contributionDays.map((day, dayIdx) => {
-                                const { color, contributionCount, contributionLevel, date, weekday } = day
-
-                                return (
-                                    <div key={`day-${dayIdx}`}>
-                                        <div
-                                            style={{
-                                                backgroundColor: color,
-                                                width: 12,
-                                                height: 12,
-                                                borderRadius: '50%',
-                                            }}
-                                        ></div>
-                                        <p>
-                                            Contribution count: {contributionCount} ({contributionLevel})
-                                        </p>
-                                        <p>
-                                            Date: {date} {weekdayIntToName(weekday)}
-                                        </p>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    )
-                })}
-            </div>
+            <WeekContainer weeks={weeks} />
             <div>
                 {commitContributionsByRepository.map((repoContributions, idx) => {
                     const { repository, contributions } = repoContributions
