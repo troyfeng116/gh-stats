@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import { GH_GQL_Schema__ContributionCalendarDay } from '@/server/lib/gh-gql/Contributions/query'
+import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
 import { weekdayIntToName } from '@/shared/utils/weekdayIntToName'
 
 interface DayCellProps {
-    day: GH_GQL_Schema__ContributionCalendarDay
+    day: SHARED_Model__ContributionCalendarDay
 }
 
 export const DayCell: React.FC<DayCellProps> = (props) => {

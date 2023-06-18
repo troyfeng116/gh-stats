@@ -1,3 +1,5 @@
+import { SHARED_Model__ContributionLevelType } from '@/shared/models/models/Contributions'
+
 export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 100) {
     viewer {
         contributionsCollection {
@@ -72,18 +74,11 @@ export interface GH_GQL_Schema__ContributionCalendarWeek {
     contributionDays: GH_GQL_Schema__ContributionCalendarDay[]
 }
 
-export enum GH_GQL_Schema__ContributionLevelType {
-    NONE = 'NONE',
-    FIRST_QUARTILE = 'FIRST_QUARTILE',
-    SECOND_QUARTILE = 'SECOND_QUARTILE',
-    THIRD_QUARTILE = 'THIRD_QUARTILE',
-    FOURTH_QUARTILE = 'FOURTH_QUARTILE',
-}
-
 export interface GH_GQL_Schema__ContributionCalendarDay {
     color: string
     contributionCount: string
-    contributionLevel: GH_GQL_Schema__ContributionLevelType
+    // TODO: should this be in shared
+    contributionLevel: SHARED_Model__ContributionLevelType
     date: string
     weekday: number
 }

@@ -4,10 +4,10 @@ import React from 'react'
 
 import Week from './Week'
 
-import { GH_GQL_Schema__ContributionCalendarWeek } from '@/server/lib/gh-gql/Contributions/query'
+import { SHARED_Model__ContributionCalendarWeek } from '@/shared/models/models/Contributions'
 
 interface WeekContainerProps {
-    weeks: GH_GQL_Schema__ContributionCalendarWeek[]
+    weeks: SHARED_Model__ContributionCalendarWeek[]
 }
 
 export const WeekContainer: React.FC<WeekContainerProps> = (props) => {
