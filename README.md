@@ -34,14 +34,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## TODO:
-- GH_API_User model
-- rate limiting safety checks
-
-Short-term:
 - check renaming stuff according to conventions (client, server/shared)
 - /repos page with per-repo info and clickable on each repo?
 - split repos into owned(public/private)/contributed
-- don't fetch total lines of code in /repos initially? (add option to view as background call)
 - rate limiting checks (block backend calls if approaching rate limit)
 - client lib APIs: one per file
 - clean up backend services
+- view total lines of code with button
+- pagination for contributionsByRepo
+- frontend for contributions
