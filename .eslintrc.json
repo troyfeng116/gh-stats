@@ -59,6 +59,7 @@
             {
                 "enforceForRenamedProperties": false
             }
-        ]
+        ],
+        "@typescript-eslint/no-empty-function": "off"
     }
 }

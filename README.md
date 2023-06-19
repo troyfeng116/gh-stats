@@ -32,3 +32,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## TODO:
+- check renaming stuff according to conventions (client, server/shared)
+- /repos page with per-repo info and clickable on each repo?
+- split repos into owned(public/private)/contributed
+- rate limiting checks (block backend calls if approaching rate limit)
+- client lib APIs: one per file
+- clean up backend services
+- view total lines of code with button
+- pagination for contributionsByRepo
+- add URLs to all GQL queries
+- add issue + PR contributions by repo to Contributions query, merge with commit contributions

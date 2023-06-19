@@ -3,6 +3,8 @@ import './globals.css'
 import React from 'react'
 import { Inter } from 'next/font/google'
 
+import ClientWrapper from '@/client/components/Wrappers'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -13,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <ClientWrapper>{children}</ClientWrapper>
+            </body>
         </html>
     )
 }
