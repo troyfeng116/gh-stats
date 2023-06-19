@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+import ByRepo from './ByRepo'
 import CalendarGrid from './CalendarGrid'
 
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
@@ -62,32 +63,7 @@ export const Contributions: React.FC = () => {
             </div>
             <div>
                 <h3>Contributions by repository:</h3>
-                {commitContributionsByRepository.map((repoContributions, idx) => {
-                    const { repository, contributions } = repoContributions
-                    const {
-                        name,
-                        owner: { login },
-                    } = repository
-                    const { nodes } = contributions
-                    return (
-                        <div key={`repo-${idx}`}>
-                            <p>
-                                {login}/{name}
-                            </p>
-                            {nodes.map((node, idx) => {
-                                const { occurredAt, commitCount } = node
-                                return (
-                                    <div key={`repo-contribution-node-${idx}`}>
-                                        <div></div>
-                                        <p>
-                                            {commitCount} commits at {new Date(occurredAt).toLocaleDateString()}
-                                        </p>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    )
-                })}
+                <ByRepo contributionsByRepo={commitContributionsByRepository} />
             </div>
         </div>
     )
