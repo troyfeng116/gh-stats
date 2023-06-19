@@ -55,10 +55,13 @@ export const Contributions: React.FC = () => {
     return (
         <div>
             <h2>Last year of contributions</h2>
-            <div>{contributionYears}</div>
-            <p>Total contributions: {totalContributions}</p>
-            <WeekContainer weeks={weeks} />
+            <p>{contributionYears}</p>
             <div>
+                <h3>Total contributions: {totalContributions}</h3>
+                <WeekContainer weeks={weeks} />
+            </div>
+            <div>
+                <h3>Contributions by repository:</h3>
                 {commitContributionsByRepository.map((repoContributions, idx) => {
                     const { repository, contributions } = repoContributions
                     const {

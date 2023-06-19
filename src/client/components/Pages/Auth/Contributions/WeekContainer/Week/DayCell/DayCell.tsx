@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
-import { weekdayIntToName } from '@/shared/utils/weekdayIntToName'
+import { weekdayIntToFullName } from '@/shared/utils/weekdayIntToName'
 
 interface DayCellProps {
     day: SHARED_Model__ContributionCalendarDay
@@ -47,10 +47,12 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
                         color: 'black',
                         position: 'absolute',
                         left: -24,
+                        top: 18,
+                        padding: '3px 6px',
                     }}
                 >
                     <p>
-                        {weekdayIntToName(weekday)} {new Date(date).toLocaleDateString()}
+                        {weekdayIntToFullName(weekday)} {new Date(date).toLocaleDateString()}
                     </p>
                     <p>
                         {contributionCount} contributions ({contributionLevel})
