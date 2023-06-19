@@ -1,6 +1,6 @@
 import { SERVICE_Call__getAllReposWithCommitCounts } from '@/server/services/reposAndCommitCounts'
 import { SHARED_APIFields__LifetimeStats, SHARED_Model__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
-import { SHARED_Model__AllLanguageStats } from '@/shared/models/models/Language'
+import { SHARED_Model__AllLanguageStats, SHARED_Model__Language } from '@/shared/models/models/Language'
 import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models/models/Repos'
 import { SHARED_Model__RepoCommitCountStats } from '@/shared/models/models/Stats'
 
@@ -22,11 +22,7 @@ const sharedRepoReduceLanguageStats = (
         }
     }
 
-    const allLanguageData: {
-        size: number
-        color: string
-        name: string
-    }[] = []
+    const allLanguageData: SHARED_Model__Language[] = []
 
     for (const name in languageToDisk) {
         const { totalSize, color } = languageToDisk[name]

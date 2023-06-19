@@ -1,0 +1,4 @@
+.calendar_grid {
+    display: flex;
+    flex-direction: column;
+}

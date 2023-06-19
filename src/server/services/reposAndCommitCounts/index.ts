@@ -58,7 +58,7 @@ interface SERVICE_Response__getAllReposWithCommitCounts extends SERVICE_Response
 export const SERVICE_Call__getAllReposWithCommitCounts = async (
     accessToken: string,
 ): Promise<SERVICE_Response__getAllReposWithCommitCounts> => {
-    const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken)
+    const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken, {})
 
     if (!viewerSuccess || viewer === undefined) {
         return { repos: undefined, success: false, error: viewerError }
