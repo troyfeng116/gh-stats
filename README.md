@@ -42,4 +42,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - clean up backend services
 - view total lines of code with button
 - pagination for contributionsByRepo
-- frontend for contributions
+- add URLs to all GQL queries
+- add issue + PR contributions by repo to Contributions query, merge with commit contributions
