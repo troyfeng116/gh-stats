@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-import WeekContainer from './WeekContainer'
+import CalendarGrid from './CalendarGrid'
 
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { contributionsAPI } from '@/client/lib/authAPI'
@@ -58,7 +58,7 @@ export const Contributions: React.FC = () => {
             <p>{contributionYears}</p>
             <div>
                 <h3>Total contributions: {totalContributions}</h3>
-                <WeekContainer weeks={weeks} />
+                <CalendarGrid weeks={weeks} />
             </div>
             <div>
                 <h3>Contributions by repository:</h3>

@@ -25,7 +25,6 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
         <div
             style={{
                 position: 'relative',
-                margin: 1,
             }}
         >
             <div

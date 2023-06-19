@@ -1,9 +1,9 @@
-.week_container {
+.calendar_grid {
     display: flex;
     flex-direction: column;
 }
 
-.week_container_row {
+.calendar_grid_row {
     display: flex;
     align-items: center;
 }
