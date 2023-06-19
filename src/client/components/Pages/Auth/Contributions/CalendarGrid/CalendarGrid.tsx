@@ -2,7 +2,7 @@ import styles from './CalendarGrid.module.css'
 
 import React from 'react'
 
-import DayCell from './DayCell'
+import Row from './Row'
 
 import { weeksToCalendarGrid } from '@/client/utils/weeksToCalendarGrid'
 import { SHARED_Model__ContributionCalendarWeek } from '@/shared/models/models/Contributions'
@@ -20,18 +20,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = (props) => {
     return (
         <div className={styles.calendar_grid}>
             {SHORT_WEEKDAYS.map((weekday, idx) => {
-                return (
-                    <div key={`calendar-grid-row-${idx}`} className={styles.calendar_grid_row}>
-                        <p style={{ width: 48 }}>{weekday}</p>
-                        {calendarGrid[idx].map((day, dayIdx) => {
-                            return (
-                                <div key={`day-cell-${dayIdx}`} style={{ margin: '0 1px' }}>
-                                    <DayCell day={day} />
-                                </div>
-                            )
-                        })}
-                    </div>
-                )
+                return <Row key={`calendar-grid-row-${idx}`} weekdayName={weekday} days={calendarGrid[idx]} />
             })}
         </div>
     )
