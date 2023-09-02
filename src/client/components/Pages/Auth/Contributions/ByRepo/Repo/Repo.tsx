@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Histogram from '../Histogram'
+
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
 interface RepoProps {
@@ -16,22 +18,34 @@ export const Repo: React.FC<RepoProps> = (props) => {
     } = repository
     const { nodes } = contributions
 
+    const histogramData: { x: number; y: number }[] = nodes.map(({ occurredAt, commitCount }) => {
+        return { x: new Date(occurredAt).getTime(), y: commitCount }
+    })
+
     return (
         <div>
             <p>
                 {login}/{name}
             </p>
-            {nodes.map((node, idx) => {
-                const { occurredAt, commitCount } = node
-                return (
-                    <div key={`repo-contribution-node-${idx}`}>
-                        <div>{occurredAt}</div>
-                        <p>
-                            {commitCount} commits at {new Date(occurredAt).toLocaleDateString()}
-                        </p>
-                    </div>
-                )
-            })}
+            <Histogram
+                data={histogramData}
+                yAxisProperties={{
+                    label: 'Contributions',
+                }}
+                xAxisProperties={{
+                    label: 'Date',
+                    numTicks: Math.min(histogramData.length, 9),
+                    tickLabelMapping: (tickValue) => {
+                        return new Date(tickValue).toLocaleDateString(undefined, {
+                            year: '2-digit',
+                            month: 'numeric',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: '2-digit',
+                        })
+                    },
+                }}
+            />
         </div>
     )
 }
