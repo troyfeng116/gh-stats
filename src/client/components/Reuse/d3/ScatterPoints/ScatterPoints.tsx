@@ -1,7 +1,7 @@
 import React from 'react'
 import * as d3 from 'd3'
 
-interface DataPointsProps {
+interface ScatterPointsProps {
     data: { x: number; y: number }[]
     xDomain: [number, number]
     yDomain: [number, number]
@@ -10,7 +10,7 @@ interface DataPointsProps {
     padding: [number, number, number, number]
 }
 
-export const DataPoints: React.FC<DataPointsProps> = (props) => {
+export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
     const { data, xDomain, yDomain, width, height, padding } = props
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
 

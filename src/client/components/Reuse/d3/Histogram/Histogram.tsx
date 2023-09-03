@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 
 import Axes, { AxisProperties } from '@/client/components/Reuse/d3/Axes'
-import DataPoints from '@/client/components/Reuse/d3/DataPoints'
+import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
 
 interface HistogramProps {
     data: { x: number; y: number }[]
@@ -32,7 +32,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
 
     return (
         <svg width={width} height={height}>
-            <DataPoints
+            <ScatterPoints
                 data={data}
                 xDomain={xDomain}
                 yDomain={yDomain}
