@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
+import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
 interface RepoContributionsGraph {
@@ -29,16 +30,7 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraph> = (props) 
                 xAxisProperties={{
                     label: 'Date',
                     numTicks: Math.min(histogramData.length, 9),
-                    tickLabelMapping: (tickValue) => {
-                        return new Date(tickValue).toLocaleDateString(undefined, {
-                            year: '2-digit',
-                            month: 'numeric',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false,
-                        })
-                    },
+                    tickLabelMapping: tickValueToDateLabel,
                 }}
             />
         </div>
