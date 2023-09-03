@@ -12,19 +12,21 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
     const { contributionsByRepo } = props
 
     const allContributionsData: { x: number; y: number }[] = useMemo(() => {
-        return contributionsByRepo
-            .map((repoContributions) => {
-                const {
-                    contributions: { nodes },
-                } = repoContributions
-                return nodes.map(({ occurredAt, commitCount }) => {
-                    return { x: new Date(occurredAt).getTime(), y: commitCount }
-                })
+        const aggregatedContributions = new Map<number, number>()
+        contributionsByRepo.forEach((repoContributions) => {
+            const {
+                contributions: { nodes },
+            } = repoContributions
+            nodes.forEach(({ occurredAt, commitCount }) => {
+                const contributionTs = new Date(occurredAt).getTime()
+                const prevCommitCount = aggregatedContributions.get(contributionTs) || 0
+                aggregatedContributions.set(contributionTs, prevCommitCount + commitCount)
             })
-            .reduce((prevData, currentDataSoFar) => {
-                currentDataSoFar.push(...prevData)
-                return currentDataSoFar
-            }, [])
+        })
+
+        return Array.from(aggregatedContributions.entries()).map(([occurredAt, commitCount]) => {
+            return { x: occurredAt, y: commitCount }
+        })
     }, [contributionsByRepo])
 
     return (

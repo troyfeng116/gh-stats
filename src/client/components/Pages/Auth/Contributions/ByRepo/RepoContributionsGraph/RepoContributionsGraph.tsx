@@ -29,7 +29,7 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraph> = (props) 
                 }}
                 xAxisProperties={{
                     label: 'Date',
-                    numTicks: Math.min(histogramData.length, 9),
+                    numTicks: 9,
                     tickLabelMapping: tickValueToDateLabel,
                 }}
             />
