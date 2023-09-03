@@ -11,6 +11,8 @@ interface HistogramProps {
     padding?: [number, number, number, number]
     xAxisProperties?: AxisProperties
     yAxisProperties?: AxisProperties
+
+    dataTooltipMapping?: (data: { x: number; y: number }) => string
 }
 
 const AXIS_PADDING_RATIO = 0.1
@@ -23,7 +25,15 @@ const getHistogramDimensionDomain = (values: number[]): [number, number] => {
 }
 
 export const Histogram: React.FC<HistogramProps> = (props) => {
-    const { data, width, height, padding = [18, 18, 90, 90], xAxisProperties, yAxisProperties } = props
+    const {
+        data,
+        width,
+        height,
+        padding = [18, 18, 90, 90],
+        xAxisProperties,
+        yAxisProperties,
+        dataTooltipMapping,
+    } = props
 
     const xValues = data.map(({ x }) => x)
     const yValues = data.map(({ y }) => y)
@@ -32,14 +42,6 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
 
     return (
         <svg width={width} height={height}>
-            <ScatterPoints
-                data={data}
-                xDomain={xDomain}
-                yDomain={yDomain}
-                width={width}
-                height={height}
-                padding={padding}
-            />
             <Axes
                 xDomain={xDomain}
                 yDomain={yDomain}
@@ -48,6 +50,15 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                 padding={padding}
                 xAxisProperties={xAxisProperties}
                 yAxisProperties={yAxisProperties}
+            />
+            <ScatterPoints
+                data={data}
+                xDomain={xDomain}
+                yDomain={yDomain}
+                width={width}
+                height={height}
+                padding={padding}
+                dataTooltipMapping={dataTooltipMapping}
             />
         </svg>
     )

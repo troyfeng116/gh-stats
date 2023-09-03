@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
+import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
 import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
@@ -32,6 +33,7 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraph> = (props) 
                     numTicks: 9,
                     tickLabelMapping: tickValueToDateLabel,
                 }}
+                dataTooltipMapping={dataToContributionsDateMapping}
             />
         </div>
     )

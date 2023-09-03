@@ -1,6 +1,8 @@
 import React from 'react'
 import * as d3 from 'd3'
 
+import { ScatterPoint } from './ScatterPoint/ScatterPoint'
+
 interface ScatterPointsProps {
     data: { x: number; y: number }[]
     xDomain: [number, number]
@@ -8,10 +10,12 @@ interface ScatterPointsProps {
     width: number
     height: number
     padding: [number, number, number, number]
+
+    dataTooltipMapping?: (data: { x: number; y: number }) => string
 }
 
 export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
-    const { data, xDomain, yDomain, width, height, padding } = props
+    const { data, xDomain, yDomain, width, height, padding, dataTooltipMapping } = props
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
 
     const xScale = d3
@@ -26,7 +30,18 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
     return (
         <g>
             {data.map(({ x, y }, idx) => {
-                return <circle key={idx} fill="white" cx={xScale(x)} cy={yScale(y)} r={6} />
+                return (
+                    <ScatterPoint
+                        key={idx}
+                        x={x}
+                        y={y}
+                        xScale={xScale}
+                        yScale={yScale}
+                        r={6}
+                        fill="white"
+                        dataTooltipMapping={dataTooltipMapping}
+                    />
+                )
             })}
         </g>
     )

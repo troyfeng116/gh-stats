@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
+import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
 import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
@@ -29,21 +30,25 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
         })
     }, [contributionsByRepo])
 
-    return (
-        <div>
-            <Histogram
-                data={allContributionsData}
-                width={500}
-                height={360}
-                yAxisProperties={{
-                    label: 'Contributions',
-                }}
-                xAxisProperties={{
-                    label: 'Date',
-                    numTicks: 9,
-                    tickLabelMapping: tickValueToDateLabel,
-                }}
-            />
-        </div>
+    return useMemo(
+        () => (
+            <div>
+                <Histogram
+                    data={allContributionsData}
+                    width={500}
+                    height={360}
+                    yAxisProperties={{
+                        label: 'Contributions',
+                    }}
+                    xAxisProperties={{
+                        label: 'Date',
+                        numTicks: 9,
+                        tickLabelMapping: tickValueToDateLabel,
+                    }}
+                    dataTooltipMapping={dataToContributionsDateMapping}
+                />
+            </div>
+        ),
+        [allContributionsData],
     )
 }
