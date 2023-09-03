@@ -15,8 +15,8 @@ interface AxesProps {
     width: number
     height: number
     padding: [number, number, number, number]
-    xAxisProperties: AxisProperties
-    yAxisProperties: AxisProperties
+    xAxisProperties?: AxisProperties
+    yAxisProperties?: AxisProperties
 }
 
 export const Axes: React.FC<AxesProps> = (props) => {

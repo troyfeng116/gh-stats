@@ -6,11 +6,11 @@ import DataPoints from '@/client/components/Reuse/d3/DataPoints'
 
 interface HistogramProps {
     data: { x: number; y: number }[]
-    width?: number
-    height?: number
+    width: number
+    height: number
     padding?: [number, number, number, number]
-    xAxisProperties: AxisProperties
-    yAxisProperties: AxisProperties
+    xAxisProperties?: AxisProperties
+    yAxisProperties?: AxisProperties
 }
 
 const AXIS_PADDING_RATIO = 0.1
@@ -23,7 +23,7 @@ const getHistogramDimensionDomain = (values: number[]): [number, number] => {
 }
 
 export const Histogram: React.FC<HistogramProps> = (props) => {
-    const { data, width = 450, height = 300, padding = [12, 12, 60, 60], xAxisProperties, yAxisProperties } = props
+    const { data, width, height, padding = [18, 18, 90, 90], xAxisProperties, yAxisProperties } = props
 
     const xValues = data.map(({ x }) => x)
     const yValues = data.map(({ y }) => y)

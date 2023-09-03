@@ -8,12 +8,16 @@ interface YAxisProps {
     yStart: number
     yEnd: number
     xOffset: number
-    axisProperties: AxisProperties
+    axisProperties?: AxisProperties
 }
 
 export const YAxis: React.FC<YAxisProps> = (props) => {
     const { range, yStart, yEnd, xOffset, axisProperties } = props
-    const { label = 'X axis', numTicks = 10, tickLabelMapping = (tickValue) => tickValue.toString() } = axisProperties
+    const {
+        label = 'Y axis',
+        numTicks = 10,
+        tickLabelMapping = (tickValue: number) => tickValue.toString(),
+    } = axisProperties || { label: undefined, numTicks: undefined, tickLabelMapping: undefined }
 
     const yTicks = useMemo(() => {
         const yScale = d3.scaleLinear().domain(range).range([yEnd, yStart])
@@ -35,10 +39,10 @@ export const YAxis: React.FC<YAxisProps> = (props) => {
             >
                 {label}
             </text>
-            <line x1={xOffset} y1={yStart} x2={xOffset} y2={yEnd} />
+            <line x1={xOffset} y1={yStart} x2={xOffset} y2={yEnd} strokeWidth={2} />
             {yTicks.map(({ value, yOffset }) => (
                 <g key={value} transform={`translate(${xOffset}, ${yOffset})`}>
-                    <line x1="-6" x2="0" />
+                    <line x1="-6" x2="0" strokeWidth={2} />
                     <text
                         key={value}
                         style={{
