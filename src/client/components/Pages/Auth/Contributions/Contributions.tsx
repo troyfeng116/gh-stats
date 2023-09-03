@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+import AllContributionsGraph from './AllContributionsGraph'
 import ByRepo from './ByRepo'
 import CalendarGrid from './CalendarGrid'
 
@@ -56,10 +57,15 @@ export const Contributions: React.FC = () => {
     return (
         <div>
             <h2>Last year of contributions</h2>
-            <p>{contributionYears}</p>
+            <h3>Total contributions: {totalContributions}</h3>
+            <p>Previously contributed in {contributionYears.join(', ')}</p>
             <div>
-                <h3>Total contributions: {totalContributions}</h3>
+                <h3>Contributions calendar:</h3>
                 <CalendarGrid weeks={weeks} />
+            </div>
+            <div>
+                <h3>Last year of contributions:</h3>
+                <AllContributionsGraph contributionsByRepo={commitContributionsByRepository} />
             </div>
             <div>
                 <h3>Contributions by repository:</h3>
