@@ -16,11 +16,13 @@ export const Nav: React.FC = () => {
     if (authStatus === AuthStatus.AUTH) {
         return (
             <nav className={styles.nav}>
-                {NAV_AUTH_ROUTES.map(({ href, label }, idx) => (
-                    <Link key={idx} href={href}>
-                        {label}
-                    </Link>
-                ))}
+                <div>
+                    {NAV_AUTH_ROUTES.map(({ href, label }, idx) => (
+                        <Link key={idx} href={href} className={styles.nav_link}>
+                            {label}
+                        </Link>
+                    ))}
+                </div>
 
                 <button onClick={logout}>Log out</button>
             </nav>
@@ -29,11 +31,13 @@ export const Nav: React.FC = () => {
 
     return (
         <nav className={styles.nav}>
-            {NAV_UNAUTH_ROUTES.map(({ href, label }, idx) => (
-                <Link key={idx} href={href}>
-                    {label}
-                </Link>
-            ))}
+            <div>
+                {NAV_UNAUTH_ROUTES.map(({ href, label }, idx) => (
+                    <Link key={idx} href={href} className={styles.nav_link}>
+                        {label}
+                    </Link>
+                ))}
+            </div>
         </nav>
     )
 }

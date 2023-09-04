@@ -1,7 +1,16 @@
 .nav {
-    padding: 6px 12px;
+    padding: 6px 24px;
     border-bottom: 1px solid white;
     min-height: 48px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.nav_link {
+    margin: 12px;
+}
+
+.nav_link:hover {
+    color: gray;
 }
