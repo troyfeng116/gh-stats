@@ -14,8 +14,7 @@ export const weeksToCalendarGrid = (
     for (let i = 0; i < weeks.length; i++) {
         const week = weeks[i]
         const { contributionDays } = week
-        for (let j = 0; j < contributionDays.length; j++) {
-            const day = contributionDays[j]
+        for (const day of contributionDays) {
             const { weekday } = day
             calendarGrid[weekday].push(day)
         }
