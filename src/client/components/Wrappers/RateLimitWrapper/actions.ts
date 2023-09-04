@@ -1,4 +1,4 @@
-import { SHARED_Model__RateLimit } from '@/shared/models/models/RateLimit'
+import { SHARED_Model__RateLimitClientInfo } from '@/shared/models/models/RateLimit'
 
 export const RATE_LIMIT_LOADING = 'RATE_LIMIT_LOADING'
 export const RATE_LIMIT_UNAUTH = 'RATE_LIMIT_UNAUTH'
@@ -20,7 +20,7 @@ interface RateLimitAuthError {
 
 interface RateLimitAuthResponse {
     type: typeof RATE_LIMIT_AUTH_RESPONSE
-    rateLimit: SHARED_Model__RateLimit
+    rateLimit: SHARED_Model__RateLimitClientInfo
 }
 
 export type RateLimitWrapperAction = RateLimitLoading | RateLimitUnauth | RateLimitAuthError | RateLimitAuthResponse

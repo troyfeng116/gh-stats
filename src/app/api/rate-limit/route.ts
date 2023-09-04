@@ -18,9 +18,9 @@ export const GET = async (request: Request): Promise<Response> => {
     }
 
     const rateLimitRes: SHARED_APIFields__RateLimit = await SERVICE_Call__getRateLimit(token)
-    const { success, rateLimit } = rateLimitRes
+    const { success, rateLimitClientInfo } = rateLimitRes
 
-    const status = !success || rateLimit === undefined ? 400 : 200
+    const status = !success || rateLimitClientInfo === undefined ? 400 : 200
 
     return new Response(JSON.stringify(rateLimitRes), {
         status: status,

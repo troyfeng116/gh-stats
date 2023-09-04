@@ -10,12 +10,12 @@ import { RateLimitWrapperState } from './RateLimitWrapper'
 export const reducer = (state: RateLimitWrapperState, action: RateLimitWrapperAction): RateLimitWrapperState => {
     switch (action.type) {
         case RATE_LIMIT_LOADING:
-            return { isLoading: true, error: undefined, rateLimit: undefined }
+            return { isLoading: true, error: undefined, rateLimitInfo: undefined }
         case RATE_LIMIT_UNAUTH:
-            return { isLoading: false, error: undefined, rateLimit: undefined }
+            return { isLoading: false, error: undefined, rateLimitInfo: undefined }
         case RATE_LIMIT_AUTH_ERROR:
-            return { isLoading: false, error: action.error, rateLimit: undefined }
+            return { isLoading: false, error: action.error, rateLimitInfo: undefined }
         case RATE_LIMIT_AUTH_RESPONSE:
-            return { isLoading: false, error: undefined, rateLimit: action.rateLimit }
+            return { isLoading: false, error: undefined, rateLimitInfo: action.rateLimit }
     }
 }

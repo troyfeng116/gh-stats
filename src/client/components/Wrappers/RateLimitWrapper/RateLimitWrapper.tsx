@@ -7,7 +7,7 @@ import { RATE_LIMIT_AUTH_ERROR, RATE_LIMIT_AUTH_RESPONSE, RATE_LIMIT_LOADING, RA
 import { reducer } from './reducer'
 
 import { rateLimitAPI } from '@/client/lib/authAPI'
-import { SHARED_Model__RateLimit } from '@/shared/models/models/RateLimit'
+import { SHARED_Model__RateLimitClientInfo } from '@/shared/models/models/RateLimit'
 
 /*
 Should only be rendered after client-side auth redirects in AuthWrapper
@@ -20,20 +20,20 @@ interface RateLimitWrapperProps {
 export interface RateLimitWrapperState {
     isLoading: boolean
     error?: string
-    rateLimit?: SHARED_Model__RateLimit
+    rateLimitInfo?: SHARED_Model__RateLimitClientInfo
 }
 
 const initialRateLimitWrapperState: RateLimitWrapperState = {
     isLoading: true,
     error: undefined,
-    rateLimit: undefined,
+    rateLimitInfo: undefined,
 }
 
 export const RateLimitWrapper: React.FC<RateLimitWrapperProps> = (props) => {
     const { children } = props
 
     const [state, dispatch] = useReducer(reducer, initialRateLimitWrapperState)
-    const { isLoading, error, rateLimit } = state
+    const { isLoading, error, rateLimitInfo } = state
 
     const { authStatus, accessToken } = useAuth()
     const pathname = usePathname()
@@ -48,7 +48,7 @@ export const RateLimitWrapper: React.FC<RateLimitWrapperProps> = (props) => {
             const {
                 success: rateLimitSuccess,
                 error: rateLimitError,
-                rateLimit: updatedRateLimit,
+                rateLimitClientInfo: updatedRateLimit,
             } = await rateLimitAPI(accessToken)
 
             if (!rateLimitSuccess || updatedRateLimit === undefined) {
@@ -77,10 +77,16 @@ export const RateLimitWrapper: React.FC<RateLimitWrapperProps> = (props) => {
         return <div>Checking rate limits...</div>
     }
 
-    if (rateLimit === undefined) {
+    if (rateLimitInfo === undefined) {
         return <div>Rate limit error: {error}</div>
     }
 
-    console.log(`[RateLimitWrapper] rendering ${pathname}`)
+    const { isRateLimited, rateLimitedMessage, rateOkMessage } = rateLimitInfo
+
+    if (isRateLimited) {
+        return <div>{rateLimitedMessage}</div>
+    }
+
+    console.log(`[RateLimitWrapper] rendering ${pathname}; ${rateOkMessage}`)
     return <>{children}</>
 }
