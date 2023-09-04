@@ -1,4 +1,4 @@
-import { SERVICE_Call__getRateLimit } from '@/server/services/rateLimit'
+import { SERVICE_Call__getRateLimitViaAPI } from '@/server/services/rateLimit'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 import { SHARED_APIFields__RateLimit } from '@/shared/models/apiFields/rateLimit'
 
@@ -17,7 +17,7 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const rateLimitRes: SHARED_APIFields__RateLimit = await SERVICE_Call__getRateLimit(token)
+    const rateLimitRes: SHARED_APIFields__RateLimit = await SERVICE_Call__getRateLimitViaAPI(token)
     const { success, rateLimitClientInfo } = rateLimitRes
 
     const status = !success || rateLimitClientInfo === undefined ? 400 : 200
