@@ -121,7 +121,7 @@ export const SERVICE_Call__getRateLimitViaAPI = async (accessToken: string): Pro
         rateLimitClientInfo: {
             isRateLimited: false,
             rateLimitedMessage: undefined,
-            rateOkMessage: getRateOkMessage({ ...core, resetAtStr: getResetDateStr(core.reset * 1000) }),
+            rateOkMessage: getRateOkMessage({ ...graphql, resetAtStr: getResetDateStr(graphql.reset * 1000) }),
         },
     }
 }
