@@ -123,7 +123,10 @@ export const SERVICE_Call__countLifetimeCommits = async (
     accessToken: string,
 ): Promise<SERVICE_Response__countLifetimeCommits> => {
     try {
-        const [userRes, reposRes] = await Promise.all([GH_API_Call__getUser(accessToken), SERVICE_Call__listAllRepos(accessToken)])
+        const [userRes, reposRes] = await Promise.all([
+            GH_API_Call__getUser(accessToken),
+            SERVICE_Call__listAllRepos(accessToken),
+        ])
 
         const { success: userSuccess, error: userError, user } = userRes
         if (!userSuccess || user === undefined) {

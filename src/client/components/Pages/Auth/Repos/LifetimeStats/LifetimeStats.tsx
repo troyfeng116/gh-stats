@@ -5,7 +5,7 @@ import React from 'react'
 import LanguageData from './LanguageData'
 import RepoCell from './RepoCell'
 
-import { SHARED_Model__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
+import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface LifetimeStatsProps {
