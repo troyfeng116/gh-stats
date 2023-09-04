@@ -16,7 +16,7 @@ interface SERVICE_Response__getContributorActivity extends SERVICE_Response__BAS
     activity?: SHARED_Model__ContributorCommitActivity
 }
 
-export const getContributorActivity = async (
+export const SERVICE_Call__getContributorActivity = async (
     accessToken: string,
     authUser: string,
     owner: string,
@@ -77,7 +77,9 @@ export const SERVICE_Call__computeLinesStatsAcrossReposUsingMetrics = async (
             for (; idx < repos.length && idx < startIdx + CHUNK_SIZE; idx++) {
                 const { owner, name: repoName } = repos[idx]
                 const { login: ownerLogin } = owner
-                activityPromiseChunk.push(getContributorActivity(accessToken, authUser, ownerLogin, repoName))
+                activityPromiseChunk.push(
+                    SERVICE_Call__getContributorActivity(accessToken, authUser, ownerLogin, repoName),
+                )
             }
 
             activities.push(...(await Promise.all(activityPromiseChunk)))
