@@ -26,7 +26,7 @@ interface SERVICE_Response__countAllRepos extends SERVICE_Response__BASE {
     numRepos?: number
 }
 
-export const countAllRepos = async (accessToken: string): Promise<SERVICE_Response__countAllRepos> => {
+export const SERVICE_Call__countAllRepos = async (accessToken: string): Promise<SERVICE_Response__countAllRepos> => {
     const { success, error, numRepos } = await GH_API_Call__countRepos(accessToken)
 
     if (!success || numRepos === undefined) {
@@ -38,8 +38,8 @@ export const countAllRepos = async (accessToken: string): Promise<SERVICE_Respon
 
 type SERVICE_Response__listAllRepos = SERVICE_Response__listRepos
 
-export const listAllRepos = async (accessToken: string): Promise<SERVICE_Response__listAllRepos> => {
-    const { success: countSuccess, error: countError, numRepos } = await countAllRepos(accessToken)
+export const SERVICE_Call__listAllRepos = async (accessToken: string): Promise<SERVICE_Response__listAllRepos> => {
+    const { success: countSuccess, error: countError, numRepos } = await SERVICE_Call__countAllRepos(accessToken)
     // console.log(numRepos)
 
     if (!countSuccess || numRepos === undefined) {

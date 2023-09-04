@@ -1,7 +1,8 @@
 import { SERVICE_Call__getAllReposWithCommitCounts } from '@/server/services/reposAndCommitCounts'
-import { SHARED_APIFields__LifetimeStats, SHARED_Model__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
+import { SHARED_APIFields__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
 import { SHARED_Model__AllLanguageStats, SHARED_Model__Language } from '@/shared/models/models/Language'
 import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models/models/Repos'
+import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { SHARED_Model__RepoCommitCountStats } from '@/shared/models/models/Stats'
 
 const sharedRepoReduceLanguageStats = (

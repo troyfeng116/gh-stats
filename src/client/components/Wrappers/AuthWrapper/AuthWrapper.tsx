@@ -24,7 +24,7 @@ const isUnauthAllowedOnRoute = (pathname: string): boolean => {
 export const AuthWrapper: React.FC<AuthWrapperProps> = (props) => {
     const { children } = props
 
-    const { authStatus } = useAuth()
+    const { authStatus, accessToken } = useAuth()
     const router = useRouter()
     const pathname = usePathname()
 
@@ -34,7 +34,7 @@ export const AuthWrapper: React.FC<AuthWrapperProps> = (props) => {
         } else if (authStatus === AuthStatus.AUTH && !isAuthAllowedOnRoute(pathname)) {
             router.push('/')
         }
-    }, [router, pathname, authStatus])
+    }, [router, pathname, authStatus, accessToken])
 
     // TODO: loading state
     // remember this is immediately returned from server before hydration

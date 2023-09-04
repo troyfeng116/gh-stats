@@ -6,7 +6,7 @@ import LifetimeStats from './LifetimeStats'
 
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
-import { SHARED_Model__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
+import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 
 export const Repos: React.FC = () => {
     const { accessToken } = useAuth()
