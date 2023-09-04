@@ -3,6 +3,8 @@ import styles from './Nav.module.css'
 import React from 'react'
 import Link from 'next/link'
 
+import Button from '../../Reuse/Button'
+
 import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { NAV_AUTH_ROUTES, NAV_UNAUTH_ROUTES } from '@/client/routes'
 
@@ -23,8 +25,7 @@ export const Nav: React.FC = () => {
                         </Link>
                     ))}
                 </div>
-
-                <button onClick={logout}>Log out</button>
+                <Button onClick={logout}>Log out</Button>
             </nav>
         )
     }

@@ -12,5 +12,9 @@
 }
 
 .nav_link:hover {
-    color: gray;
+    color: rgb(199, 199, 199);
+}
+
+.nav_link:active {
+    color: rgb(129, 249, 209);
 }

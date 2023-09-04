@@ -1,0 +1,17 @@
+.std_btn {
+    padding: 6px 18px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+}
+
+.std_btn:hover {
+    background-color: rgb(199, 199, 199);
+}
+
+.std_btn:active {
+    background-color: rgb(129, 249, 209);
+}
