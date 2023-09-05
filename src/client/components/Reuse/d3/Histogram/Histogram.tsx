@@ -58,6 +58,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                 width={width}
                 height={height}
                 padding={padding}
+                includeLines={true}
                 dataTooltipMapping={dataTooltipMapping}
             />
         </svg>

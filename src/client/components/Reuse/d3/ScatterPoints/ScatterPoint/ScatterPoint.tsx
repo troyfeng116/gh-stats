@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
-import * as d3 from 'd3'
 
 interface ScatterPointProps {
     x: number
     y: number
+    xData: number
+    yData: number
     r?: number
     fill?: string
-
-    xScale: (value: d3.NumberValue) => number
-    yScale: (value: d3.NumberValue) => number
 
     dataTooltipMapping?: (data: { x: number; y: number }) => string
 }
 
 export const ScatterPoint: React.FC<ScatterPointProps> = (props) => {
-    const { x, y, r = 6, fill = 'white', xScale, yScale, dataTooltipMapping } = props
+    const { x, y, xData, yData, r = 6, fill = 'white', dataTooltipMapping } = props
 
     const [shouldShowToolTip, setShouldShowTooltip] = useState<boolean>(false)
 
@@ -27,8 +25,9 @@ export const ScatterPoint: React.FC<ScatterPointProps> = (props) => {
     }
 
     return (
-        <g style={{ transform: `translate(${xScale(x)}px, ${yScale(y)}px)` }}>
+        <g style={{ transform: `translate(${x}px, ${y}px)` }}>
             <circle fill={fill} cx={0} cy={0} r={r} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
+
             {dataTooltipMapping !== undefined && shouldShowToolTip && (
                 <>
                     <rect
@@ -48,7 +47,7 @@ export const ScatterPoint: React.FC<ScatterPointProps> = (props) => {
                             padding: '3px 6px',
                         }}
                     >
-                        {dataTooltipMapping({ x: x, y: y })}
+                        {dataTooltipMapping({ x: xData, y: yData })}
                     </text>
                 </>
             )}
