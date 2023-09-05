@@ -2,21 +2,26 @@ import React, { useMemo } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
+import { getRandomScatterPointColor } from '@/client/utils/scatterPointColors'
 import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
-interface RepoContributionsGraph {
+interface RepoContributionsGraphProps {
     repoContributions: SHARED_Model__CommitContributionsByRepo
 }
 
-export const RepoContributionsGraph: React.FC<RepoContributionsGraph> = (props) => {
+export const RepoContributionsGraph: React.FC<RepoContributionsGraphProps> = (props) => {
     const { repoContributions } = props
 
     const { contributions } = repoContributions
     const { nodes } = contributions
 
-    const histogramData: { x: number; y: number }[] = nodes.map(({ occurredAt, commitCount }) => {
+    const points = nodes.map(({ occurredAt, commitCount }) => {
         return { x: new Date(occurredAt).getTime(), y: commitCount }
+    })
+    const histogramData: { points: { x: number; y: number }[]; color?: string }[] = Array.of({
+        points: points,
+        color: getRandomScatterPointColor(),
     })
 
     return useMemo(

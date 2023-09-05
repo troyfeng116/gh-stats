@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
+import { getRandomScatterPointColor } from '@/client/utils/scatterPointColors'
 import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
@@ -12,7 +13,7 @@ interface AllContributionsGraphProps {
 export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (props) => {
     const { contributionsByRepo } = props
 
-    const allContributionsData: { x: number; y: number }[] = useMemo(() => {
+    const allContributionPoints: { x: number; y: number }[] = useMemo(() => {
         const aggregatedContributions = new Map<number, number>()
         contributionsByRepo.forEach((repoContributions) => {
             const {
@@ -25,16 +26,24 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
             })
         })
 
-        return Array.from(aggregatedContributions.entries()).map(([occurredAt, commitCount]) => {
-            return { x: occurredAt, y: commitCount }
+        return Array.from(aggregatedContributions.entries()).map(([occurredAtTimestamp, commitCount]) => {
+            return { x: occurredAtTimestamp, y: commitCount }
         })
     }, [contributionsByRepo])
+
+    const histogramData: {
+        points: { x: number; y: number }[]
+        color?: string
+    }[] = Array.of({
+        points: allContributionPoints,
+        color: getRandomScatterPointColor(),
+    })
 
     return useMemo(
         () => (
             <div>
                 <Histogram
-                    data={allContributionsData}
+                    data={histogramData}
                     width={500}
                     height={360}
                     yAxisProperties={{
@@ -49,6 +58,6 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
                 />
             </div>
         ),
-        [allContributionsData],
+        [allContributionPoints],
     )
 }

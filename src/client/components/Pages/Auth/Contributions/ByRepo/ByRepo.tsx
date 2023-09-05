@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
@@ -51,6 +52,25 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
         },
     )
 
+    let byRepoCharts: React.ReactElement | null = null
+    if (shouldOverlay) {
+        byRepoCharts = <OverlayContributionsGraph contributionsByRepo={selectedRepoContributions} />
+    } else {
+        byRepoCharts = (
+            <>
+                {selectedRepoContributions.map((repoContributions, idx) => {
+                    const repoKey = getRepoKey(repoContributions)
+                    return (
+                        <div key={`repo-${idx}`}>
+                            <p>{repoKey}</p>
+                            <RepoContributionsGraph key={`repo-${repoKey}`} repoContributions={repoContributions} />
+                        </div>
+                    )
+                })}
+            </>
+        )
+    }
+
     return (
         <div>
             <div>
@@ -78,18 +98,7 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                     {selectedRepoContributions.length === 0 ? (
                         <p>Select a repo to view per-repo contribution charts</p>
                     ) : (
-                        selectedRepoContributions.map((repoContributions, idx) => {
-                            const repoKey = getRepoKey(repoContributions)
-                            return (
-                                <div key={`repo-${idx}`}>
-                                    <p>{repoKey}</p>
-                                    <RepoContributionsGraph
-                                        key={`repo-${repoKey}`}
-                                        repoContributions={repoContributions}
-                                    />
-                                </div>
-                            )
-                        })
+                        byRepoCharts
                     )}
                 </div>
             </div>

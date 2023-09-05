@@ -5,7 +5,7 @@ import Axes, { AxisProperties } from '@/client/components/Reuse/d3/Axes'
 import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
 
 interface HistogramProps {
-    data: { x: number; y: number }[]
+    data: { points: { x: number; y: number }[]; color?: string }[]
     width: number
     height: number
     padding?: [number, number, number, number]
@@ -35,8 +35,8 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
         dataTooltipMapping,
     } = props
 
-    const xValues = data.map(({ x }) => x)
-    const yValues = data.map(({ y }) => y)
+    const xValues = data.map(({ points }) => points.map(({ x }) => x)).flat(1)
+    const yValues = data.map(({ points }) => points.map(({ y }) => y)).flat(1)
     const xDomain = getHistogramDimensionDomain(xValues)
     const yDomain = getHistogramDimensionDomain(yValues)
 
@@ -51,16 +51,22 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                 xAxisProperties={xAxisProperties}
                 yAxisProperties={yAxisProperties}
             />
-            <ScatterPoints
-                data={data}
-                xDomain={xDomain}
-                yDomain={yDomain}
-                width={width}
-                height={height}
-                padding={padding}
-                includeLines={true}
-                dataTooltipMapping={dataTooltipMapping}
-            />
+            {data.map(({ points, color }, idx) => {
+                return (
+                    <ScatterPoints
+                        key={`scatter-points-${idx}`}
+                        points={points}
+                        xDomain={xDomain}
+                        yDomain={yDomain}
+                        width={width}
+                        height={height}
+                        padding={padding}
+                        includeLines={true}
+                        color={color}
+                        dataTooltipMapping={dataTooltipMapping}
+                    />
+                )
+            })}
         </svg>
     )
 }
