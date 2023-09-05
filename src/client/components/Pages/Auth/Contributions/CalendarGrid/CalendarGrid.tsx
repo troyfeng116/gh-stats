@@ -19,8 +19,8 @@ export const CalendarGrid: React.FC<CalendarGridProps> = (props) => {
 
     return (
         <div className={styles.calendar_grid}>
-            {SHORT_WEEKDAYS.map((weekday, idx) => {
-                return <Row key={`calendar-grid-row-${idx}`} weekdayName={weekday} days={calendarGrid[idx]} />
+            {SHORT_WEEKDAYS.map((weekdayName, idx) => {
+                return <Row key={`calendar-grid-row-${idx}`} weekdayName={weekdayName} days={calendarGrid[idx]} />
             })}
         </div>
     )

@@ -14,6 +14,7 @@ interface RowProps {
 export const Row: React.FC<RowProps> = (props) => {
     const { weekdayName, days } = props
 
+    console.log(`${weekdayName} -> ${days.length}`)
     return (
         <div className={styles.row}>
             <p style={{ width: 48 }}>{weekdayName}</p>

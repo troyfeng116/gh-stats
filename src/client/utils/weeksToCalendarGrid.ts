@@ -3,6 +3,7 @@ import {
     SHARED_Model__ContributionCalendarWeek,
 } from '@/shared/models/models/Contributions'
 
+// TODO: move to server
 export const weeksToCalendarGrid = (
     weeks: SHARED_Model__ContributionCalendarWeek[],
 ): SHARED_Model__ContributionCalendarDay[][] => {

@@ -76,7 +76,7 @@ export interface GH_GQL_Schema__ContributionCalendarWeek {
 
 export interface GH_GQL_Schema__ContributionCalendarDay {
     color: string
-    contributionCount: string
+    contributionCount: number
     // TODO: should this be in shared
     contributionLevel: SHARED_Model__ContributionLevelType
     date: string

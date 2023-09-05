@@ -8,7 +8,7 @@ export enum SHARED_Model__ContributionLevelType {
 
 export interface SHARED_Model__ContributionCalendarDay {
     color: string
-    contributionCount: string
+    contributionCount: number
     contributionLevel: SHARED_Model__ContributionLevelType
     date: string
     weekday: number
@@ -53,4 +53,22 @@ export interface SHARED_Model__Contributions {
     totalRepositoryContributions: number
     startedAt: number
     commitContributionsByRepository: SHARED_Model__CommitContributionsByRepo[]
+}
+
+export interface SHARED_Model__DailyContributionsInfo {
+    avgDailyContributions: number
+    contributionsByWeekday: number[] // weekday (idx) -> total contributionsCount on that weekday
+}
+
+export interface SHARED_Model__MonthlyContributionsInfo {
+    avgMonthlyContributions: number
+    contributionsByMonth: { [month: string]: number } // month name -> total contributionsCount in that month
+}
+
+export interface SHARED_Model__ContributionsClientInfo {
+    contributions: SHARED_Model__Contributions
+    dailyInfo: SHARED_Model__DailyContributionsInfo
+    monthlyInfo: SHARED_Model__MonthlyContributionsInfo
+    longestContributionStreak: number
+    longestContributionDrySpell: number
 }
