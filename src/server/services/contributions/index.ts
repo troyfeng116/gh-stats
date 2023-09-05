@@ -65,15 +65,21 @@ const extractMonthlyContributionsInfo = (
     as needed in ContributionsClientInfo.MonthlyContributionInfo
     */
 
-    const contributionsByMonth: { [month: string]: number } = {}
+    const contributionsByMonthDict: { [month: string]: number } = {}
     for (const contributionDay of dailyContributionData) {
         const { contributionCount, date } = contributionDay
         const month = new Date(date).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
-        if (!(month in contributionsByMonth)) {
-            contributionsByMonth[month] = 0
+        if (!(month in contributionsByMonthDict)) {
+            contributionsByMonthDict[month] = 0
         }
-        contributionsByMonth[month] += contributionCount
+        contributionsByMonthDict[month] += contributionCount
     }
+
+    const contributionsByMonth: { month: string; contributionCount: number }[] = []
+    for (const month in contributionsByMonthDict) {
+        contributionsByMonth.push({ month: month, contributionCount: contributionsByMonthDict[month] })
+    }
+
     return {
         avgMonthlyContributions: totalContributions / 12,
         contributionsByMonth: contributionsByMonth,
