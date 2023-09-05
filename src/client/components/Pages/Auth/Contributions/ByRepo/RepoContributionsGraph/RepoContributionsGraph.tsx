@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
@@ -19,22 +19,25 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraph> = (props) 
         return { x: new Date(occurredAt).getTime(), y: commitCount }
     })
 
-    return (
-        <div>
-            <Histogram
-                data={histogramData}
-                width={500}
-                height={360}
-                yAxisProperties={{
-                    label: 'Contributions',
-                }}
-                xAxisProperties={{
-                    label: 'Date',
-                    numTicks: 9,
-                    tickLabelMapping: tickValueToDateLabel,
-                }}
-                dataTooltipMapping={dataToContributionsDateMapping}
-            />
-        </div>
+    return useMemo(
+        () => (
+            <div>
+                <Histogram
+                    data={histogramData}
+                    width={500}
+                    height={360}
+                    yAxisProperties={{
+                        label: 'Contributions',
+                    }}
+                    xAxisProperties={{
+                        label: 'Date',
+                        numTicks: 9,
+                        tickLabelMapping: tickValueToDateLabel,
+                    }}
+                    dataTooltipMapping={dataToContributionsDateMapping}
+                />
+            </div>
+        ),
+        [repoContributions],
     )
 }
