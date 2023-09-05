@@ -31,17 +31,21 @@ const getRateLimitedMessage = (
 ): string => {
     const { used, limit, remaining, resetAtStr } = rateLimitInfo
     const rateLimitType = isGraphql ? 'GraphQL queries' : 'API requests'
-    return `Github imposes a rate limit of ${limit} ${rateLimitType}, and you have used ${used} (${remaining} remaining). Please retry after ${resetAtStr}.`
+    return `GitHub imposes a rate limit of ${limit} ${rateLimitType}, and you have used ${used} (${remaining} remaining). Please retry after ${resetAtStr}.`
 }
 
-const getRateOkMessage = (rateLimitInfo: {
-    used: number
-    limit: number
-    remaining: number
-    resetAtStr: string
-}): string => {
+const getRateOkMessage = (
+    rateLimitInfo: {
+        used: number
+        limit: number
+        remaining: number
+        resetAtStr: string
+    },
+    isGraphql = true,
+): string => {
     const { used, limit, remaining, resetAtStr } = rateLimitInfo
-    return `Used ${used} queries out of Github API limit ${limit} (${remaining} remaining, resets at ${resetAtStr})`
+    const rateLimitType = isGraphql ? 'GraphQL queries' : 'API requests'
+    return `Used ${used} queries out of GitHub ${rateLimitType} rate limit ${limit} (${remaining} remaining, resets at ${resetAtStr})`
 }
 
 export const SERVICE_Call__getRateLimit = async (accessToken: string): Promise<SHARED_APIFields__RateLimit> => {
