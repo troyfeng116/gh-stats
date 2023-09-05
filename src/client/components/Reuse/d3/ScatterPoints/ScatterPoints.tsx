@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as d3 from 'd3'
 
 import { ScatterPoint } from './ScatterPoint/ScatterPoint'
+import ScatterTooltip from './ScatterTooltip'
 
 import { computeScatterLineEndpoints } from '@/client/utils/computeScatterLineEndpoints'
 
@@ -32,6 +33,8 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
     } = props
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
 
+    const [showTooltipForIdx, setShowTooltipForIdx] = useState<number>()
+
     const xScale = d3
         .scaleLinear()
         .domain(xDomain)
@@ -46,6 +49,18 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
     })
 
     const lineEndpoints = computeScatterLineEndpoints(scaledData)
+
+    let scatterTooltip: React.ReactElement | null = null
+    if (dataTooltipMapping !== undefined && showTooltipForIdx !== undefined) {
+        const tooltipPoint = points[showTooltipForIdx]
+        scatterTooltip = (
+            <ScatterTooltip
+                text={dataTooltipMapping(tooltipPoint)}
+                cx={xScale(tooltipPoint.x)}
+                cy={yScale(tooltipPoint.y)}
+            />
+        )
+    }
 
     return (
         <g>
@@ -69,16 +84,17 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
                 return (
                     <ScatterPoint
                         key={`scatter-pt-${idx}`}
-                        x={xScale(x)}
-                        y={yScale(y)}
-                        xData={x}
-                        yData={y}
+                        cx={xScale(x)}
+                        cy={yScale(y)}
                         r={5}
                         fill={color}
-                        dataTooltipMapping={dataTooltipMapping}
+                        onMouseEnter={() => setShowTooltipForIdx(idx)}
+                        onMouseLeave={() => setShowTooltipForIdx(undefined)}
                     />
                 )
             })}
+
+            {scatterTooltip}
         </g>
     )
 }
