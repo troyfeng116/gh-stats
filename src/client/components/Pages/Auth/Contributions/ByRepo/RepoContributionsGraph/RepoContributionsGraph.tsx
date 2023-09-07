@@ -19,9 +19,11 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraphProps> = (pr
     const points = nodes.map(({ occurredAt, commitCount }) => {
         return { x: new Date(occurredAt).getTime(), y: commitCount }
     })
-    const histogramData: { points: { x: number; y: number }[]; color?: string }[] = Array.of({
+
+    const histogramData: { points: { x: number; y: number }[]; color: string; r: number }[] = Array.of({
         points: points,
         color: getRandomScatterPointColor(),
+        r: 3.9,
     })
 
     return useMemo(

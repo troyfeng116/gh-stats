@@ -90,7 +90,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
                         key={`scatter-pt-${idx}`}
                         cx={xScale(x)}
                         cy={yScale(y)}
-                        r={r}
+                        r={idx == showTooltipForIdx ? r * 1.9 : r}
                         fill={color}
                         onMouseEnter={() => setShowTooltipForIdx(idx)}
                         onMouseLeave={() => setShowTooltipForIdx(undefined)}

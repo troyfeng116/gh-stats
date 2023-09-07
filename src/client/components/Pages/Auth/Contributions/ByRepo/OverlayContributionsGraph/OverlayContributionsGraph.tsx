@@ -39,13 +39,18 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
         color: string
         r: number
         lineStrokeWidth: number
-    }[] = histogramDataWithColors.map((data) => {
-        const { repoKey } = data
-        if (repoKey == repoKeyToHighlight) {
-            return { ...data, r: 6, lineStrokeWidth: 3 }
-        }
-        return { ...data, r: 3, lineStrokeWidth: 1.5 }
-    })
+    }[] = histogramDataWithColors
+        .map((data) => {
+            const { repoKey } = data
+            if (repoKey == repoKeyToHighlight) {
+                return { ...data, r: 3.9, lineStrokeWidth: 3 }
+            }
+            return { ...data, r: 2.9, lineStrokeWidth: 1.5 }
+        })
+        .sort(
+            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
+                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
+        )
 
     const legendData: {
         label: string
