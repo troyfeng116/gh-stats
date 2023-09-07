@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
+import Legend from '@/client/components/Reuse/Legend'
 import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
+import { getRepoKey } from '@/client/utils/getRepoKeyFromRepoContributions'
 import { attachScatterPointColors } from '@/client/utils/scatterPointColors'
 import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
@@ -24,12 +26,16 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
             return { points: points }
         })
 
-    const histogramDataWithColors: { points: { x: number; y: number }[]; color?: string }[] =
+    const histogramDataWithColors: { points: { x: number; y: number }[]; color: string }[] =
         attachScatterPointColors(histogramData)
+
+    const legendData: { label: string; color: string }[] = histogramDataWithColors.map(({ color }, idx) => {
+        return { label: getRepoKey(contributionsByRepo[idx]), color: color }
+    })
 
     return useMemo(
         () => (
-            <div>
+            <div style={{ display: 'flex' }}>
                 <Histogram
                     data={histogramDataWithColors}
                     width={500}
@@ -44,6 +50,8 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
                     }}
                     dataTooltipMapping={dataToContributionsDateMapping}
                 />
+
+                <Legend legendData={legendData} />
             </div>
         ),
         [contributionsByRepo],

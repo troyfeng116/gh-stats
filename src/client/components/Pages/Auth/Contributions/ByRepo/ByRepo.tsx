@@ -3,20 +3,11 @@ import React, { useState } from 'react'
 import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
+import { getRepoKey } from '@/client/utils/getRepoKeyFromRepoContributions'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
 interface ByRepoProps {
     contributionsByRepo: SHARED_Model__CommitContributionsByRepo[]
-}
-
-const getRepoKey = (repoContributions: SHARED_Model__CommitContributionsByRepo): string => {
-    const {
-        repository: {
-            name,
-            owner: { login },
-        },
-    } = repoContributions
-    return `${login}/${name}`
 }
 
 export const ByRepo: React.FC<ByRepoProps> = (props) => {
@@ -41,7 +32,6 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
         setSelectedRepos((prevSelectedRepos) => {
             const prevIsSelected = prevSelectedRepos.get(repoKey)
             const updatedIsSelected = prevIsSelected === undefined ? true : !prevIsSelected
-            console.log(`handling toggled ${repoKey}: setting to ${updatedIsSelected}`)
             return new Map(prevSelectedRepos.set(repoKey, updatedIsSelected))
         })
     }

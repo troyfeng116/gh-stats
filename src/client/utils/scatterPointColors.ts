@@ -9,7 +9,7 @@ const COLORS = [
 
 export const attachScatterPointColors = (
     scatterPoints: { points: { x: number; y: number }[]; color?: string }[],
-): { points: { x: number; y: number }[]; color?: string }[] => {
+): { points: { x: number; y: number }[]; color: string }[] => {
     return scatterPoints.map(({ points }, idx) => {
         return { points: points, color: COLORS[idx % COLORS.length] }
     })
