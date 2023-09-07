@@ -59,15 +59,13 @@ export const Contributions: React.FC = () => {
 
     const { contributions, dailyInfo, monthlyInfo, longestContributionStreak, longestContributionDrySpell } =
         contributionsClientInfo
-    const { totalContributions, contributionCalendar, contributionYears, commitContributionsByRepository } =
-        contributions
+    const { totalContributions, contributionCalendar, commitContributionsByRepository } = contributions
     const { weeks } = contributionCalendar
 
     return (
         <div>
             <h2>Last year of contributions</h2>
             <h3>Total contributions: {totalContributions}</h3>
-            <p>Previously contributed in {contributionYears.join(', ')}</p>
             <p>Longest active streak: {longestContributionStreak} days</p>
             <p>Longest inactive streak: {longestContributionDrySpell} days</p>
 

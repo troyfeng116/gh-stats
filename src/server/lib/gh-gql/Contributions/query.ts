@@ -108,7 +108,6 @@ export interface GH_GQL_Schema__CommitContributionsByRepository {
 }
 
 export interface GH_GQL_Schema__ContributionsCollection extends GH_GQL_Schema__ContributionsAggregate {
-    contributionYears: number[]
     contributionCalendar: {
         colors: string[]
         isHalloween: boolean

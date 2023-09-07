@@ -55,7 +55,6 @@ export interface SHARED_Model__CommitContributionsByRepo {
 
 // TODO: clean up GQL raw responses
 export interface SHARED_Model__ContributionsCollection extends SHARED_Model__ContributionsAggregate {
-    contributionYears: number[]
     contributionCalendar: {
         isHalloween: boolean
         weeks: SHARED_Model__ContributionCalendarWeek[]
