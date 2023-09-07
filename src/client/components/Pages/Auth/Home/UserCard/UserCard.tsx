@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Card from '@/client/components/Reuse/Card'
 import { SHARED_Model__UserCard } from '@/shared/models/models/UserCard'
 
 interface UserCardProps {
@@ -11,7 +12,7 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
     const { userId, name, email, followers, following, createdAt, totalRepos, totalPRs } = userCard
 
     return (
-        <div>
+        <Card>
             <h2>{userId}</h2>
             {name && <p>{name}</p>}
             {email && <p>{email}</p>}
@@ -21,6 +22,6 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
             <p>
                 {followers} followers, {following} following
             </p>
-        </div>
+        </Card>
     )
 }
