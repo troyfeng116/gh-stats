@@ -61,7 +61,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
             <ScatterTooltip
                 text={dataTooltipMapping(tooltipPoint)}
                 cx={xScale(tooltipPoint.x)}
-                cy={yScale(tooltipPoint.y)}
+                cy={yScale(yDomain[0])}
             />
         )
     }

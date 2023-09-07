@@ -13,5 +13,10 @@ interface ScatterPointProps {
 export const ScatterPoint: React.FC<ScatterPointProps> = (props) => {
     const { cx, cy, r = 6, fill = 'white', onMouseEnter, onMouseLeave } = props
 
-    return <circle fill={fill} cx={cx} cy={cy} r={r} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
+    return (
+        <g style={{ transform: `translate(${cx}px, ${cy}px)` }} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+            <circle fill={fill} cx={0} cy={0} r={9} fillOpacity={0} />
+            <circle r={r} cx={0} cy={0} fill={fill} />
+        </g>
+    )
 }

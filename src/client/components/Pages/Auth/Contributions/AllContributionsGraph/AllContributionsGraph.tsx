@@ -34,9 +34,11 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
     const histogramData: {
         points: { x: number; y: number }[]
         color?: string
+        r?: number
     }[] = Array.of({
         points: allContributionPoints,
         color: getRandomScatterPointColor(),
+        r: 3.9,
     })
 
     return useMemo(
@@ -44,8 +46,8 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
             <div>
                 <Histogram
                     data={histogramData}
-                    width={500}
-                    height={360}
+                    width={900}
+                    height={600}
                     yAxisProperties={{
                         label: 'Contributions',
                     }}

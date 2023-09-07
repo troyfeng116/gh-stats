@@ -86,8 +86,15 @@ const extractMonthlyContributionsInfo = (
     }
 }
 
-export const SERVICE_Call__getContributions = async (accessToken: string): Promise<SHARED_APIFields__Contributions> => {
-    const { success, error, contributions } = await GH_GQL_Call__Contributions(accessToken, {})
+export const SERVICE_Call__getContributions = async (
+    accessToken: string,
+    from?: string,
+    to?: string,
+): Promise<SHARED_APIFields__Contributions> => {
+    const { success, error, contributions } = await GH_GQL_Call__Contributions(accessToken, {
+        from: from,
+        to: to,
+    })
 
     if (!success || contributions === undefined) {
         return { contributionsClientInfo: undefined, success: false, error: error }

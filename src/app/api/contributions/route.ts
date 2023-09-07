@@ -12,7 +12,11 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const contributionsRes: SHARED_APIFields__Contributions = await SERVICE_Call__getContributionsClientInfo(token)
+    const contributionsRes: SHARED_APIFields__Contributions = await SERVICE_Call__getContributionsClientInfo(
+        token,
+        '2020-08-16T19:23:51Z',
+        '2021-08-16T19:23:51Z',
+    )
     const { success, contributionsClientInfo } = contributionsRes
 
     const status = !success || contributionsClientInfo === undefined ? 400 : 200

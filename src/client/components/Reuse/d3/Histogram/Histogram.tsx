@@ -15,13 +15,18 @@ interface HistogramProps {
     dataTooltipMapping?: (data: { x: number; y: number }) => string
 }
 
-const AXIS_PADDING_RATIO = 0.1
+const AXIS_PADDING_RATIO = 0.09
 
-const getHistogramDimensionDomain = (values: number[]): [number, number] => {
+const getHistogramDimensionDomain = (values: number[], minZero = false): [number, number] => {
     /* extract min and max values from values along dimension, pad ends with AXIS_PADDING_RATIO */
     const domainRaw: [number, number] = [d3.min(values) || 0, d3.max(values) || 100]
     const rangeRaw = domainRaw[1] - domainRaw[0]
-    return [domainRaw[0] - AXIS_PADDING_RATIO * rangeRaw, domainRaw[1] + AXIS_PADDING_RATIO * rangeRaw]
+    let domainMinScaled = domainRaw[0] - AXIS_PADDING_RATIO * rangeRaw
+    if (minZero) {
+        domainMinScaled = Math.max(0, domainMinScaled)
+    }
+    const domainMaxScaled = domainRaw[1] + AXIS_PADDING_RATIO * rangeRaw
+    return [domainMinScaled, domainMaxScaled]
 }
 
 export const Histogram: React.FC<HistogramProps> = (props) => {
@@ -38,7 +43,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
     const xValues = data.map(({ points }) => points.map(({ x }) => x)).flat(1)
     const yValues = data.map(({ points }) => points.map(({ y }) => y)).flat(1)
     const xDomain = getHistogramDimensionDomain(xValues)
-    const yDomain = getHistogramDimensionDomain(yValues)
+    const yDomain = getHistogramDimensionDomain(yValues, true)
 
     return (
         <svg width={width} height={height}>

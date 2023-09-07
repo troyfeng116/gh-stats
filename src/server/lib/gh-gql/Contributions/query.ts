@@ -1,8 +1,8 @@
 import { SHARED_Model__ContributionLevelType } from '@/shared/models/models/Contributions'
 
-export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 100) {
+export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 100, $from: DateTime, $to: DateTime) {
     viewer {
-        contributionsCollection {
+        contributionsCollection(from: $from, to: $to) {
             ...ContributionsCollection
         }
     }
@@ -60,7 +60,8 @@ fragment ContributionsCollection on ContributionsCollection {
 
 export interface GH_GQL_QueryVars__Contributions {
     first?: number
-    after?: string
+    from?: string // ISO-8601 encoded UTC date string
+    to?: string // ISO-8601 encoded UTC date string
 }
 
 export interface GH_GQL_Schema__ContributionCalendarMonth {
@@ -117,6 +118,6 @@ export interface GH_GQL_Schema__ContributionsCollection {
     totalCommitContributions: number
     totalRepositoriesWithContributedCommits: number
     totalRepositoryContributions: number
-    startedAt: number
+    startedAt: string
     commitContributionsByRepository: GH_GQL_Schema__CommitContributionsByRepository[]
 }

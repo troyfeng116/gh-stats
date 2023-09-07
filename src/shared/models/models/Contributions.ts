@@ -51,7 +51,7 @@ export interface SHARED_Model__Contributions {
     totalCommitContributions: number
     totalRepositoriesWithContributedCommits: number
     totalRepositoryContributions: number
-    startedAt: number
+    startedAt: string
     commitContributionsByRepository: SHARED_Model__CommitContributionsByRepo[]
 }
 

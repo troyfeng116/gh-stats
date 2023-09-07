@@ -42,9 +42,9 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
     }[] = histogramDataWithColors.map((data) => {
         const { repoKey } = data
         if (repoKey == repoKeyToHighlight) {
-            return { ...data, r: 6, lineStrokeWidth: 4 }
+            return { ...data, r: 6, lineStrokeWidth: 3 }
         }
-        return { ...data, r: 4, lineStrokeWidth: 2 }
+        return { ...data, r: 3, lineStrokeWidth: 1.5 }
     })
 
     const legendData: {
@@ -66,8 +66,8 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
             <div style={{ display: 'flex' }}>
                 <Histogram
                     data={histogramDataWithHighlighted}
-                    width={500}
-                    height={360}
+                    width={690}
+                    height={420}
                     yAxisProperties={{
                         label: 'Contributions',
                     }}
