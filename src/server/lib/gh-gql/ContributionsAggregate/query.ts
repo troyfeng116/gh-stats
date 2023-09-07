@@ -7,6 +7,7 @@ export const GH_GQL_Query__ContributionsAggregate = `query ContributionsAggregat
 }
 
 fragment ContributionsCollectionAggregates on ContributionsCollection {
+    restrictedContributionsCount
     totalCommitContributions
     totalIssueContributions
     totalPullRequestContributions
@@ -14,6 +15,7 @@ fragment ContributionsCollectionAggregates on ContributionsCollection {
     totalRepositoriesWithContributedCommits
     totalRepositoryContributions
     startedAt
+    endedAt
     contributionCalendar {
         totalContributions
     }
@@ -26,6 +28,7 @@ export interface GH_GQL_QueryVars__ContributionsAggregate {
 }
 
 export interface GH_GQL_Schema__ContributionsAggregate {
+    restrictedContributionsCount: number
     totalCommitContributions: number
     totalIssueContributions: number
     totalPullRequestContributions: number
@@ -33,6 +36,7 @@ export interface GH_GQL_Schema__ContributionsAggregate {
     totalRepositoriesWithContributedCommits: number
     totalRepositoryContributions: number
     startedAt: string
+    endedAt: string
     contributionCalendar: {
         totalContributions: number
     }

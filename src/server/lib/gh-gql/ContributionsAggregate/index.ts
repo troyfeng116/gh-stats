@@ -18,7 +18,7 @@ export interface GH_GQL_Response__ContributionsAggregate extends GH_GQL_Response
     contributionsAggregate?: GH_GQL_Schema__ContributionsAggregate
 }
 
-export const GH_GQL_Call__Contributions = async (
+export const GH_GQL_Call__ContributionsAggregate = async (
     accessToken: string,
     variables: GH_GQL_QueryVars__ContributionsAggregate,
 ): Promise<GH_GQL_Response__ContributionsAggregate> => {

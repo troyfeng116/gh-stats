@@ -5,29 +5,29 @@ import React, { useEffect, useState } from 'react'
 import UserCard from '@/client/components/Pages/Auth/Home/UserCard'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { getUserCardAPI } from '@/client/lib/authAPI'
-import { SHARED_Model__UserCard } from '@/shared/models/models/UserCard'
+import { SHARED_Model__UserCardClientInfo } from '@/shared/models/models/UserCard'
 
 export const Home: React.FC = () => {
     const { accessToken } = useAuth()
 
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>()
-    const [userCard, setUserCard] = useState<SHARED_Model__UserCard>()
+    const [userCardClientInfo, setUserCardClientInfo] = useState<SHARED_Model__UserCardClientInfo>()
 
     useEffect(() => {
-        const fetchUserCard = async (accessToken: string) => {
+        const fetchUserCardClientInfo = async (accessToken: string) => {
             setError(undefined)
-            const { success, error, userCard: getUserCardAPIRes } = await getUserCardAPI(accessToken)
+            const { success, error, userCardClientInfo: updatedUserCardClientInfo } = await getUserCardAPI(accessToken)
             setIsLoading(false)
-            if (!success || getUserCardAPIRes === undefined) {
+            if (!success || updatedUserCardClientInfo === undefined) {
                 setError(error)
             } else {
-                setUserCard(getUserCardAPIRes)
+                setUserCardClientInfo(updatedUserCardClientInfo)
             }
         }
 
         if (accessToken !== undefined) {
-            fetchUserCard(accessToken)
+            fetchUserCardClientInfo(accessToken)
         }
     }, [accessToken])
 
@@ -35,13 +35,13 @@ export const Home: React.FC = () => {
         return <div>user card loading...</div>
     }
 
-    if (error !== undefined || userCard === undefined) {
+    if (error !== undefined || userCardClientInfo === undefined) {
         return <div>{error}</div>
     }
 
     return (
         <div>
-            <UserCard userCard={userCard} />
+            <UserCard userCardClientInfo={userCardClientInfo} />
         </div>
     )
 }

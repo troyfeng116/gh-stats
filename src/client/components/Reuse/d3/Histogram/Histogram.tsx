@@ -17,8 +17,15 @@ interface HistogramProps {
 
 const AXIS_PADDING_RATIO = 0.09
 
+/**
+ * Extract min and max values from values along dimension, pad ends with AXIS_PADDING_RATIO
+ *
+ * @param values Arbitrary set of values along one dimension of histogram chart
+ * @param minZero Whether minimum value should be truncated at zero. Default `false`
+ *
+ * @returns [scaledMin, scaledMax] pair
+ */
 const getHistogramDimensionDomain = (values: number[], minZero = false): [number, number] => {
-    /* extract min and max values from values along dimension, pad ends with AXIS_PADDING_RATIO */
     const domainRaw: [number, number] = [d3.min(values) || 0, d3.max(values) || 100]
     const rangeRaw = domainRaw[1] - domainRaw[0]
     let domainMinScaled = domainRaw[0] - AXIS_PADDING_RATIO * rangeRaw

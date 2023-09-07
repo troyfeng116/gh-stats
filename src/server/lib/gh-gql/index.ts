@@ -26,6 +26,10 @@ export const BASE_GH_GQL_Call__makeQueryWithAuth = async (
     query: string,
     variables?: object,
 ): Promise<Response> => {
+    console.log(
+        `[BASE_GH_GQL_Call__makeQueryWithAuth] ${query.split('\n')[0]} with variables ${JSON.stringify(variables)}`,
+    )
+
     const payload = {
         query: query,
         variables: variables,

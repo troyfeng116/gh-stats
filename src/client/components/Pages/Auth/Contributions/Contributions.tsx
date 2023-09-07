@@ -59,8 +59,9 @@ export const Contributions: React.FC = () => {
 
     const { contributions, dailyInfo, monthlyInfo, longestContributionStreak, longestContributionDrySpell } =
         contributionsClientInfo
-    const { contributionCalendar, contributionYears, commitContributionsByRepository } = contributions
-    const { totalContributions, weeks } = contributionCalendar
+    const { totalContributions, contributionCalendar, contributionYears, commitContributionsByRepository } =
+        contributions
+    const { weeks } = contributionCalendar
 
     return (
         <div>
