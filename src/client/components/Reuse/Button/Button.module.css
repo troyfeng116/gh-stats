@@ -9,10 +9,16 @@
     cursor: pointer;
 }
 
-.std_btn:hover {
+.std_btn:hover:not(:disabled) {
     background-color: rgb(199, 199, 199);
 }
 
-.std_btn:active {
+.std_btn:active:not(:disabled) {
     background-color: rgb(129, 249, 209);
+}
+
+.std_btn:disabled {
+    cursor: not-allowed;
+    background-color: rgb(139, 139, 139);
+    opacity: 0.8;
 }
