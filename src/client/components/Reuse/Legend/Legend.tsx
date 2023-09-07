@@ -1,7 +1,12 @@
 import React from 'react'
 
 interface LegendProps {
-    legendData: { label: string; color: string }[]
+    legendData: {
+        label: string
+        color: string
+        onMouseEnter?: React.MouseEventHandler<Element>
+        onMouseLeave?: React.MouseEventHandler<Element>
+    }[]
 }
 
 export const Legend: React.FC<LegendProps> = (props) => {
@@ -9,9 +14,14 @@ export const Legend: React.FC<LegendProps> = (props) => {
 
     return (
         <div>
-            {legendData.map(({ label, color }, idx) => {
+            {legendData.map(({ label, color, onMouseEnter, onMouseLeave }, idx) => {
                 return (
-                    <div key={`legend-${label}-${idx}`} style={{ display: 'flex', alignItems: 'center' }}>
+                    <div
+                        key={`legend-${label}-${idx}`}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                    >
                         <div
                             style={{
                                 backgroundColor: color,

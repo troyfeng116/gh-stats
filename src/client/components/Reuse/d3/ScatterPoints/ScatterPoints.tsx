@@ -15,6 +15,8 @@ interface ScatterPointsProps {
     padding: [number, number, number, number]
     includeLines?: boolean
     color?: string
+    r?: number
+    lineStrokeWidth?: number
 
     dataTooltipMapping?: (data: { x: number; y: number }) => string
 }
@@ -29,6 +31,8 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
         padding,
         includeLines = false,
         color = 'white',
+        r = 5,
+        lineStrokeWidth = 2,
         dataTooltipMapping,
     } = props
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
@@ -75,7 +79,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
                             y2={y2}
                             color={color}
                             stroke="currentColor"
-                            strokeWidth={2}
+                            strokeWidth={lineStrokeWidth}
                         />
                     )
                 })}
@@ -86,7 +90,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
                         key={`scatter-pt-${idx}`}
                         cx={xScale(x)}
                         cy={yScale(y)}
-                        r={5}
+                        r={r}
                         fill={color}
                         onMouseEnter={() => setShowTooltipForIdx(idx)}
                         onMouseLeave={() => setShowTooltipForIdx(undefined)}

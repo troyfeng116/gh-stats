@@ -5,7 +5,7 @@ import Axes, { AxisProperties } from '@/client/components/Reuse/d3/Axes'
 import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
 
 interface HistogramProps {
-    data: { points: { x: number; y: number }[]; color?: string }[]
+    data: { points: { x: number; y: number }[]; color?: string; r?: number; lineStrokeWidth?: number }[]
     width: number
     height: number
     padding?: [number, number, number, number]
@@ -51,7 +51,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                 xAxisProperties={xAxisProperties}
                 yAxisProperties={yAxisProperties}
             />
-            {data.map(({ points, color }, idx) => {
+            {data.map(({ points, color, r, lineStrokeWidth }, idx) => {
                 return (
                     <ScatterPoints
                         key={`scatter-points-${idx}`}
@@ -63,6 +63,8 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                         padding={padding}
                         includeLines={true}
                         color={color}
+                        r={r}
+                        lineStrokeWidth={lineStrokeWidth}
                         dataTooltipMapping={dataTooltipMapping}
                     />
                 )

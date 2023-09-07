@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import Legend from '@/client/components/Reuse/Legend'
@@ -15,29 +15,57 @@ interface OverlayContributionsGraphProps {
 export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps> = (props) => {
     const { contributionsByRepo } = props
 
-    const histogramData: { points: { x: number; y: number }[] }[] = contributionsByRepo
+    const [repoKeyToHighlight, setRepoKeyToHighlight] = useState<string>()
+
+    const histogramData: { points: { x: number; y: number }[]; repoKey: string }[] = contributionsByRepo
         .map((repoContributions) => {
-            return repoContributions.contributions.nodes
+            return { nodes: repoContributions.contributions.nodes, repoKey: getRepoKey(repoContributions) }
         })
-        .map((nodes) => {
+        .map(({ nodes, repoKey }) => {
             const points = nodes.map(({ occurredAt, commitCount }) => {
                 return { x: new Date(occurredAt).getTime(), y: commitCount }
             })
-            return { points: points }
+            return { points: points, repoKey: repoKey }
         })
 
-    const histogramDataWithColors: { points: { x: number; y: number }[]; color: string }[] =
+    const histogramDataWithColors: { points: { x: number; y: number }[]; color: string; repoKey: string }[] =
         attachScatterPointColors(histogramData)
 
-    const legendData: { label: string; color: string }[] = histogramDataWithColors.map(({ color }, idx) => {
-        return { label: getRepoKey(contributionsByRepo[idx]), color: color }
+    const histogramDataWithHighlighted: {
+        points: {
+            x: number
+            y: number
+        }[]
+        color: string
+        r: number
+        lineStrokeWidth: number
+    }[] = histogramDataWithColors.map((data) => {
+        const { repoKey } = data
+        if (repoKey == repoKeyToHighlight) {
+            return { ...data, r: 6, lineStrokeWidth: 4 }
+        }
+        return { ...data, r: 4, lineStrokeWidth: 2 }
+    })
+
+    const legendData: {
+        label: string
+        color: string
+        onMouseEnter: React.MouseEventHandler<Element>
+        onMouseLeave: React.MouseEventHandler<Element>
+    }[] = histogramDataWithColors.map(({ color, repoKey }) => {
+        return {
+            label: repoKey,
+            color: color,
+            onMouseEnter: () => setRepoKeyToHighlight(repoKey),
+            onMouseLeave: () => setRepoKeyToHighlight(undefined),
+        }
     })
 
     return useMemo(
         () => (
             <div style={{ display: 'flex' }}>
                 <Histogram
-                    data={histogramDataWithColors}
+                    data={histogramDataWithHighlighted}
                     width={500}
                     height={360}
                     yAxisProperties={{
@@ -54,6 +82,6 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
                 <Legend legendData={legendData} />
             </div>
         ),
-        [contributionsByRepo],
+        [contributionsByRepo, repoKeyToHighlight],
     )
 }
