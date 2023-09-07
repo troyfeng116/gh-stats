@@ -17,7 +17,7 @@ export interface GH_GQL_Response__BASE {
     error?: string
 }
 
-export interface GH_GQL_RawResponse_BASE {
+export interface GH_GQL_RawResponse__BASE {
     errors?: { message: string }[]
 }
 

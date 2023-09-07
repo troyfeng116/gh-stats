@@ -1,3 +1,5 @@
+import { GH_GQL_Schema__ContributionsAggregate } from '../ContributionsAggregate/query'
+
 import { SHARED_Model__ContributionLevelType } from '@/shared/models/models/Contributions'
 
 export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 100, $from: DateTime, $to: DateTime) {
@@ -9,7 +11,12 @@ export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 10
 }
 
 fragment ContributionsCollection on ContributionsCollection {
-    contributionYears
+    totalCommitContributions
+    totalIssueContributions
+    totalPullRequestContributions
+    totalPullRequestReviewContributions
+    totalRepositoryContributions
+    startedAt
     contributionCalendar {
         colors
         isHalloween
@@ -30,11 +37,6 @@ fragment ContributionsCollection on ContributionsCollection {
             }
         }
     }
-    totalPullRequestContributions
-    totalCommitContributions
-    totalRepositoriesWithContributedCommits
-    totalRepositoryContributions
-    startedAt
     commitContributionsByRepository {
         repository {
             name
@@ -105,7 +107,7 @@ export interface GH_GQL_Schema__CommitContributionsByRepository {
     }
 }
 
-export interface GH_GQL_Schema__ContributionsCollection {
+export interface GH_GQL_Schema__ContributionsCollection extends GH_GQL_Schema__ContributionsAggregate {
     contributionYears: number[]
     contributionCalendar: {
         colors: string[]
@@ -114,10 +116,5 @@ export interface GH_GQL_Schema__ContributionsCollection {
         totalContributions: number
         weeks: GH_GQL_Schema__ContributionCalendarWeek[]
     }
-    totalPullRequestContributions: number
-    totalCommitContributions: number
-    totalRepositoriesWithContributedCommits: number
-    totalRepositoryContributions: number
-    startedAt: string
     commitContributionsByRepository: GH_GQL_Schema__CommitContributionsByRepository[]
 }

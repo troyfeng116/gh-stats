@@ -1,8 +1,8 @@
-import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse_BASE, GH_GQL_Response__BASE } from '..'
+import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse__BASE, GH_GQL_Response__BASE } from '..'
 
 import { GH_GQL_Query__Viewer, GH_GQL_QueryVars__Viewer, GH_GQL_Schema__Viewer } from './query'
 
-interface GH_GQL_RawResponse__Viewer extends GH_GQL_RawResponse_BASE {
+interface GH_GQL_RawResponse__Viewer extends GH_GQL_RawResponse__BASE {
     data?: {
         viewer: GH_GQL_Schema__Viewer
     }
