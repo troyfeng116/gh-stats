@@ -2,6 +2,7 @@ import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
 import { SERVICE_Call__getContributionsAggregate } from '@/server/services/contributionsAggregate'
 import { toDateStringISO8601UTC } from '@/server/utils/dateUtils'
+import { DAY_MS } from '@/shared/constants'
 import { SHARED_APIFields__UserCard } from '@/shared/models/apiFields/userCard'
 import {
     CONVERTER__userObjToSharedUserCard,
@@ -25,7 +26,11 @@ export const SERVICE_Call__getUserCardDataFromGQL = async (
         success: contributionsSuccess,
         error: contributionsError,
         contributionsAggregate,
-    } = await SERVICE_Call__getContributionsAggregate(accessToken, createdAt, toDateStringISO8601UTC(new Date()))
+    } = await SERVICE_Call__getContributionsAggregate(
+        accessToken,
+        new Date(new Date(createdAt).getTime() - DAY_MS).toISOString(),
+        toDateStringISO8601UTC(new Date()),
+    )
 
     if (!contributionsSuccess || contributionsAggregate === undefined) {
         return { success: false, error: contributionsError, userCardClientInfo: undefined }

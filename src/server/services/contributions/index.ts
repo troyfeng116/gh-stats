@@ -1,8 +1,16 @@
+import { SERVICE_Response__BASE } from '..'
+
 import { GH_GQL_Call__Contributions } from '@/server/lib/gh-gql/Contributions'
 import { GH_GQL_Schema__ContributionCalendarDay } from '@/server/lib/gh-gql/Contributions/query'
+import { chunkFromToRange } from '@/server/utils/chunkFromTo'
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
-import { CONVERTER__contributionsSchemaToShared } from '@/shared/models/converters/ContributionsConverters'
 import {
+    CONVERTER__contributionsSchemaToShared,
+    REDUCER__contributionsCollection_INITIAL_VALUE,
+    REDUCER__contributionsCollectionMerger,
+} from '@/shared/models/converters/ContributionsConverters'
+import {
+    SHARED_Model__ContributionsCollection,
     SHARED_Model__DailyContributionsInfo,
     SHARED_Model__MonthlyContributionsInfo,
 } from '@/shared/models/models/Contributions'
@@ -92,9 +100,81 @@ const extractMonthlyContributionsInfo = (
     }
 
     return {
-        avgMonthlyContributions: totalContributions / 12,
+        avgMonthlyContributions: totalContributions / contributionsByMonth.length,
         contributionsByMonth: contributionsByMonth,
     }
+}
+
+interface SERVICE_Response__ContributionsCollection extends SERVICE_Response__BASE {
+    contributionsCollection?: SHARED_Model__ContributionsCollection
+}
+
+/**
+ * Retrieves contributions collection.
+ * Assumes `from` and `to` are valid if set; that is, ISO 6801 UTC formatted strings, with range at most 1 year).
+ *
+ * @param from If defined, valid ISO 6801 UTC formatted string. At most 1 year before `to`.
+ * @param to If defined, valid ISO 6801 UTC formatted string. At most 1 year after `from`.
+ *
+ * @returns Contributions collection if GraphQL request successful.
+ */
+const getContributionsCollectionForSingleChunk = async (
+    accessToken: string,
+    from?: string,
+    to?: string,
+): Promise<SERVICE_Response__ContributionsCollection> => {
+    const { success, error, contributions } = await GH_GQL_Call__Contributions(accessToken, {
+        from: from,
+        to: to,
+    })
+
+    if (!success || contributions === undefined) {
+        return { success: false, error: error, contributionsCollection: undefined }
+    }
+
+    const convertedContributionsCollection: SHARED_Model__ContributionsCollection =
+        CONVERTER__contributionsSchemaToShared(contributions)
+
+    return { success: true, contributionsCollection: convertedContributionsCollection }
+}
+
+/**
+ * Chunks `from` and `to` range into chunks of one year,
+ * to avoid range limit errors from GraphQL API.
+ *
+ * @param from Date string.
+ * @param to Date string.
+ *
+ * @returns Reduced contribution collection models if all requests successful (transaction). Fails if at least one request fails.
+ */
+const getContributionsCollectionWithRangeChunks = async (
+    accessToken: string,
+    from: string,
+    to: string,
+): Promise<SERVICE_Response__ContributionsCollection> => {
+    const rangeChunks = chunkFromToRange(from, to, 100)
+
+    const rangeChunkResults: SHARED_Model__ContributionsCollection[] = []
+    for (const { from: chunkFrom, to: chunkTo } of rangeChunks) {
+        const { success, error, contributionsCollection } = await getContributionsCollectionForSingleChunk(
+            accessToken,
+            chunkFrom,
+            chunkTo,
+        )
+        if (!success || contributionsCollection === undefined) {
+            return { success: false, error: error, contributionsCollection: undefined }
+        }
+        rangeChunkResults.push(contributionsCollection)
+    }
+
+    const mergedContributionsCollection: SHARED_Model__ContributionsCollection = rangeChunkResults.reduce(
+        (prev, cur) => {
+            return REDUCER__contributionsCollectionMerger(prev, cur)
+        },
+        REDUCER__contributionsCollection_INITIAL_VALUE,
+    )
+
+    return { success: true, contributionsCollection: mergedContributionsCollection }
 }
 
 export const SERVICE_Call__getContributions = async (
@@ -102,17 +182,17 @@ export const SERVICE_Call__getContributions = async (
     from?: string,
     to?: string,
 ): Promise<SHARED_APIFields__Contributions> => {
-    const { success, error, contributions } = await GH_GQL_Call__Contributions(accessToken, {
-        from: from,
-        to: to,
-    })
+    const { success, error, contributionsCollection } =
+        from !== undefined && to !== undefined
+            ? await getContributionsCollectionWithRangeChunks(accessToken, from, to)
+            : await getContributionsCollectionForSingleChunk(accessToken, from, to)
 
-    if (!success || contributions === undefined) {
-        return { contributionsClientInfo: undefined, success: false, error: error }
+    if (!success || contributionsCollection === undefined) {
+        return { success: false, error: error, contributionsClientInfo: undefined }
     }
 
-    const { contributionCalendar } = contributions
-    const { weeks, totalContributions } = contributionCalendar
+    const { contributionCalendar, totalContributions } = contributionsCollection
+    const { weeks } = contributionCalendar
 
     const dailyContributionData: GH_GQL_Schema__ContributionCalendarDay[] = weeks
         .map((week) => {
@@ -124,7 +204,7 @@ export const SERVICE_Call__getContributions = async (
 
     return {
         contributionsClientInfo: {
-            contributions: CONVERTER__contributionsSchemaToShared(contributions),
+            contributions: contributionsCollection,
             dailyInfo: extractDailyContributionsInfo(dailyContributionData, totalContributions),
             monthlyInfo: extractMonthlyContributionsInfo(dailyContributionData, totalContributions),
             longestContributionStreak: longestStreak,

@@ -42,10 +42,6 @@ const getContributionsAggregateForSingleChunk = async (
     return { success: true, contributionsAggregate: convertedContributionsAggregate }
 }
 
-interface SERVICE_Response__ContributionsAggregateWithRangeChunks extends SERVICE_Response__BASE {
-    contributionsAggregateList?: SHARED_Model__ContributionsAggregate[]
-}
-
 /**
  * Chunks `from` and `to` range into chunks of one year,
  * to avoid range limit errors from GraphQL API.
@@ -53,13 +49,13 @@ interface SERVICE_Response__ContributionsAggregateWithRangeChunks extends SERVIC
  * @param from Date string.
  * @param to Date string.
  *
- * @returns List of aggregate contribution models if all requests successful (transaction). Fails if at least one request fails.
+ * @returns Reduced aggregate contribution models if all requests successful (transaction). Fails if at least one request fails.
  */
 const getContributionsAggregateWithRangeChunks = async (
     accessToken: string,
     from: string,
     to: string,
-): Promise<SERVICE_Response__ContributionsAggregateWithRangeChunks> => {
+): Promise<SERVICE_Response__ContributionsAggregate> => {
     const rangeChunks = chunkFromToRange(from, to, 365)
 
     const rangeChunkResults: SHARED_Model__ContributionsAggregate[] = []
@@ -70,12 +66,16 @@ const getContributionsAggregateWithRangeChunks = async (
             chunkTo,
         )
         if (!success || contributionsAggregate === undefined) {
-            return { success: false, error: error, contributionsAggregateList: undefined }
+            return { success: false, error: error, contributionsAggregate: undefined }
         }
         rangeChunkResults.push(contributionsAggregate)
     }
 
-    return { success: true, contributionsAggregateList: rangeChunkResults }
+    const mergedContributionsAggregate: SHARED_Model__ContributionsAggregate = rangeChunkResults.reduce((prev, cur) => {
+        return REDUCER__contributionsAggregateMerger(prev, cur)
+    }, REDUCER__contributionsAggregate_INITIAL_VALUE)
+
+    return { success: true, contributionsAggregate: mergedContributionsAggregate }
 }
 
 /**
@@ -90,26 +90,7 @@ export const SERVICE_Call__getContributionsAggregate = async (
     from?: string,
     to?: string,
 ): Promise<SERVICE_Response__ContributionsAggregate> => {
-    if (from !== undefined && to !== undefined) {
-        const {
-            success: chunkSuccess,
-            error: chunkError,
-            contributionsAggregateList,
-        } = await getContributionsAggregateWithRangeChunks(accessToken, from, to)
-
-        if (!chunkSuccess || contributionsAggregateList === undefined) {
-            return { success: false, error: chunkError, contributionsAggregate: undefined }
-        }
-
-        const mergedContributionsAggregate: SHARED_Model__ContributionsAggregate = contributionsAggregateList.reduce(
-            (prev, cur) => {
-                return REDUCER__contributionsAggregateMerger(prev, cur)
-            },
-            REDUCER__contributionsAggregate_INITIAL_VALUE,
-        )
-
-        return { success: true, contributionsAggregate: mergedContributionsAggregate }
-    }
-
-    return await getContributionsAggregateForSingleChunk(accessToken, from, to)
+    return from !== undefined && to !== undefined
+        ? await getContributionsAggregateWithRangeChunks(accessToken, from, to)
+        : await getContributionsAggregateForSingleChunk(accessToken, from, to)
 }

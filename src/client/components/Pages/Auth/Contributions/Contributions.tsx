@@ -27,7 +27,7 @@ export const Contributions: React.FC = () => {
                 success,
                 error,
                 contributionsClientInfo: updatedContributionsClientInfo,
-            } = await contributionsAPI(accessToken)
+            } = await contributionsAPI(accessToken, '2021-08-16T19:23:51Z', '2023-09-16T19:23:51Z')
             setIsLoading(false)
             if (!success || updatedContributionsClientInfo === undefined) {
                 setError(error)

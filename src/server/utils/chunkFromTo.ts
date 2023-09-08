@@ -1,5 +1,7 @@
 import { toDateStringISO8601UTC } from './dateUtils'
 
+import { DAY_MS } from '@/shared/constants'
+
 /**
  * Given from/to date range, break into multiple ranges of size at most `chunkLenDays`.
  * Returned chunk dates are ISO-8601 encoded UTC date strings: YYYY-MM-DDTHH:MM:SSZ,
@@ -17,14 +19,14 @@ export const chunkFromToRange = (
     chunkLenDays = 100,
 ): { from: string; to: string }[] => {
     const chunks: { from: string; to: string }[] = []
-    const chunkLenMs = chunkLenDays * 24 * 60 * 60 * 1000
+    const chunkLenMs = chunkLenDays * DAY_MS
 
     const fromTimestampMs = new Date(from).getTime()
     const toTimestampMs = new Date(to).getTime()
     for (let startTimestampMs = fromTimestampMs; startTimestampMs < toTimestampMs; startTimestampMs += chunkLenMs) {
         chunks.push({
             from: toDateStringISO8601UTC(startTimestampMs),
-            to: toDateStringISO8601UTC(Math.min(startTimestampMs + chunkLenMs - 1, toTimestampMs)),
+            to: toDateStringISO8601UTC(Math.min(startTimestampMs + chunkLenMs - DAY_MS, toTimestampMs)),
         })
     }
 

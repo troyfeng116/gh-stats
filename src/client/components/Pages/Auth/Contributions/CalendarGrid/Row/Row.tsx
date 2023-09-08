@@ -16,7 +16,7 @@ export const Row: React.FC<RowProps> = (props) => {
 
     return (
         <div className={styles.row}>
-            <p style={{ width: 48 }}>{weekdayName}</p>
+            <p style={{ minWidth: 48, maxWidth: 48 }}>{weekdayName}</p>
             {days.map((day, dayIdx) => {
                 return (
                     <div key={`day-cell-${dayIdx}`} style={{ margin: '0 1px' }}>

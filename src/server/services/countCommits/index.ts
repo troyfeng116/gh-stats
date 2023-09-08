@@ -36,7 +36,7 @@ interface SERVICE_Response__countCommitsForRepo extends SERVICE_Response__BASE {
     numCommits?: number
 }
 
-export const SERVICE_CALL__countCommitsForRepo = async (
+export const SERVICE_Call__countCommitsForRepo = async (
     accessToken: string,
     owner: string,
     repo: string,
@@ -87,7 +87,7 @@ const countCommitsInRepos = async (
     for (let i = 0; i < repos.length; i++) {
         const { owner, name: repoName } = repos[i]
         const { login: ownerLogin } = owner
-        countCommitsPromises.push(SERVICE_CALL__countCommitsForRepo(accessToken, ownerLogin, repoName, authUser))
+        countCommitsPromises.push(SERVICE_Call__countCommitsForRepo(accessToken, ownerLogin, repoName, authUser))
     }
 
     const chunkedCountCommitsPromises = chunkArr(countCommitsPromises)
