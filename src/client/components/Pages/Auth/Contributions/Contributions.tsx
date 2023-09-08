@@ -27,7 +27,7 @@ export const Contributions: React.FC = () => {
                 success,
                 error,
                 contributionsClientInfo: updatedContributionsClientInfo,
-            } = await contributionsAPI(accessToken, '2020-04-06T19:23:51Z', '2023-09-16T19:23:51Z')
+            } = await contributionsAPI(accessToken, '2020-04-09T19:23:51Z', '2023-09-16T19:23:51Z')
             setIsLoading(false)
             if (!success || updatedContributionsClientInfo === undefined) {
                 setError(error)
@@ -57,10 +57,15 @@ export const Contributions: React.FC = () => {
         return <div>{error}</div>
     }
 
-    const { contributions, dailyInfo, monthlyInfo, longestContributionStreak, longestContributionDrySpell } =
-        contributionsClientInfo
-    const { totalContributions, contributionCalendar, commitContributionsByRepository } = contributions
-    const { weeks } = contributionCalendar
+    const {
+        contributions,
+        calendarGrid,
+        dailyInfo,
+        monthlyInfo,
+        longestContributionStreak,
+        longestContributionDrySpell,
+    } = contributionsClientInfo
+    const { totalContributions, commitContributionsByRepository } = contributions
 
     return (
         <div>
@@ -71,7 +76,7 @@ export const Contributions: React.FC = () => {
 
             <div>
                 <h3>Contributions calendar:</h3>
-                <CalendarGrid weeks={weeks} />
+                <CalendarGrid calendarGrid={calendarGrid} />
             </div>
             <DailyContributionInfo dailyContributionInfo={dailyInfo} />
             <MonthlyContributionInfo monthlyContributionInfo={monthlyInfo} />

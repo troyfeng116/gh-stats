@@ -3,6 +3,7 @@ import { SERVICE_Response__BASE } from '..'
 import { GH_GQL_Call__Contributions } from '@/server/lib/gh-gql/Contributions'
 import { GH_GQL_Schema__ContributionCalendarDay } from '@/server/lib/gh-gql/Contributions/query'
 import { chunkFromToRange } from '@/server/utils/chunkFromTo'
+import { weeksToCalendarGrid } from '@/server/utils/weeksToCalendarGrid'
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
 import {
     CONVERTER__contributionsSchemaToShared,
@@ -212,6 +213,7 @@ export const SERVICE_Call__getContributions = async (
     return {
         contributionsClientInfo: {
             contributions: contributionsCollection,
+            calendarGrid: weeksToCalendarGrid(weeks),
             dailyInfo: extractDailyContributionsInfo(dailyContributionData, totalContributions),
             monthlyInfo: extractMonthlyContributionsInfo(dailyContributionData, totalContributions),
             longestContributionStreak: longestStreak,

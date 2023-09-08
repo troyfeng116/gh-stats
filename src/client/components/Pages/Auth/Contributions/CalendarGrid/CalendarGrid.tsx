@@ -4,18 +4,15 @@ import React from 'react'
 
 import Row from './Row'
 
-import { weeksToCalendarGrid } from '@/client/utils/weeksToCalendarGrid'
-import { SHARED_Model__ContributionCalendarWeek } from '@/shared/models/models/Contributions'
+import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
 import { SHORT_WEEKDAYS } from '@/shared/utils/weekdayIntToName'
 
 interface CalendarGridProps {
-    weeks: SHARED_Model__ContributionCalendarWeek[]
+    calendarGrid: (SHARED_Model__ContributionCalendarDay | null)[][]
 }
 
 export const CalendarGrid: React.FC<CalendarGridProps> = (props) => {
-    const { weeks } = props
-
-    const calendarGrid = weeksToCalendarGrid(weeks)
+    const { calendarGrid } = props
 
     return (
         <div className={styles.calendar_grid}>
