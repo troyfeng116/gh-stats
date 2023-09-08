@@ -1,7 +1,6 @@
-import { SERVICE_Call__getContributionsAggregate } from '../contributions'
-
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
+import { SERVICE_Call__getContributionsAggregate } from '@/server/services/contributionsAggregate'
 import { toDateStringISO8601UTC } from '@/server/utils/dateUtils'
 import { SHARED_APIFields__UserCard } from '@/shared/models/apiFields/userCard'
 import {

@@ -21,7 +21,7 @@ export const CONVERTER__contributionsSchemaToShared = (
     return { ...contributionsCollectionSchema, totalContributions: totalContributions }
 }
 
-export const REDUCER_INITIAL_VALUE: SHARED_Model__ContributionsAggregate = {
+export const REDUCER__contributionsAggregate_INITIAL_VALUE: SHARED_Model__ContributionsAggregate = {
     restrictedContributionsCount: 0,
     totalCommitContributions: 0,
     totalIssueContributions: 0,
