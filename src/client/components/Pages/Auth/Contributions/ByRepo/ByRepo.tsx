@@ -70,6 +70,9 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
             <div>
                 <div>
                     {contributionsByRepo.map((repoContributions) => {
+                        const {
+                            contributions: { totalCount },
+                        } = repoContributions
                         const repoKey = getRepoKey(repoContributions)
                         return (
                             <div key={`repo-select-${repoKey}`}>
@@ -78,7 +81,7 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                                     checked={selectedRepos.get(repoKey) === true}
                                     onChange={() => handleRepoToggled(repoKey)}
                                 />
-                                {repoKey}
+                                {repoKey} ({totalCount} commits)
                             </div>
                         )
                     })}
