@@ -69,6 +69,7 @@ export interface SHARED_Model__DailyContributionsInfo {
 
 export interface SHARED_Model__MonthlyContributionsInfo {
     avgMonthlyContributions: number
+    contributionsByMonthAndYear: { monthAndYear: string; contributionCount: number }[]
     contributionsByMonth: { month: string; contributionCount: number }[]
 }
 

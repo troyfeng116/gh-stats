@@ -85,14 +85,34 @@ const extractMonthlyContributionsInfo = (
     dailyContributionData: GH_GQL_Schema__ContributionCalendarDay[],
     totalContributions: number,
 ): SHARED_Model__MonthlyContributionsInfo => {
+    const contributionsByMonthAndYearDict: { [monthAndYear: string]: number } = {}
     const contributionsByMonthDict: { [month: string]: number } = {}
     for (const contributionDay of dailyContributionData) {
         const { contributionCount, date } = contributionDay
-        const month = new Date(date).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+
+        const monthAndYear = new Date(date).toLocaleDateString(undefined, {
+            month: 'long',
+            year: 'numeric',
+            timeZone: 'UTC',
+        })
+        if (!(monthAndYear in contributionsByMonthAndYearDict)) {
+            contributionsByMonthAndYearDict[monthAndYear] = 0
+        }
+        contributionsByMonthAndYearDict[monthAndYear] += contributionCount
+
+        const month = new Date(date).toLocaleDateString(undefined, { month: 'long', timeZone: 'UTC' })
         if (!(month in contributionsByMonthDict)) {
             contributionsByMonthDict[month] = 0
         }
         contributionsByMonthDict[month] += contributionCount
+    }
+
+    const contributionsByMonthAndYear: { monthAndYear: string; contributionCount: number }[] = []
+    for (const monthAndYear in contributionsByMonthAndYearDict) {
+        contributionsByMonthAndYear.push({
+            monthAndYear: monthAndYear,
+            contributionCount: contributionsByMonthAndYearDict[monthAndYear],
+        })
     }
 
     const contributionsByMonth: { month: string; contributionCount: number }[] = []
@@ -102,6 +122,7 @@ const extractMonthlyContributionsInfo = (
 
     return {
         avgMonthlyContributions: totalContributions / contributionsByMonth.length,
+        contributionsByMonthAndYear: contributionsByMonthAndYear,
         contributionsByMonth: contributionsByMonth,
     }
 }

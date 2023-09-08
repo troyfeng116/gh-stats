@@ -8,14 +8,21 @@ interface MonthlyContributionInfoProps {
 
 export const MonthlyContributionInfo: React.FC<MonthlyContributionInfoProps> = (props) => {
     const { monthlyContributionInfo } = props
-    const { avgMonthlyContributions, contributionsByMonth } = monthlyContributionInfo
+    const { avgMonthlyContributions, contributionsByMonthAndYear, contributionsByMonth } = monthlyContributionInfo
 
     return (
         <div>
             <p>Average contributions per month: {avgMonthlyContributions}</p>
+            {contributionsByMonthAndYear.map(({ monthAndYear, contributionCount }, idx) => {
+                return (
+                    <p key={`contributions-month-year-${idx}`}>
+                        {monthAndYear}: {contributionCount} contributions
+                    </p>
+                )
+            })}
             {contributionsByMonth.map(({ month, contributionCount }, idx) => {
                 return (
-                    <p key={idx}>
+                    <p key={`contributions-month-${idx}`}>
                         {month}: {contributionCount} contributions
                     </p>
                 )
