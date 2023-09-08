@@ -11,12 +11,15 @@ export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 10
 }
 
 fragment ContributionsCollection on ContributionsCollection {
+    restrictedContributionsCount
     totalCommitContributions
     totalIssueContributions
     totalPullRequestContributions
     totalPullRequestReviewContributions
+    totalRepositoriesWithContributedCommits
     totalRepositoryContributions
     startedAt
+    endedAt
     contributionCalendar {
         colors
         isHalloween

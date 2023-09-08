@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
+import { formatDateUTC__WWMMMMDYYYY } from '@/shared/utils/dateUtils'
 
 interface DayCellProps {
     day: SHARED_Model__ContributionCalendarDay
@@ -49,15 +50,7 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
                         padding: '3px 6px',
                     }}
                 >
-                    <p>
-                        {new Date(date).toLocaleDateString(undefined, {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            weekday: 'long',
-                            timeZone: 'UTC',
-                        })}
-                    </p>
+                    <p>{formatDateUTC__WWMMMMDYYYY(date)}</p>
                     <p>
                         {contributionCount} contributions ({contributionLevel})
                     </p>
