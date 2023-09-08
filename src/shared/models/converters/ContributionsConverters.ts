@@ -4,9 +4,9 @@ import {
     SHARED_Model__ContributionsCollection,
 } from '../models/Contributions'
 
-import { getRepoKey } from '@/client/utils/getRepoKeyFromRepoContributions'
 import { GH_GQL_Schema__ContributionsCollection } from '@/server/lib/gh-gql/Contributions/query'
 import { GH_GQL_Schema__ContributionsAggregate } from '@/server/lib/gh-gql/ContributionsAggregate/query'
+import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
 
 export const CONVERTER__contributionsAggregateSchemaToShared = (
     contributionsAggregateSchema: GH_GQL_Schema__ContributionsAggregate,

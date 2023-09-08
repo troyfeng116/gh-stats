@@ -177,6 +177,13 @@ const getContributionsCollectionWithRangeChunks = async (
     return { success: true, contributionsCollection: mergedContributionsCollection }
 }
 
+/**
+ * Given any `from` and `to` range, retrieve contribution collection for that time range.
+ * Succeeds even if `from` and `to` are set to more than a year apart.
+ *
+ * @param from If defined, valid ISO 6801 UTC formatted string.
+ * @param to If defined, valid ISO 6801 UTC formatted string.
+ */
 export const SERVICE_Call__getContributions = async (
     accessToken: string,
     from?: string,

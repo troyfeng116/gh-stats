@@ -3,10 +3,10 @@ import React, { useMemo, useState } from 'react'
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import Legend from '@/client/components/Reuse/Legend'
 import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
-import { getRepoKey } from '@/client/utils/getRepoKeyFromRepoContributions'
 import { attachScatterPointColors } from '@/client/utils/scatterPointColors'
 import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
+import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
 
 interface OverlayContributionsGraphProps {
     contributionsByRepo: SHARED_Model__CommitContributionsByRepo[]

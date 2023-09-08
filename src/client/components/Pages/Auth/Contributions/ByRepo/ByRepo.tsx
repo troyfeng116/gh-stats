@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
-import { getRepoKey } from '@/client/utils/getRepoKeyFromRepoContributions'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
+import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
 
 interface ByRepoProps {
     contributionsByRepo: SHARED_Model__CommitContributionsByRepo[]
