@@ -28,7 +28,7 @@ export const Row: React.FC<RowProps> = (props) => {
                 }
                 return (
                     <div key={`day-cell-${dayIdx}`} style={{ margin: '0 1px' }}>
-                        <DayCell day={day} />
+                        <DayCell day={day} isOnRightSideOfGrid={dayIdx > days.length / 2} />
                     </div>
                 )
             })}

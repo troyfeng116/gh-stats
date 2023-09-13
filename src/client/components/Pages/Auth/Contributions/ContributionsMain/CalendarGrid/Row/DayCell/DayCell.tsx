@@ -5,11 +5,12 @@ import { formatDateUTC__WWMMMMDYYYY } from '@/shared/utils/dateUtils'
 
 interface DayCellProps {
     day: SHARED_Model__ContributionCalendarDay
+    isOnRightSideOfGrid: boolean
 }
 
 export const DayCell: React.FC<DayCellProps> = (props) => {
-    const { day } = props
-    const { color, contributionCount, contributionLevel, date } = day
+    const { day, isOnRightSideOfGrid } = props
+    const { color, contributionCount, contributionLevel, date, weekday } = day
 
     const [shouldShowCard, setShouldShowCard] = useState<boolean>(false)
 
@@ -20,6 +21,8 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
     const onMouseLeave = () => {
         setShouldShowCard(false)
     }
+
+    const isInBottomHalfOfGrid = weekday > 3
 
     return (
         <div
@@ -45,8 +48,10 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
                         backgroundColor: 'white',
                         color: 'black',
                         position: 'absolute',
-                        left: -24,
-                        top: 18,
+                        left: isOnRightSideOfGrid ? undefined : 0,
+                        right: isOnRightSideOfGrid ? 0 : undefined,
+                        top: isInBottomHalfOfGrid ? undefined : 18,
+                        bottom: isInBottomHalfOfGrid ? 18 : undefined,
                         padding: '3px 6px',
                     }}
                 >
