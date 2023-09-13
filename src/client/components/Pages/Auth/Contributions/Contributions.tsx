@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
 
 import AllContributionsGraph from './AllContributionsGraph'
 import ByRepo from './ByRepo'
@@ -9,10 +8,9 @@ import CalendarGrid from './CalendarGrid'
 import DailyContributionInfo from './DailyContributionInfo'
 import MonthlyContributionInfo from './MonthlyContributionInfo'
 
-import Button from '@/client/components/Reuse/Button'
+import DateRangeInput from '@/client/components/Reuse/DateRangeInput'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { contributionsAPI } from '@/client/lib/authAPI'
-import { validateRangeQueryDates } from '@/client/utils/validateRangeQueryDates'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
 import { formatDateUTC__MDYYYY } from '@/shared/utils/dateUtils'
 
@@ -28,15 +26,9 @@ export const Contributions: React.FC = () => {
         from: undefined,
         to: undefined,
     })
-    const [prevQueriedDateRange, setPrevQueriedDateRange] = useState<{ from?: string; to?: string }>({
-        from: undefined,
-        to: undefined,
-    })
-    const [queryDateRangeError, setQueryDateRangeError] = useState<string>()
 
     const fetchContributions = useCallback(async (accessToken: string, from?: string, to?: string) => {
         // TODO: reducer
-        setQueryDateRangeError(undefined)
         setError(undefined)
         setTriggerFetch(false)
 
@@ -50,7 +42,6 @@ export const Contributions: React.FC = () => {
 
         if (!success || updatedContributionsClientInfo === undefined) {
             setError(error)
-            // setContributionsClientInfo(undefined)
         } else {
             setContributionsClientInfo(updatedContributionsClientInfo)
         }
@@ -69,31 +60,10 @@ export const Contributions: React.FC = () => {
 
         if (triggerFetch && accessToken !== undefined) {
             const { from: curFrom, to: curTo } = queryDateRange
-            const { from: prevFrom, to: prevTo } = prevQueriedDateRange
-            if (curFrom === prevFrom && curTo === prevTo) {
-                setQueryDateRangeError('Please specify a new date range to query!')
-                return
-            }
-
-            const dateRangeValidationError = validateRangeQueryDates(curFrom, curTo)
-            if (dateRangeValidationError !== null) {
-                setQueryDateRangeError(dateRangeValidationError)
-                return
-            }
-
-            setPrevQueriedDateRange({ from: curFrom, to: curTo })
             // TODO: client-side validate dates
             fetchContributions(accessToken, curFrom, curTo)
         }
-    }, [accessToken, triggerFetch, queryDateRange, prevQueriedDateRange])
-
-    if (accessToken === undefined) {
-        return (
-            <div>
-                <Link href="/login">Please login</Link>
-            </div>
-        )
-    }
+    }, [accessToken, triggerFetch, queryDateRange])
 
     if (isLoading) {
         return <div>Loading</div>
@@ -113,50 +83,14 @@ export const Contributions: React.FC = () => {
     } = contributionsClientInfo
     const { totalContributions, commitContributionsByRepository, startedAt, endedAt } = contributions
 
-    const { from, to } = queryDateRange
-
-    const handleFromOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setQueryDateRange((prevRange) => {
-            return { ...prevRange, from: e.target.value }
-        })
+    const handleRangeSelected = (fromDate: string | undefined, toDate: string | undefined) => {
+        setQueryDateRange({ from: fromDate, to: toDate })
+        setTriggerFetch(true)
     }
-
-    const handleToOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setQueryDateRange((prevRange) => {
-            return { ...prevRange, to: e.target.value }
-        })
-    }
-
-    const handleOnFocus: React.FocusEventHandler<HTMLInputElement> = () => {
-        setQueryDateRangeError(undefined)
-    }
-
-    const handleOnClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-        if (!isLoading) {
-            setTriggerFetch(true)
-        }
-    }
-
-    const isButtonDisabled =
-        isLoading ||
-        queryDateRangeError !== undefined ||
-        (prevQueriedDateRange.from === queryDateRange.from && prevQueriedDateRange.to === queryDateRange.to)
 
     return (
         <div>
-            <div>
-                <label htmlFor="from" />
-                <input type="date" id="from" value={from} onChange={handleFromOnChange} onFocus={handleOnFocus} />
-
-                <label htmlFor="to" />
-                <input type="date" id="to" value={to} onChange={handleToOnChange} onFocus={handleOnFocus} />
-
-                <Button onClick={handleOnClick} disabled={isButtonDisabled}>
-                    Query
-                </Button>
-
-                {queryDateRangeError !== undefined && <p>{queryDateRangeError}</p>}
-            </div>
+            <DateRangeInput initialFrom={undefined} initialTo={undefined} handleRangeSelected={handleRangeSelected} />
             <h2>
                 Contributions from {formatDateUTC__MDYYYY(startedAt)}
                 &nbsp;to {formatDateUTC__MDYYYY(endedAt)}
