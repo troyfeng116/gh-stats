@@ -26,9 +26,19 @@ export const Row: React.FC<RowProps> = (props) => {
                         ></div>
                     )
                 }
+
+                const { weekday } = day
+                const isInBottomHalfOfGrid = weekday > 3
+                const isOnRightSideOfGrid = dayIdx > days.length / 2
+                const tooltipPosition = {
+                    left: isOnRightSideOfGrid ? undefined : 0,
+                    right: isOnRightSideOfGrid ? 0 : undefined,
+                    top: isInBottomHalfOfGrid ? undefined : 18,
+                    bottom: isInBottomHalfOfGrid ? 18 : undefined,
+                }
                 return (
                     <div key={`day-cell-${dayIdx}`} style={{ margin: '0 1px' }}>
-                        <DayCell day={day} isOnRightSideOfGrid={dayIdx > days.length / 2} />
+                        <DayCell day={day} tooltipPosition={tooltipPosition} />
                     </div>
                 )
             })}
