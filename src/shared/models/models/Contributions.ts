@@ -80,4 +80,5 @@ export interface SHARED_Model__ContributionsClientInfo {
     monthlyInfo: SHARED_Model__MonthlyContributionsInfo
     longestContributionStreak: number
     longestContributionDrySpell: number
+    accountCreatedDate: string
 }

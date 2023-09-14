@@ -1,3 +1,5 @@
+import { SERVICE_Response__BASE } from '..'
+
 import { GH_API_Call__getUser } from '@/server/lib/gh-api/users'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
 import { SERVICE_Call__getContributionsAggregate } from '@/server/services/contributionsAggregate'
@@ -13,15 +15,13 @@ import { SHARED_Model__UserCard } from '@/shared/models/models/UserCard'
 export const SERVICE_Call__getUserCardDataFromGQL = async (
     accessToken: string,
 ): Promise<SHARED_APIFields__UserCard> => {
-    const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken, {})
+    const { success: viewerSuccess, error: viewerError, viewer } = await SERVICE_Call__getViewer(accessToken)
 
     if (!viewerSuccess || viewer === undefined) {
         return { success: false, error: viewerError, userCardClientInfo: undefined }
     }
 
-    const userCard: SHARED_Model__UserCard = CONVERTER__viewerSchemaToSharedUserCard(viewer)
-
-    const { createdAt } = userCard
+    const { createdAt } = viewer
     const {
         success: contributionsSuccess,
         error: contributionsError,
@@ -39,10 +39,25 @@ export const SERVICE_Call__getUserCardDataFromGQL = async (
     return {
         success: true,
         userCardClientInfo: {
-            userCard: userCard,
+            userCard: viewer,
             contributionsAggregate: contributionsAggregate,
         },
     }
+}
+
+interface SERVICE_Response__getViewer extends SERVICE_Response__BASE {
+    viewer?: SHARED_Model__UserCard
+}
+
+export const SERVICE_Call__getViewer = async (accessToken: string): Promise<SERVICE_Response__getViewer> => {
+    const { success: viewerSuccess, error: viewerError, viewer } = await GH_GQL_Call__Viewer(accessToken, {})
+
+    if (!viewerSuccess || viewer === undefined) {
+        return { success: false, error: viewerError, viewer: undefined }
+    }
+
+    const userCard: SHARED_Model__UserCard = CONVERTER__viewerSchemaToSharedUserCard(viewer)
+    return { success: true, viewer: userCard }
 }
 
 export const SERVICE_Call__getUserCardDataFromAPI = async (

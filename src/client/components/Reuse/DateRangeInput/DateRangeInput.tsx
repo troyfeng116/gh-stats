@@ -4,6 +4,10 @@ import Button from '@/client/components/Reuse/Button'
 import { validateRangeQueryDates } from '@/client/utils/validateRangeQueryDates'
 
 interface DateRangeInputProps {
+    rangeBounds: {
+        min?: string
+        max?: string
+    }
     initialFrom: string | undefined
     initialTo: string | undefined
     disabled?: boolean
@@ -11,8 +15,19 @@ interface DateRangeInputProps {
     handleRangeSelected: (fromDate: string | undefined, toDate: string | undefined) => void
 }
 
+/**
+ * Generic component for selecting `from`/`to` date ranges.
+ * Performs validation using `utils.validateRangeQueryDates` before invoking `handleRangeSelected` callback.
+ *
+ * @param rangeBounds Min and max dates that can be selected.
+ * @param initialFrom Starting `from` value.
+ * @param initialTo Starting `to` value.
+ * @param disabled Set to disable interacting with this range selector.
+ * @param handleRangeSelected Callback invoked once "submit" button is clicked and selected date range is validated.
+ */
 export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
-    const { initialFrom, initialTo, disabled = false, handleRangeSelected } = props
+    const { rangeBounds, initialFrom, initialTo, disabled = false, handleRangeSelected } = props
+    const { min, max } = rangeBounds
 
     const [queryDateRange, setQueryDateRange] = useState<{ from?: string; to?: string }>({
         from: initialFrom,
@@ -53,7 +68,10 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
             return
         }
 
-        const dateRangeValidationError = validateRangeQueryDates(curFrom, curTo)
+        const dateRangeValidationError = validateRangeQueryDates(curFrom, curTo, {
+            min: min === undefined ? undefined : new Date(min),
+            max: max === undefined ? undefined : new Date(max),
+        })
         if (dateRangeValidationError !== null) {
             setQueryDateRangeError(dateRangeValidationError)
             return
@@ -66,13 +84,29 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
     return (
         <div>
             <label htmlFor="from" />
-            <input type="date" id="from" onChange={handleFromOnChange} onFocus={handleOnFocus} />
+            <input
+                disabled={disabled}
+                min={min}
+                max={max}
+                type="date"
+                id="from"
+                onChange={handleFromOnChange}
+                onFocus={handleOnFocus}
+            />
 
             <label htmlFor="to" />
-            <input type="date" id="to" onChange={handleToOnChange} onFocus={handleOnFocus} />
+            <input
+                disabled={disabled}
+                min={min}
+                max={max}
+                type="date"
+                id="to"
+                onChange={handleToOnChange}
+                onFocus={handleOnFocus}
+            />
 
             <Button onClick={onClick} disabled={isButtonDisabled}>
-                Query
+                Submit
             </Button>
 
             {queryDateRangeError !== undefined && <p>{queryDateRangeError}</p>}

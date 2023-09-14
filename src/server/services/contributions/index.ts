@@ -1,3 +1,4 @@
+import { SERVICE_Call__getViewer } from '../userCard'
 import { SERVICE_Response__BASE } from '..'
 
 import { GH_GQL_Call__Contributions } from '@/server/lib/gh-gql/Contributions'
@@ -211,14 +212,31 @@ export const SERVICE_Call__getContributions = async (
     from?: string,
     to?: string,
 ): Promise<SHARED_APIFields__Contributions> => {
-    const { success, error, contributionsCollection } =
+    const viewerPromise = SERVICE_Call__getViewer(accessToken)
+    const contributionsCollectionPromise =
         from !== undefined && to !== undefined
-            ? await getContributionsCollectionWithRangeChunks(accessToken, from, to)
-            : await getContributionsCollectionForSingleChunk(accessToken, from, to)
+            ? getContributionsCollectionWithRangeChunks(accessToken, from, to)
+            : getContributionsCollectionForSingleChunk(accessToken, from, to)
+    const [viewerResult, contributionsCollectionResult] = await Promise.all([
+        viewerPromise,
+        contributionsCollectionPromise,
+    ])
 
-    if (!success || contributionsCollection === undefined) {
-        return { success: false, error: error, contributionsClientInfo: undefined }
+    const { success: viewerSuccess, error: viewerError, viewer } = viewerResult
+    if (!viewerSuccess || viewer === undefined) {
+        return { success: false, error: viewerError, contributionsClientInfo: undefined }
     }
+
+    const {
+        success: contributionsSuccess,
+        error: contributionsError,
+        contributionsCollection,
+    } = contributionsCollectionResult
+    if (!contributionsSuccess || contributionsCollection === undefined) {
+        return { success: false, error: contributionsError, contributionsClientInfo: undefined }
+    }
+
+    const { createdAt } = viewer
 
     const { contributionCalendar, totalContributions } = contributionsCollection
     const { weeks } = contributionCalendar
@@ -239,6 +257,7 @@ export const SERVICE_Call__getContributions = async (
             monthlyInfo: extractMonthlyContributionsInfo(dailyContributionData, totalContributions),
             longestContributionStreak: longestStreak,
             longestContributionDrySpell: longestDrySpell,
+            accountCreatedDate: createdAt,
         },
         success: true,
     }

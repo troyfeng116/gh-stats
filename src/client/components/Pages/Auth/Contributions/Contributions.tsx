@@ -83,9 +83,15 @@ export const Contributions: React.FC = () => {
         contributionsMainComponent = <ContributionsMain contributionsClientInfo={contributionsClientInfo} />
     }
 
+    const dateRangeBounds = {
+        min: new Date(contributionsClientInfo?.accountCreatedDate || 0).toLocaleDateString(),
+        max: new Date().toUTCString(),
+    }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <DateRangeInput
+                rangeBounds={dateRangeBounds}
                 initialFrom={undefined}
                 initialTo={undefined}
                 disabled={isLoading}
