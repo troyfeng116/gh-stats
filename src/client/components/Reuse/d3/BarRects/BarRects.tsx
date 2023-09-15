@@ -18,7 +18,7 @@ export const BarRects: React.FC<BarRectsProps> = (props) => {
     const { data, xDomain, yDomain, width, height, padding, axisHorizontalPadding, color } = props
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
 
-    const barPadding = 0
+    const barPadding = 9
     const numBars = data.length
     const xScale = d3
         .scaleLinear()
@@ -29,7 +29,7 @@ export const BarRects: React.FC<BarRectsProps> = (props) => {
         .domain(yDomain)
         .range([0, height - paddingBottom - paddingTop])
     const barWidth =
-        (width - paddingRight - paddingLeft - 2 * axisHorizontalPadding - barPadding * (numBars - 1)) / numBars
+        (width - paddingRight - paddingLeft - 2 * axisHorizontalPadding - barPadding * (numBars - 1)) / (numBars - 1)
 
     return (
         <g>

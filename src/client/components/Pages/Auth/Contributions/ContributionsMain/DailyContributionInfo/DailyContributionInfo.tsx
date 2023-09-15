@@ -1,7 +1,7 @@
 import React from 'react'
 
 import BarChart from '@/client/components/Reuse/d3/BarChart'
-import { getRandomScatterPointColor } from '@/client/utils/scatterPointColors'
+import { DAILY_BAR_COLOR } from '@/client/utils/scatterPointColors'
 import { SHARED_Model__DailyContributionsInfo } from '@/shared/models/models/Contributions'
 import { weekdayIntToFullName } from '@/shared/utils/weekdayIntToName'
 
@@ -34,7 +34,7 @@ export const DailyContributionInfo: React.FC<DailyContributionInfoProps> = (prop
                 width={590}
                 height={390}
                 axisHorizontalPadding={69}
-                color={getRandomScatterPointColor()}
+                color={DAILY_BAR_COLOR}
                 xAxisLabel="Weekday"
             />
         </div>

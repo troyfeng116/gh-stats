@@ -1,21 +1,21 @@
 const COLORS = [
-    'rgb(129,129,255)',
     'rgb(129,255,129)',
+    'rgb(129,129,255)',
     'rgb(255,129,129)',
     'rgb(129,255,255)',
-    'rgb(255,129,255)',
     'rgb(255,255,129)',
+    'rgb(255,129,255)',
 
-    'rgb(69,219,255)',
     'rgb(69,255,219)',
+    'rgb(69,219,255)',
     'rgb(255,219,69)',
-    'rgb(219,69,255)',
     'rgb(219,255,219)',
     'rgb(255,219,69)',
+    'rgb(219,69,255)',
 
     'rgb(69,255,255)',
-    'rgb(255,69,255)',
     'rgb(255,255,69)',
+    'rgb(255,69,255)',
 ]
 
 export const attachScatterPointColors = (
@@ -29,3 +29,6 @@ export const attachScatterPointColors = (
 export const getRandomScatterPointColor = (): string => {
     return COLORS[Math.floor(Math.random() * COLORS.length)]
 }
+
+export const DAILY_BAR_COLOR = 'rgb(129,255,129)'
+export const MONTHLY_BAR_COLOR = 'rgb(69,255,219)'
