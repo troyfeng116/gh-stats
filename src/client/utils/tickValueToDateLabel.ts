@@ -14,3 +14,14 @@ export const tickValueToDateLabel = (tickValue: number) => {
         true,
     )
 }
+
+export const tickValueToMonthAndYearLabel = (tickValue: number) => {
+    return formatDate(
+        tickValue,
+        {
+            year: 'numeric',
+            month: 'short',
+        },
+        true,
+    )
+}

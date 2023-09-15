@@ -1,7 +1,10 @@
 import React from 'react'
 
 import BarChart from '@/client/components/Reuse/d3/BarChart'
+import Histogram from '@/client/components/Reuse/d3/Histogram'
+import { dataToContributionsMonthAndYearMapping } from '@/client/utils/dataToContributionsDateTooltip'
 import { PRIMARY_BAR_COLOR } from '@/client/utils/scatterPointColors'
+import { tickValueToMonthAndYearLabel } from '@/client/utils/tickValueToDateLabel'
 import { SHARED_Model__MonthlyContributionsInfo } from '@/shared/models/models/Contributions'
 
 interface MonthlyContributionInfoProps {
@@ -18,16 +21,24 @@ export const MonthlyContributionInfo: React.FC<MonthlyContributionInfoProps> = (
         },
     )
 
+    const monthAndYearPoints: { x: number; y: number }[] = contributionsByMonthAndYear.map(
+        ({ monthAndYear, contributionCount }) => {
+            return { x: new Date(monthAndYear).getTime(), y: contributionCount }
+        },
+    )
+    const histogramData: {
+        points: { x: number; y: number }[]
+        color?: string
+        r?: number
+        lineStrokeWidth?: number
+    }[] = Array.of({
+        points: monthAndYearPoints,
+        color: PRIMARY_BAR_COLOR,
+    })
+
     return (
         <div>
             <p>Average contributions per month: {avgMonthlyContributions.toFixed(2)}</p>
-            {contributionsByMonthAndYear.map(({ monthAndYear, contributionCount }, idx) => {
-                return (
-                    <p key={`contributions-month-year-${idx}`}>
-                        {monthAndYear}: {contributionCount} contributions
-                    </p>
-                )
-            })}
             <BarChart
                 data={barChartData}
                 width={690}
@@ -38,6 +49,20 @@ export const MonthlyContributionInfo: React.FC<MonthlyContributionInfoProps> = (
                 yAxisProperties={{
                     label: 'Contributions',
                 }}
+            />
+            <Histogram
+                data={histogramData}
+                width={690}
+                height={390}
+                yAxisProperties={{
+                    label: 'Contributions',
+                }}
+                xAxisProperties={{
+                    label: 'Date',
+                    tickMarkOverride: monthAndYearPoints.map(({ x }) => x),
+                    tickLabelMapping: tickValueToMonthAndYearLabel,
+                }}
+                dataTooltipMapping={dataToContributionsMonthAndYearMapping}
             />
         </div>
     )
