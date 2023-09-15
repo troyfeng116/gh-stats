@@ -41,6 +41,7 @@ export const BarRects: React.FC<BarRectsProps> = (props) => {
                         width={barWidth}
                         height={heightScale(y)}
                         color={color}
+                        label={y > 0 ? `${y}` : undefined}
                     />
                 )
             })}

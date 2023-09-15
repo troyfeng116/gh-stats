@@ -31,7 +31,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
     const xValues = data.map(({ points }) => points.map(({ x }) => x)).flat(1)
     const yValues = data.map(({ points }) => points.map(({ y }) => y)).flat(1)
     const xDomain = computeChartDimensionDomain(xValues)
-    const yDomain = computeChartDimensionDomain(yValues, true)
+    const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
     return (
         <svg width={width} height={height}>

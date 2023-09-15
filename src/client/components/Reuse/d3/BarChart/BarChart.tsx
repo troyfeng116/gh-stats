@@ -36,7 +36,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
 
     const xDomain: [number, number] = [0, data.length - 1]
     const yValues = data.map(({ y }) => y)
-    const yDomain = computeChartDimensionDomain(yValues, true)
+    const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
     return (
         <svg width={width} height={height}>
