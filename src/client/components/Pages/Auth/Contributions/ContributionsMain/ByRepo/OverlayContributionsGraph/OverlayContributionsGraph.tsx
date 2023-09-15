@@ -38,14 +38,15 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
         }[]
         color: string
         r: number
+        opacity: number
         lineStrokeWidth: number
     }[] = histogramDataWithColors
         .map((data) => {
             const { repoKey } = data
             if (repoKey == repoKeyToHighlight) {
-                return { ...data, r: 3.9, lineStrokeWidth: 3 }
+                return { ...data, r: 3.3, opacity: 1, lineStrokeWidth: 3 }
             }
-            return { ...data, r: 2.9, lineStrokeWidth: 1.5 }
+            return { ...data, r: 2.8, opacity: repoKeyToHighlight !== undefined ? 0.5 : 1, lineStrokeWidth: 1.5 }
         })
         .sort(
             ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
@@ -87,6 +88,6 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
                 <Legend legendData={legendData} />
             </div>
         ),
-        [contributionsByRepo, repoKeyToHighlight],
+        [histogramDataWithHighlighted, legendData],
     )
 }

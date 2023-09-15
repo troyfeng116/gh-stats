@@ -17,6 +17,7 @@ interface ScatterPointsProps {
     includeLines?: boolean
     color?: string
     r?: number
+    opacity?: number
     lineStrokeWidth?: number
 
     dataTooltipMapping?: (data: { x: number; y: number }) => string
@@ -34,6 +35,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
         includeLines = false,
         color = 'white',
         r = 5,
+        opacity = 1,
         lineStrokeWidth = 2,
         dataTooltipMapping,
     } = props
@@ -69,7 +71,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
     }
 
     return (
-        <g>
+        <g opacity={opacity}>
             {includeLines &&
                 lineEndpoints.map(({ x1, y1, x2, y2 }, idx) => {
                     return (

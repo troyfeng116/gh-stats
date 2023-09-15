@@ -5,7 +5,13 @@ import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface HistogramProps {
-    data: { points: { x: number; y: number }[]; color?: string; r?: number; lineStrokeWidth?: number }[]
+    data: {
+        points: { x: number; y: number }[]
+        color?: string
+        r?: number
+        opacity?: number
+        lineStrokeWidth?: number
+    }[]
     width: number
     height: number
     padding?: [number, number, number, number]
@@ -45,7 +51,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                 xAxisProperties={xAxisProperties}
                 yAxisProperties={yAxisProperties}
             />
-            {data.map(({ points, color, r, lineStrokeWidth }, idx) => {
+            {data.map(({ points, color, r, opacity, lineStrokeWidth }, idx) => {
                 return (
                     <ScatterPoints
                         key={`scatter-points-${idx}`}
@@ -59,6 +65,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                         includeLines={true}
                         color={color}
                         r={r}
+                        opacity={opacity}
                         lineStrokeWidth={lineStrokeWidth}
                         dataTooltipMapping={dataTooltipMapping}
                     />
