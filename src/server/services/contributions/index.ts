@@ -4,7 +4,10 @@ import { SERVICE_Response__BASE } from '..'
 import { GH_GQL_Call__Contributions } from '@/server/lib/gh-gql/Contributions'
 import { GH_GQL_Schema__ContributionCalendarDay } from '@/server/lib/gh-gql/Contributions/query'
 import { chunkFromToRange } from '@/server/utils/chunkFromTo'
-import { orderContributionMonthsByCalendarOrder, populateMonthDictWithAllMonths } from '@/server/utils/monthStringUtils'
+import {
+    orderContributionMonthsByCalendarOrder,
+    populateMonthDictWithMissingMonths,
+} from '@/server/utils/monthStringUtils'
 import { weeksToCalendarGrid } from '@/server/utils/weeksToCalendarGrid'
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
 import {
@@ -88,7 +91,7 @@ const extractMonthlyContributionsInfo = (
     totalContributions: number,
 ): SHARED_Model__MonthlyContributionsInfo => {
     const contributionsByMonthAndYearDict: { [monthAndYear: string]: number } = {}
-    const contributionsByMonthDict: { [month: string]: number } = populateMonthDictWithAllMonths({})
+    let contributionsByMonthDict: { [month: string]: number } = {}
     for (const contributionDay of dailyContributionData) {
         const { contributionCount, date } = contributionDay
 
@@ -104,8 +107,7 @@ const extractMonthlyContributionsInfo = (
 
         const month = new Date(date).toLocaleDateString(undefined, { month: 'long', timeZone: 'UTC' })
         if (!(month in contributionsByMonthDict)) {
-            console.error(`[services.contributions.extractMonthlyContributionsInfo] found non-existent month: ${month}`)
-            continue
+            contributionsByMonthDict[month] = 0
         }
         contributionsByMonthDict[month] += contributionCount
     }
@@ -118,13 +120,15 @@ const extractMonthlyContributionsInfo = (
         })
     }
 
+    const numRepresentedMonths = Object.keys(contributionsByMonthDict).length
+    contributionsByMonthDict = populateMonthDictWithMissingMonths(contributionsByMonthDict)
     const contributionsByMonth: { month: string; contributionCount: number }[] = []
     for (const month in contributionsByMonthDict) {
         contributionsByMonth.push({ month: month, contributionCount: contributionsByMonthDict[month] })
     }
 
     return {
-        avgMonthlyContributions: totalContributions / contributionsByMonth.length,
+        avgMonthlyContributions: totalContributions / numRepresentedMonths,
         contributionsByMonthAndYear: contributionsByMonthAndYear,
         contributionsByMonth: orderContributionMonthsByCalendarOrder(contributionsByMonth),
     }

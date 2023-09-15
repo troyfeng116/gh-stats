@@ -14,15 +14,19 @@ const MONTH_MAP: { [month: string]: number } = {
 }
 
 /**
- * Populates given dictionary with zeroes for each month name to avoid client-side access errors.
+ * Populates given dictionary with zeroes for each missing month name to avoid client-side access errors.
  *
- * @param monthDict Dictionary for which keys should be populated.
+ * @param monthDict Dictionary for which month keys should be populated.
  *
  * @returns Reference to original dictionary, with zero-defaulted month keys.
  */
-export const populateMonthDictWithAllMonths = (monthDict: { [month: string]: number }): { [month: string]: number } => {
+export const populateMonthDictWithMissingMonths = (monthDict: {
+    [month: string]: number
+}): { [month: string]: number } => {
     for (const key in MONTH_MAP) {
-        monthDict[key] = 0
+        if (!(key in monthDict)) {
+            monthDict[key] = 0
+        }
     }
     return monthDict
 }
