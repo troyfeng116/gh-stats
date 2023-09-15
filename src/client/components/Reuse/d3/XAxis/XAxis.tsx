@@ -16,21 +16,28 @@ export const XAxis: React.FC<XAxisProps> = (props) => {
     const { domain, xStart, xEnd, yOffset, axisHorizontalPadding, axisProperties } = props
     const {
         label = 'X axis',
-        numTicks = 10,
+        numTicks = 9,
+        tickMarkOverride,
         tickLabelMapping = (tickValue: number) => tickValue.toString(),
     } = axisProperties || { label: undefined, numTicks: undefined, tickLabelMapping: undefined }
 
-    const xTicks = useMemo(() => {
+    const xTicks: { value: number; xOffset: number }[] = useMemo(() => {
         const xScale = d3
             .scaleLinear()
             .domain(domain)
             .range([xStart + axisHorizontalPadding, xEnd - axisHorizontalPadding])
 
-        return xScale.ticks(numTicks).map((value) => ({
-            value,
-            xOffset: xScale(value),
-        }))
-    }, [domain, xStart, xEnd, numTicks])
+        if (tickMarkOverride === undefined) {
+            return xScale.ticks(numTicks).map((value) => ({
+                value: value,
+                xOffset: xScale(value),
+            }))
+        }
+
+        return tickMarkOverride.map((value) => {
+            return { value: value, xOffset: xScale(value) }
+        })
+    }, [domain, xStart, xEnd, numTicks, tickMarkOverride])
 
     return (
         <g color="white" stroke="currentColor">

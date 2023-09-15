@@ -6,6 +6,7 @@ import YAxis from '../YAxis'
 export interface AxisProperties {
     label: string
     numTicks?: number
+    tickMarkOverride?: number[]
     tickLabelMapping?: (tickValue: number) => string
 }
 

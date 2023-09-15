@@ -30,7 +30,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
 
     const xAxisProperties: AxisProperties = {
         label: xAxisLabel,
-        numTicks: data.length,
+        tickMarkOverride: data.map((__, idx) => idx),
         tickLabelMapping: (tickValue) => data[tickValue].xLabel,
     }
 

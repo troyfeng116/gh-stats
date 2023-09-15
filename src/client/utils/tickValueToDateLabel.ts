@@ -1,10 +1,16 @@
+import { formatDate } from '@/shared/utils/dateUtils'
+
 export const tickValueToDateLabel = (tickValue: number) => {
-    return new Date(tickValue).toLocaleDateString(undefined, {
-        year: '2-digit',
-        month: 'numeric',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-    })
+    return formatDate(
+        tickValue,
+        {
+            year: '2-digit',
+            month: 'numeric',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+        },
+        true,
+    )
 }
