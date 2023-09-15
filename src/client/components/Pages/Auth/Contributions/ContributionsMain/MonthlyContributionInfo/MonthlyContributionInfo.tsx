@@ -3,6 +3,7 @@ import React from 'react'
 import BarChart from '@/client/components/Reuse/d3/BarChart'
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import { PRIMARY_BAR_COLOR } from '@/client/utils/charts/chartColors'
+import { computeAxisTickOverrides } from '@/client/utils/charts/computeTickOverrides'
 import { dataToContributionsMonthAndYearMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
 import { tickValueToMonthAndYearLabel } from '@/client/utils/charts/tickValueToLabel'
 import { SHARED_Model__MonthlyContributionsInfo } from '@/shared/models/models/Contributions'
@@ -30,10 +31,10 @@ export const MonthlyContributionInfo: React.FC<MonthlyContributionInfoProps> = (
         points: { x: number; y: number }[]
         color?: string
         r?: number
-        lineStrokeWidth?: number
     }[] = Array.of({
         points: monthAndYearPoints,
         color: PRIMARY_BAR_COLOR,
+        r: 3,
     })
 
     return (
@@ -58,8 +59,11 @@ export const MonthlyContributionInfo: React.FC<MonthlyContributionInfoProps> = (
                     label: 'Contributions',
                 }}
                 xAxisProperties={{
-                    label: 'Date',
-                    tickMarkOverride: monthAndYearPoints.map(({ x }) => x),
+                    label: 'Month/Year',
+                    tickMarkOverride: computeAxisTickOverrides(
+                        monthAndYearPoints.map(({ x }) => x),
+                        18,
+                    ),
                     tickLabelMapping: tickValueToMonthAndYearLabel,
                 }}
                 dataTooltipMapping={dataToContributionsMonthAndYearMapping}

@@ -38,7 +38,7 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
     }[] = Array.of({
         points: allContributionPoints,
         color: getRandomScatterPointColor(),
-        r: 3.9,
+        r: 3,
     })
 
     return useMemo(

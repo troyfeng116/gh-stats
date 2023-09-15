@@ -22,13 +22,6 @@ export const DailyContributionInfo: React.FC<DailyContributionInfoProps> = (prop
     return (
         <div>
             <p>Average contributions per day: {avgDailyContributions.toFixed(2)}</p>
-            {contributionsByWeekday.map((contributionCount, weekdayIdx) => {
-                return (
-                    <p key={weekdayIdx}>
-                        {weekdayIntToFullName(weekdayIdx)}: {contributionCount} contributions
-                    </p>
-                )
-            })}
             <BarChart
                 data={barChartData}
                 width={590}
