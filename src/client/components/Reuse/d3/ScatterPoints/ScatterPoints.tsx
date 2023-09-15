@@ -13,6 +13,7 @@ interface ScatterPointsProps {
     width: number
     height: number
     padding: [number, number, number, number]
+    axisHorizontalPadding: number
     includeLines?: boolean
     color?: string
     r?: number
@@ -29,6 +30,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
         width,
         height,
         padding,
+        axisHorizontalPadding,
         includeLines = false,
         color = 'white',
         r = 5,
@@ -42,7 +44,7 @@ export const ScatterPoints: React.FC<ScatterPointsProps> = (props) => {
     const xScale = d3
         .scaleLinear()
         .domain(xDomain)
-        .range([paddingLeft, width - paddingRight])
+        .range([paddingLeft + axisHorizontalPadding, width - paddingRight - axisHorizontalPadding])
     const yScale = d3
         .scaleLinear()
         .domain(yDomain)

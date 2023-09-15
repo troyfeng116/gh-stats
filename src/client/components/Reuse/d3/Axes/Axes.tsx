@@ -15,12 +15,13 @@ interface AxesProps {
     width: number
     height: number
     padding: [number, number, number, number]
+    axisHorizontalPadding: number
     xAxisProperties?: AxisProperties
     yAxisProperties?: AxisProperties
 }
 
 export const Axes: React.FC<AxesProps> = (props) => {
-    const { xDomain, yDomain, width, height, padding, xAxisProperties, yAxisProperties } = props
+    const { xDomain, yDomain, width, height, padding, axisHorizontalPadding, xAxisProperties, yAxisProperties } = props
 
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
     const xAxisStart = paddingLeft,
@@ -35,6 +36,7 @@ export const Axes: React.FC<AxesProps> = (props) => {
                 xStart={xAxisStart}
                 xEnd={xAxisEnd}
                 yOffset={yAxisEnd}
+                axisHorizontalPadding={axisHorizontalPadding}
                 axisProperties={xAxisProperties}
             />
             <YAxis

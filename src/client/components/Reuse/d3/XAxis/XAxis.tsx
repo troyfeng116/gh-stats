@@ -8,11 +8,12 @@ interface XAxisProps {
     xStart: number
     xEnd: number
     yOffset: number
+    axisHorizontalPadding: number
     axisProperties?: AxisProperties
 }
 
 export const XAxis: React.FC<XAxisProps> = (props) => {
-    const { domain, xStart, xEnd, yOffset, axisProperties } = props
+    const { domain, xStart, xEnd, yOffset, axisHorizontalPadding, axisProperties } = props
     const {
         label = 'X axis',
         numTicks = 10,
@@ -20,7 +21,10 @@ export const XAxis: React.FC<XAxisProps> = (props) => {
     } = axisProperties || { label: undefined, numTicks: undefined, tickLabelMapping: undefined }
 
     const xTicks = useMemo(() => {
-        const xScale = d3.scaleLinear().domain(domain).range([xStart, xEnd])
+        const xScale = d3
+            .scaleLinear()
+            .domain(domain)
+            .range([xStart + axisHorizontalPadding, xEnd - axisHorizontalPadding])
 
         return xScale.ticks(numTicks).map((value) => ({
             value,
