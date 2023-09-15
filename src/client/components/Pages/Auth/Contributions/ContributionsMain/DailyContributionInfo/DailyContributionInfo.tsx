@@ -21,7 +21,7 @@ export const DailyContributionInfo: React.FC<DailyContributionInfoProps> = (prop
 
     return (
         <div>
-            <p>Average contributions per day: {avgDailyContributions}</p>
+            <p>Average contributions per day: {avgDailyContributions.toFixed(2)}</p>
             {contributionsByWeekday.map((contributionCount, weekdayIdx) => {
                 return (
                     <p key={weekdayIdx}>

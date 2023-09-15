@@ -20,7 +20,7 @@ export const MonthlyContributionInfo: React.FC<MonthlyContributionInfoProps> = (
 
     return (
         <div>
-            <p>Average contributions per month: {avgMonthlyContributions}</p>
+            <p>Average contributions per month: {avgMonthlyContributions.toFixed(2)}</p>
             {contributionsByMonthAndYear.map(({ monthAndYear, contributionCount }, idx) => {
                 return (
                     <p key={`contributions-month-year-${idx}`}>
