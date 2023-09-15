@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 import { ScatterPoint } from './ScatterPoint/ScatterPoint'
 import ScatterTooltip from './ScatterTooltip'
 
-import { computeScatterLineEndpoints } from '@/client/utils/computeScatterLineEndpoints'
+import { computeScatterLineEndpoints } from '@/client/utils/charts/computeScatterLineEndpoints'
 
 interface ScatterPointsProps {
     points: { x: number; y: number }[]

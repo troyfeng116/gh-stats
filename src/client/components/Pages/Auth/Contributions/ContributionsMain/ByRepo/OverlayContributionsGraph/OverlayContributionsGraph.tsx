@@ -2,9 +2,9 @@ import React, { useMemo, useState } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import Legend from '@/client/components/Reuse/Legend'
-import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
-import { attachScatterPointColors } from '@/client/utils/scatterPointColors'
-import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
+import { attachScatterPointColors } from '@/client/utils/charts/chartColors'
+import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
+import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
 

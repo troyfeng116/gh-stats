@@ -1,7 +1,7 @@
 import React from 'react'
 
 import BarChart from '@/client/components/Reuse/d3/BarChart'
-import { PRIMARY_BAR_COLOR } from '@/client/utils/scatterPointColors'
+import { PRIMARY_BAR_COLOR } from '@/client/utils/charts/chartColors'
 import { SHARED_Model__DailyContributionsInfo } from '@/shared/models/models/Contributions'
 import { weekdayIntToFullName } from '@/shared/utils/weekdayIntToName'
 

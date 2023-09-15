@@ -3,7 +3,7 @@ import React from 'react'
 import Axes, { AxisProperties } from '../Axes'
 import BarRects from '../BarRects'
 
-import { computeChartDimensionDomain } from '@/client/utils/computeChartDimensionDomain'
+import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface BarChartProps {
     data: { xLabel: string; y: number; color?: string }[]

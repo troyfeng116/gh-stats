@@ -2,9 +2,9 @@ import React from 'react'
 
 import BarChart from '@/client/components/Reuse/d3/BarChart'
 import Histogram from '@/client/components/Reuse/d3/Histogram'
-import { dataToContributionsMonthAndYearMapping } from '@/client/utils/dataToContributionsDateTooltip'
-import { PRIMARY_BAR_COLOR } from '@/client/utils/scatterPointColors'
-import { tickValueToMonthAndYearLabel } from '@/client/utils/tickValueToDateLabel'
+import { PRIMARY_BAR_COLOR } from '@/client/utils/charts/chartColors'
+import { dataToContributionsMonthAndYearMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
+import { tickValueToMonthAndYearLabel } from '@/client/utils/charts/tickValueToLabel'
 import { SHARED_Model__MonthlyContributionsInfo } from '@/shared/models/models/Contributions'
 
 interface MonthlyContributionInfoProps {

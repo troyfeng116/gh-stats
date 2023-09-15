@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
-import { dataToContributionsDateMapping } from '@/client/utils/dataToContributionsDateTooltip'
-import { getRandomScatterPointColor } from '@/client/utils/scatterPointColors'
-import { tickValueToDateLabel } from '@/client/utils/tickValueToDateLabel'
+import { getRandomScatterPointColor } from '@/client/utils/charts/chartColors'
+import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
+import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
 interface RepoContributionsGraphProps {

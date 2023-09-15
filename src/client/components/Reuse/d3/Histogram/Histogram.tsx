@@ -2,7 +2,7 @@ import React from 'react'
 
 import Axes, { AxisProperties } from '@/client/components/Reuse/d3/Axes'
 import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
-import { computeChartDimensionDomain } from '@/client/utils/computeChartDimensionDomain'
+import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface HistogramProps {
     data: { points: { x: number; y: number }[]; color?: string; r?: number; lineStrokeWidth?: number }[]
