@@ -30,5 +30,4 @@ export const getRandomScatterPointColor = (): string => {
     return COLORS[Math.floor(Math.random() * COLORS.length)]
 }
 
-export const DAILY_BAR_COLOR = 'rgb(129,255,129)'
-export const MONTHLY_BAR_COLOR = 'rgb(69,255,219)'
+export const PRIMARY_BAR_COLOR = 'rgb(129,255,129)'

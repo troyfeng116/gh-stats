@@ -6,14 +6,14 @@ import BarRects from '../BarRects'
 import { computeChartDimensionDomain } from '@/client/utils/computeChartDimensionDomain'
 
 interface BarChartProps {
-    data: { xLabel: string; y: number }[]
+    data: { xLabel: string; y: number; color?: string }[]
     width: number
     height: number
     padding?: [number, number, number, number]
     axisHorizontalPadding?: number
+    barPadding?: number
     xAxisLabel: string
     yAxisProperties?: AxisProperties
-    color?: string
 }
 
 export const BarChart: React.FC<BarChartProps> = (props) => {
@@ -23,9 +23,9 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
         height,
         padding = [18, 18, 90, 90],
         axisHorizontalPadding = 39,
+        barPadding = 9,
         xAxisLabel,
         yAxisProperties,
-        color = 'white',
     } = props
 
     const xAxisProperties: AxisProperties = {
@@ -57,8 +57,8 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
                 width={width}
                 height={height}
                 padding={padding}
+                barPadding={barPadding}
                 axisHorizontalPadding={axisHorizontalPadding}
-                color={color}
             />
         </svg>
     )
