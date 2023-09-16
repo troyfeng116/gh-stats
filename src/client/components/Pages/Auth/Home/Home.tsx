@@ -39,9 +39,5 @@ export const Home: React.FC = () => {
         return <div>{error}</div>
     }
 
-    return (
-        <div>
-            <UserCard userCardClientInfo={userCardClientInfo} />
-        </div>
-    )
+    return <UserCard userCardClientInfo={userCardClientInfo} />
 }

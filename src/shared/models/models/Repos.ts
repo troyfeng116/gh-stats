@@ -60,6 +60,7 @@ export interface SHARED_Model__RepoWithCommitCountsAndLanguages extends SHARED_M
         size: number
         color: string
         name: string
+        approxLoc: number
     }[]
 }
 

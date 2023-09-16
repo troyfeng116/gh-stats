@@ -33,16 +33,12 @@ export const Repos: React.FC = () => {
     }, [accessToken])
 
     if (isLoading) {
-        return <div>lifetime stats loading...</div>
+        return <div>repository statistics loading...</div>
     }
 
     if (error !== undefined || lifetimeStats === undefined) {
         return <div>{error}</div>
     }
 
-    return (
-        <div>
-            <LifetimeStats lifetimeStats={lifetimeStats} />
-        </div>
-    )
+    return <LifetimeStats lifetimeStats={lifetimeStats} />
 }

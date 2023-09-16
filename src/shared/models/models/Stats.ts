@@ -18,6 +18,7 @@ export interface SHARED_Model__LinesStats {
 export interface SHARED_Model__RepoCommitCountStats {
     numRepos: number
     numCommits: number
+    totalDiskUsage: number
 }
 
 export interface SHARED_Model__LifetimeStats {
