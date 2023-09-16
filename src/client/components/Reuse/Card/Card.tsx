@@ -10,10 +10,7 @@ export const Card: React.FC<CardProps> = (props) => {
     const { children, className, style } = props
 
     return (
-        <div
-            className={className}
-            style={{ ...style, padding: '6px 18px', border: '2px solid rgb(129, 249, 209)', borderRadius: '6px' }}
-        >
+        <div className={className} style={{ ...style, border: '2px solid rgb(129, 249, 209)', borderRadius: '6px' }}>
             {children}
         </div>
     )
