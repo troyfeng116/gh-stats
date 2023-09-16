@@ -1,4 +1,6 @@
 import './globals.css'
+import '@/client/styles/spacing.css'
+import '@/client/styles/std.css'
 
 import React from 'react'
 import { Inter } from 'next/font/google'

@@ -1,11 +1,10 @@
-import styles from './UserCard.module.css'
-
 import React from 'react'
 import Image from 'next/image'
 
 import UserCardRow from './UserCardRow'
 
 import Card from '@/client/components/Reuse/Card'
+import { StdColors, StdLayout, StdMargin, StdPadding, StdTextSize } from '@/client/styles'
 import { SHARED_Model__UserCardClientInfo } from '@/shared/models/models/UserCard'
 import { formatDate } from '@/shared/utils/dateUtils'
 
@@ -29,37 +28,39 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
     } = contributionsAggregate
 
     return (
-        <Card className={styles.user_card}>
+        <Card className={`${StdLayout.FlexCol} ${StdPadding.All24}`}>
             <Image src={avatarUrl} width={89} height={89} alt="Github avatar" style={{ borderRadius: '50%' }} />
-            <h2 style={{ marginTop: 12 }}>{userId}</h2>
-            {name && <p style={{ color: 'rgb(199, 199, 199)' }}>{name}</p>}
-            {email && <p style={{ color: 'rgb(199, 199, 199)' }}>{email}</p>}
-            {createdAt !== undefined && (
-                <p style={{ color: 'rgb(199, 199, 199)' }}>
-                    joined&nbsp;
-                    {formatDate(createdAt, {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    })}
+            <h2 className={`${StdTextSize.H2} ${StdMargin.T12} ${StdMargin.B6}`}>{userId}</h2>
+            <div className={`${StdLayout.FlexCol} ${StdColors.LightGray}`}>
+                {name && <p>{name}</p>}
+                {email && <p>{email}</p>}
+                {createdAt !== undefined && (
+                    <p>
+                        joined&nbsp;
+                        {formatDate(createdAt, {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        })}
+                    </p>
+                )}
+                <p>
+                    {followers} followers, {following} following
                 </p>
-            )}
-            <p style={{ color: 'rgb(199, 199, 199)' }}>
-                {followers} followers, {following} following
-            </p>
+            </div>
 
-            <div style={{ marginTop: 18 }}>
+            <div className={StdMargin.T18}>
                 <UserCardRow value={totalCommitContributions} label="commits" />
                 <UserCardRow value={totalContributions} label="total contributions" />
                 <UserCardRow value={restrictedContributionsCount} label="private contributions" />
-                <hr color="rgb(199, 199, 199)" style={{ margin: '6px 0' }} />
+                <hr color="rgb(199, 199, 199)" className={`${StdMargin.T6} ${StdMargin.B6}`} />
                 <UserCardRow value={totalPullRequestContributions} label="PRs created" />
                 <UserCardRow value={totalPRs} label="PRs merged" />
                 <UserCardRow value={totalPullRequestReviewContributions} label="PRs reviewed" />
                 <UserCardRow value={totalIssueContributions} label="issues raised" />
-                <hr color="rgb(199, 199, 199)" style={{ margin: '6px 0' }} />
+                <hr color="rgb(199, 199, 199)" className={`${StdMargin.T6} ${StdMargin.B6}`} />
                 <UserCardRow value={totalRepos} label="public repos" />
                 <UserCardRow value={totalRepositoryContributions} label="repos created" />
                 <UserCardRow value={totalRepositoriesWithContributedCommits} label="repos contributed to" />

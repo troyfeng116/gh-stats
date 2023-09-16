@@ -1,6 +1,6 @@
-import styles from './UserCardRow.module.css'
-
 import React from 'react'
+
+import { StdColors, StdJustify, StdLayout, StdMargin, StdTextSize, StdWidth } from '@/client/styles'
 
 interface UserCardRowProps {
     label: string
@@ -11,8 +11,8 @@ export const UserCardRow: React.FC<UserCardRowProps> = (props) => {
     const { label, value } = props
 
     return (
-        <div className={styles.user_card_row}>
-            <p style={{ fontSize: 26, color: 'rgb(129, 249, 209)', marginRight: 60 }}>{value}</p>
+        <div className={`${StdLayout.FlexRow} ${StdWidth.Full} ${StdJustify.Between}`}>
+            <p className={`${StdTextSize.Large} ${StdColors.Green} ${StdMargin.R60}`}>{value}</p>
             <p>{label}</p>
         </div>
     )
