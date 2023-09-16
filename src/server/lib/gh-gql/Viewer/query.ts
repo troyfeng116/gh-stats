@@ -5,6 +5,7 @@ export const GH_GQL_Query__Viewer = `query Viewer($states: [PullRequestState!] =
         name
         email
         createdAt
+        avatarUrl
         followers {
             totalCount
         }
@@ -40,6 +41,7 @@ export interface GH_GQL_Schema__Viewer {
     name: string | null
     email: string | null
     createdAt: string
+    avatarUrl: string
     followers: {
         totalCount: number
     }

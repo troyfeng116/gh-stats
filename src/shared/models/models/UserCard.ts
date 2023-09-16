@@ -7,6 +7,7 @@ export interface SHARED_Model__UserCard {
     followers: number
     following: number
     createdAt: string
+    avatarUrl: string
     totalRepos: number
     totalPRs: number
 }
