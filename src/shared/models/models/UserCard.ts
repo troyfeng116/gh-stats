@@ -8,8 +8,8 @@ export interface SHARED_Model__UserCard {
     following: number
     createdAt: string
     avatarUrl: string
-    totalRepos: number
-    totalPRs: number
+    totalPublicRepos: number
+    totalMergedPRs: number
 }
 
 export interface SHARED_Model__UserCardClientInfo {

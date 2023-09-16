@@ -14,8 +14,8 @@ export const CONVERTER__viewerSchemaToSharedUserCard = (
         following: { totalCount: following },
         createdAt,
         avatarUrl,
-        repositories: { totalCount: totalRepos },
-        pullRequests: { totalCount: totalPRs },
+        repositories: { totalCount: totalPublicRepos },
+        pullRequests: { totalCount: totalMergedPRs },
     } = viewerSchema
 
     return {
@@ -26,8 +26,8 @@ export const CONVERTER__viewerSchemaToSharedUserCard = (
         following: following,
         createdAt: createdAt,
         avatarUrl: avatarUrl,
-        totalRepos: totalRepos,
-        totalPRs: totalPRs,
+        totalPublicRepos: totalPublicRepos,
+        totalMergedPRs: totalMergedPRs,
     }
 }
 
@@ -41,8 +41,8 @@ export const CONVERTER__userObjToSharedUserCard = (user: GH_API_Obj__User): SHAR
         followers: followers,
         following: following,
         createdAt: created_at,
-        totalRepos: public_repos + total_private_repos,
-        totalPRs: 0,
+        totalPublicRepos: public_repos + total_private_repos,
+        totalMergedPRs: 0,
         avatarUrl: avatar_url,
     }
 }
