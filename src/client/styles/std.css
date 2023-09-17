@@ -65,12 +65,12 @@
 
 /* ======== flex layout ======== */
 
-.std-flex-FlexRow {
+.std-flex-Row {
     display: flex;
     flex-direction: row;
 }
 
-.std-flex-FlexCol {
+.std-flex-Col {
     display: flex;
     flex-direction: column;
 }

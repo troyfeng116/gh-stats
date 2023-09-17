@@ -27,8 +27,8 @@ export enum StdFonts {
 /* ======== Layout ======== */
 
 export enum StdFlex {
-    FlexRow = 'std-flex-FlexRow',
-    FlexCol = 'std-flex-FlexCol',
+    Row = 'std-flex-Row',
+    Col = 'std-flex-Col',
 }
 
 export enum StdAlign {
@@ -43,10 +43,10 @@ export enum StdJustify {
 }
 
 export enum StdLayout {
-    FlexRow = 'std-flex-FlexRow std-align-Center',
-    FlexCol = 'std-flex-FlexCol std-align-Center',
-    FlexRowCenter = 'std-flex-FlexRow std-align-Center std-flex-justify-Center',
-    FlexColCenter = 'std-flex-FlexCol std-align-Center std-flex-justify-Center',
+    FlexRow = 'std-flex-Row std-align-Center',
+    FlexCol = 'std-flex-Col std-align-Center',
+    FlexRowCenter = 'std-flex-Row std-align-Center std-flex-justify-Center',
+    FlexColCenter = 'std-flex-Col std-align-Center std-flex-justify-Center',
 }
 
 /* ======== width ======== */
