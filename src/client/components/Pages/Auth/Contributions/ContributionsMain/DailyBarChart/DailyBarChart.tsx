@@ -5,13 +5,13 @@ import { PRIMARY_BAR_COLOR } from '@/client/utils/charts/chartColors'
 import { SHARED_Model__DailyContributionsInfo } from '@/shared/models/models/Contributions'
 import { weekdayIntToFullName } from '@/shared/utils/weekdayIntToName'
 
-interface DailyContributionInfoProps {
+interface DailyBarChartProps {
     dailyContributionInfo: SHARED_Model__DailyContributionsInfo
 }
 
-export const DailyContributionInfo: React.FC<DailyContributionInfoProps> = (props) => {
+export const DailyBarChart: React.FC<DailyBarChartProps> = (props) => {
     const { dailyContributionInfo } = props
-    const { avgDailyContributions, contributionsByWeekday } = dailyContributionInfo
+    const { contributionsByWeekday } = dailyContributionInfo
 
     const barChartData: { xLabel: string; y: number; color?: string }[] = contributionsByWeekday.map(
         (contributionCount, weekdayIdx) => {
@@ -20,18 +20,15 @@ export const DailyContributionInfo: React.FC<DailyContributionInfoProps> = (prop
     )
 
     return (
-        <div>
-            <p>Average contributions per day: {avgDailyContributions.toFixed(2)}</p>
-            <BarChart
-                data={barChartData}
-                width={590}
-                height={390}
-                axisHorizontalPadding={69}
-                xAxisLabel="Weekday"
-                yAxisProperties={{
-                    label: 'Contributions',
-                }}
-            />
-        </div>
+        <BarChart
+            data={barChartData}
+            width={590}
+            height={390}
+            axisHorizontalPadding={69}
+            xAxisLabel="Weekday"
+            yAxisProperties={{
+                label: 'Contributions',
+            }}
+        />
     )
 }

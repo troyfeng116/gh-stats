@@ -14,6 +14,7 @@ import { reducer } from './reducer'
 import DateRangeInput from '@/client/components/Reuse/DateRangeInput'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { contributionsAPI } from '@/client/lib/authAPI'
+import { StdLayout, StdMargin } from '@/client/styles'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
 
 export interface ContributionsState {
@@ -89,7 +90,7 @@ export const Contributions: React.FC = () => {
     }
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className={`${StdLayout.FlexCol}`}>
             <DateRangeInput
                 rangeBounds={dateRangeBounds}
                 initialFrom={undefined}
@@ -97,7 +98,7 @@ export const Contributions: React.FC = () => {
                 disabled={isLoading}
                 handleRangeSelected={handleRangeSelected}
             />
-            {contributionsMainComponent}
+            <div className={`${StdMargin.T30}`}>{contributionsMainComponent}</div>
         </div>
     )
 }

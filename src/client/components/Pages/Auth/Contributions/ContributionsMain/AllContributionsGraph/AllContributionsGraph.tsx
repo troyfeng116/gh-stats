@@ -43,22 +43,20 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
 
     return useMemo(
         () => (
-            <div>
-                <Histogram
-                    data={histogramData}
-                    width={900}
-                    height={600}
-                    yAxisProperties={{
-                        label: 'Contributions',
-                    }}
-                    xAxisProperties={{
-                        label: 'Date',
-                        numTicks: 9,
-                        tickLabelMapping: tickValueToDateLabel,
-                    }}
-                    dataTooltipMapping={dataToContributionsDateMapping}
-                />
-            </div>
+            <Histogram
+                data={histogramData}
+                width={900}
+                height={600}
+                yAxisProperties={{
+                    label: 'Contributions',
+                }}
+                xAxisProperties={{
+                    label: 'Date',
+                    numTicks: 9,
+                    tickLabelMapping: tickValueToDateLabel,
+                }}
+                dataTooltipMapping={dataToContributionsDateMapping}
+            />
         ),
         [allContributionPoints],
     )

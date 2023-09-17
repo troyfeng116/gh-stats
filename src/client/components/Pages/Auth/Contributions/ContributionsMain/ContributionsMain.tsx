@@ -3,11 +3,14 @@ import React from 'react'
 import AllContributionsGraph from './AllContributionsGraph'
 import ByRepo from './ByRepo'
 import CalendarGrid from './CalendarGrid'
-import DailyContributionInfo from './DailyContributionInfo'
-import MonthlyContributionInfo from './MonthlyContributionInfo'
+import DailyBarChart from './DailyBarChart'
+import MonthAndYearHistogram from './MonthAndYearHistogram'
+import MonthlyBarChart from './MonthlyBarChart'
+import SummaryCard from './SummaryCard'
 
+import Card from '@/client/components/Reuse/Card'
+import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
-import { formatDateUTC__MDYYYY } from '@/shared/utils/dateUtils'
 
 interface ContributionsMainProps {
     contributionsClientInfo: SHARED_Model__ContributionsClientInfo
@@ -16,32 +19,23 @@ interface ContributionsMainProps {
 export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
     const { contributionsClientInfo } = props
 
-    const {
-        contributions,
-        calendarGrid,
-        dailyInfo,
-        monthlyInfo,
-        longestContributionStreak,
-        longestContributionDrySpell,
-    } = contributionsClientInfo
-    const { totalContributions, commitContributionsByRepository, startedAt, endedAt } = contributions
+    const { contributions, calendarGrid, dailyInfo, monthlyInfo } = contributionsClientInfo
+    const { commitContributionsByRepository } = contributions
+    const { contributionsByMonth, contributionsByMonthAndYear } = monthlyInfo
 
     return (
-        <div>
-            <h2>
-                Contributions from {formatDateUTC__MDYYYY(startedAt)}
-                &nbsp;to {formatDateUTC__MDYYYY(endedAt)}
-            </h2>
-            <h3>Total contributions: {totalContributions}</h3>
-            <p>Longest active streak: {longestContributionStreak} days</p>
-            <p>Longest inactive streak: {longestContributionDrySpell} days</p>
+        <div className={`${StdLayout.FlexCol}`}>
+            <CalendarGrid calendarGrid={calendarGrid} />
+            <Card className={`${StdPadding.All24} ${StdMargin.T30}`}>
+                <SummaryCard contributionsClientInfo={contributionsClientInfo} />
+            </Card>
 
-            <div>
-                <h3>Contributions calendar</h3>
-                <CalendarGrid calendarGrid={calendarGrid} />
+            <div className={`${StdMargin.T30} ${StdLayout.FlexRow}`}>
+                <DailyBarChart dailyContributionInfo={dailyInfo} />
+                <MonthlyBarChart contributionsByMonth={contributionsByMonth} />
             </div>
-            <DailyContributionInfo dailyContributionInfo={dailyInfo} />
-            <MonthlyContributionInfo monthlyContributionInfo={monthlyInfo} />
+
+            <MonthAndYearHistogram contributionsByMonthAndYear={contributionsByMonthAndYear} />
 
             <div>
                 <h3>Commit contributions graph</h3>
