@@ -2,12 +2,12 @@ import React from 'react'
 
 import { StdColors, StdJustify, StdLayout, StdMargin, StdTextSize, StdWidth } from '@/client/styles'
 
-interface UserCardRowProps {
+interface StatCardProps {
     label: string
-    value: number
+    value: number | string
 }
 
-export const UserCardRow: React.FC<UserCardRowProps> = (props) => {
+export const StatRow: React.FC<StatCardProps> = (props) => {
     const { label, value } = props
 
     return (

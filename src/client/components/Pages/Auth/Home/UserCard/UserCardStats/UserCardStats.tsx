@@ -1,8 +1,7 @@
 import React from 'react'
 
-import UserCardDivider from './UserCardDivider'
-import UserCardRow from './UserCardRow'
-
+import HrDivider from '@/client/components/Reuse/HrDivider'
+import StatRow from '@/client/components/Reuse/StatRow'
 import { SHARED_Model__ContributionsAggregate } from '@/shared/models/models/Contributions'
 
 interface UserCardStatsProps {
@@ -26,19 +25,18 @@ export const UserCardStats: React.FC<UserCardStatsProps> = (props) => {
 
     return (
         <div>
-            <UserCardDivider />
-            <UserCardRow value={totalCommitContributions} label="commits" />
-            <UserCardRow value={totalContributions} label="total contributions" />
-            <UserCardRow value={restrictedContributionsCount} label="private contributions" />
-            <UserCardDivider />
-            <UserCardRow value={totalPullRequestContributions} label="PRs created" />
-            <UserCardRow value={totalMergedPRs} label="PRs merged" />
-            <UserCardRow value={totalPullRequestReviewContributions} label="PRs reviewed" />
-            <UserCardRow value={totalIssueContributions} label="issues raised" />
-            <UserCardDivider />
-            <UserCardRow value={totalPublicRepos} label="public repos" />
-            <UserCardRow value={totalRepositoryContributions} label="repos created" />
-            <UserCardRow value={totalRepositoriesWithContributedCommits} label="repos contributed to" />
+            <StatRow value={totalCommitContributions} label="commits" />
+            <StatRow value={totalContributions} label="total contributions" />
+            <StatRow value={restrictedContributionsCount} label="private contributions" />
+            <HrDivider />
+            <StatRow value={totalPullRequestContributions} label="PRs created" />
+            <StatRow value={totalMergedPRs} label="PRs merged" />
+            <StatRow value={totalPullRequestReviewContributions} label="PRs reviewed" />
+            <StatRow value={totalIssueContributions} label="issues raised" />
+            <HrDivider />
+            <StatRow value={totalPublicRepos} label="public repos" />
+            <StatRow value={totalRepositoryContributions} label="repos created" />
+            <StatRow value={totalRepositoriesWithContributedCommits} label="repos contributed to" />
         </div>
     )
 }

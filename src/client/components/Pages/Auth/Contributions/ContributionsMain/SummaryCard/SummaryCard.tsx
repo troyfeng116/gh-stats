@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { StdTextSize } from '@/client/styles'
+import HrDivider from '@/client/components/Reuse/HrDivider'
+import StatRow from '@/client/components/Reuse/StatRow'
+import { StdColors, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
 import { formatDateUTC__MDYYYY } from '@/shared/utils/dateUtils'
 
@@ -17,16 +19,19 @@ export const SummaryCard: React.FC<SummaryCardProps> = (props) => {
     const { avgMonthlyContributions } = monthlyInfo
 
     return (
-        <div>
-            <h2 className={`${StdTextSize.Large}`}>
-                Contributions from {formatDateUTC__MDYYYY(startedAt)}
-                &nbsp;to {formatDateUTC__MDYYYY(endedAt)}
-            </h2>
-            <p>Total contributions: {totalContributions}</p>
-            <p>Longest active streak: {longestContributionStreak} days</p>
-            <p>Longest inactive streak: {longestContributionDrySpell} days</p>
-            <p>Avg daily contributions: {avgDailyContributions.toFixed(1)}</p>
-            <p>Avg monthly contributions: {avgMonthlyContributions.toFixed(1)}</p>
+        <div className={`${StdLayout.FlexCol}`}>
+            <h2 className={`${StdTextSize.Large} ${StdMargin.B6}`}>Contributions</h2>
+            <p className={`${StdColors.LightGray} ${StdMargin.B12}`}>
+                {formatDateUTC__MDYYYY(startedAt)} to {formatDateUTC__MDYYYY(endedAt)}
+            </p>
+
+            <HrDivider />
+            <StatRow value={totalContributions} label="total contributions" />
+            <StatRow value={avgDailyContributions.toFixed(1)} label="avg per day" />
+            <StatRow value={avgMonthlyContributions.toFixed(1)} label="avg per month" />
+            <HrDivider />
+            <StatRow value={longestContributionStreak} label="longest streak" />
+            <StatRow value={longestContributionDrySpell} label="longest slump" />
         </div>
     )
 }

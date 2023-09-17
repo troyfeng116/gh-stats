@@ -4,6 +4,7 @@ import { UserCardStats } from './UserCardStats/UserCardStats'
 import UserCardProfile from './UserCardProfile'
 
 import Card from '@/client/components/Reuse/Card'
+import HrDivider from '@/client/components/Reuse/HrDivider'
 import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
 import { SHARED_Model__UserCardClientInfo } from '@/shared/models/models/UserCard'
 
@@ -18,7 +19,8 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
 
     return (
         <Card className={`${StdLayout.FlexCol} ${StdPadding.All24}`}>
-            <UserCardProfile userCard={userCard} className={`${StdMargin.B18}`} />
+            <UserCardProfile userCard={userCard} className={`${StdMargin.B12}`} />
+            <HrDivider />
             <UserCardStats
                 contributionsAggregate={contributionsAggregate}
                 totalMergedPRs={totalMergedPRs}
