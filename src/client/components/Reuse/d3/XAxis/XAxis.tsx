@@ -59,7 +59,7 @@ export const XAxis: React.FC<XAxisProps> = (props) => {
                         style={{
                             fontSize: '12px',
                             textAnchor: 'end',
-                            transform: 'translateY(19px) rotate(-22.9deg)',
+                            transform: 'translate(2px, 19px) rotate(-22.9deg)',
                         }}
                     >
                         {tickLabelMapping(value)}

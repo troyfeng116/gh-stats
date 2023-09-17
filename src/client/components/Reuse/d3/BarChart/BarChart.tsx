@@ -3,9 +3,12 @@ import React from 'react'
 import Axes, { AxisProperties } from '../Axes'
 import BarRects from '../BarRects'
 
+import OverflowScroll from '@/client/components/Reuse/OverflowScroll'
+import { StdFonts, StdLayout, StdTextSize } from '@/client/styles'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface BarChartProps {
+    title?: string
     data: { xLabel: string; y: number; color?: string }[]
     width: number
     height: number
@@ -18,6 +21,7 @@ interface BarChartProps {
 
 export const BarChart: React.FC<BarChartProps> = (props) => {
     const {
+        title,
         data,
         width,
         height,
@@ -39,27 +43,30 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
     const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
     return (
-        <svg width={width} height={height}>
-            <Axes
-                xDomain={xDomain}
-                yDomain={yDomain}
-                height={height}
-                width={width}
-                padding={padding}
-                axisHorizontalPadding={axisHorizontalPadding}
-                xAxisProperties={xAxisProperties}
-                yAxisProperties={yAxisProperties}
-            />
-            <BarRects
-                data={data}
-                xDomain={xDomain}
-                yDomain={yDomain}
-                width={width}
-                height={height}
-                padding={padding}
-                barPadding={barPadding}
-                axisHorizontalPadding={axisHorizontalPadding}
-            />
-        </svg>
+        <OverflowScroll className={`${StdLayout.FlexCol}`} width={width}>
+            {title !== undefined && <p className={`${StdTextSize.Medium}`}>{title}</p>}
+            <svg width={width} height={height} className={`${StdFonts.Secondary}`}>
+                <Axes
+                    xDomain={xDomain}
+                    yDomain={yDomain}
+                    height={height}
+                    width={width}
+                    padding={padding}
+                    axisHorizontalPadding={axisHorizontalPadding}
+                    xAxisProperties={xAxisProperties}
+                    yAxisProperties={yAxisProperties}
+                />
+                <BarRects
+                    data={data}
+                    xDomain={xDomain}
+                    yDomain={yDomain}
+                    width={width}
+                    height={height}
+                    padding={padding}
+                    barPadding={barPadding}
+                    axisHorizontalPadding={axisHorizontalPadding}
+                />
+            </svg>
+        </OverflowScroll>
     )
 }

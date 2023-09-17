@@ -21,6 +21,7 @@ export const DailyBarChart: React.FC<DailyBarChartProps> = (props) => {
 
     return (
         <BarChart
+            title="Breakdown by weekday"
             data={barChartData}
             width={590}
             height={390}

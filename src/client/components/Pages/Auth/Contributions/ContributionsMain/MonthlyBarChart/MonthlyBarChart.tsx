@@ -21,6 +21,7 @@ export const MonthlyBarChart: React.FC<MonthlyBarChartProps> = (props) => {
 
     return (
         <BarChart
+            title="Breakdown by month"
             data={barChartData}
             width={590}
             height={390}
