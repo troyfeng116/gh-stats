@@ -1,10 +1,9 @@
-import styles from './CalendarGrid.module.css'
-
 import React from 'react'
 
 import Row from './Row'
 
 import OverflowScroll from '@/client/components/Reuse/OverflowScroll'
+import { StdFlex, StdPadding } from '@/client/styles'
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
 import { SHORT_WEEKDAYS } from '@/shared/utils/weekdayIntToName'
 
@@ -16,7 +15,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = (props) => {
     const { calendarGrid } = props
 
     return (
-        <OverflowScroll className={styles.calendar_grid} width={900}>
+        <OverflowScroll className={`${StdFlex.Col} ${StdPadding.B6}`} width={900}>
             {SHORT_WEEKDAYS.map((weekdayName, idx) => {
                 return <Row key={`calendar-grid-row-${idx}`} weekdayName={weekdayName} days={calendarGrid[idx]} />
             })}

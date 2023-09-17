@@ -1,9 +1,8 @@
-import styles from './Row.module.css'
-
 import React from 'react'
 
 import DayCell from './DayCell'
 
+import { StdLayout } from '@/client/styles'
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
 
 interface RowProps {
@@ -15,7 +14,7 @@ export const Row: React.FC<RowProps> = (props) => {
     const { weekdayName, days } = props
 
     return (
-        <div className={styles.row}>
+        <div className={`${StdLayout.FlexRow}`}>
             <p style={{ minWidth: 48, maxWidth: 48 }}>{weekdayName}</p>
             {days.map((day, dayIdx) => {
                 if (day === null) {
