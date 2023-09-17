@@ -1,10 +1,10 @@
-import styles from './LifetimeStats.module.css'
-
 import React from 'react'
 
 import LanguageData from './LanguageData'
 import RepoCell from './RepoCell'
 
+import Card from '@/client/components/Reuse/Card'
+import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
@@ -20,27 +20,24 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
     const { allLanguageData } = language_stats
 
     return (
-        <div>
-            <h1>Lifetime stats</h1>
-            <div className={styles.section}>
+        <div className={`${StdLayout.FlexCol}`}>
+            <Card className={`${StdPadding.All24} ${StdMargin.B24}`}>
                 <h3>repos: {numRepos}</h3>
                 <p>total disk usage: {kbToStr(totalDiskUsage)}</p>
                 <h3>commits: {numCommits}</h3>
-            </div>
+            </Card>
 
-            <div className={styles.section}>
+            <Card className={`${StdPadding.All24} ${StdMargin.B24}`}>
                 <h3>language data across all contributed repos:</h3>
                 <LanguageData languageData={allLanguageData} shouldShowBytes={true} />
-            </div>
+            </Card>
 
-            <div className={styles.section}>
-                <div className={styles.card_container}>
-                    {repos.map((repo, idx) => {
-                        const { name } = repo
-                        return <RepoCell key={`${name}-${idx}`} repo={repo} />
-                    })}
-                </div>
-            </div>
+            <Card className={`${StdPadding.All24}`}>
+                {repos.map((repo, idx) => {
+                    const { name } = repo
+                    return <RepoCell key={`${name}-${idx}`} repo={repo} />
+                })}
+            </Card>
         </div>
     )
 }
