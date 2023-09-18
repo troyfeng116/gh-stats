@@ -8,7 +8,7 @@ import MonthAndYearHistogram from './MonthAndYearHistogram'
 import MonthlyBarChart from './MonthlyBarChart'
 import SummaryCard from './SummaryCard'
 
-import Card from '@/client/components/Reuse/Card'
+import Card, { CardType } from '@/client/components/Reuse/Card'
 import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
 
@@ -26,13 +26,22 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
     return (
         <div className={`${StdLayout.FlexCol}`}>
             <CalendarGrid calendarGrid={calendarGrid} />
-            <Card className={`${StdPadding.All24} ${StdMargin.T30}`}>
+            <Card className={`${StdMargin.T30}`}>
                 <SummaryCard contributionsClientInfo={contributionsClientInfo} />
             </Card>
 
-            <div className={`${StdMargin.T30} ${StdLayout.FlexRow}`}>
-                <DailyBarChart dailyContributionInfo={dailyInfo} />
-                <MonthlyBarChart contributionsByMonth={contributionsByMonth} />
+            <div className={`${StdMargin.T60} ${StdLayout.FlexRow}`}>
+                <Card
+                    className={`${StdMargin.R30}`}
+                    padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
+                    type={CardType.Secondary}
+                >
+                    <DailyBarChart dailyContributionInfo={dailyInfo} />
+                </Card>
+
+                <Card padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]} type={CardType.Secondary}>
+                    <MonthlyBarChart contributionsByMonth={contributionsByMonth} />
+                </Card>
             </div>
 
             <MonthAndYearHistogram contributionsByMonthAndYear={contributionsByMonthAndYear} />

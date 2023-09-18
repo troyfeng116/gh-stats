@@ -25,7 +25,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
         data,
         width,
         height,
-        padding = [18, 18, 90, 90],
+        padding = [18, 18, 90, 72],
         axisHorizontalPadding = 39,
         barPadding = 9,
         xAxisLabel,

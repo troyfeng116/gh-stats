@@ -4,7 +4,7 @@ import LanguageData from './LanguageData'
 import RepoCell from './RepoCell'
 
 import Card from '@/client/components/Reuse/Card'
-import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
+import { StdLayout, StdMargin } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
@@ -21,18 +21,18 @@ export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
 
     return (
         <div className={`${StdLayout.FlexCol}`}>
-            <Card className={`${StdPadding.All24} ${StdMargin.B24}`}>
+            <Card className={`${StdMargin.B24}`}>
                 <h3>repos: {numRepos}</h3>
                 <p>total disk usage: {kbToStr(totalDiskUsage)}</p>
                 <h3>commits: {numCommits}</h3>
             </Card>
 
-            <Card className={`${StdPadding.All24} ${StdMargin.B24}`}>
+            <Card className={`${StdMargin.B24}`}>
                 <h3>language data across all contributed repos:</h3>
                 <LanguageData languageData={allLanguageData} shouldShowBytes={true} />
             </Card>
 
-            <Card className={`${StdPadding.All24}`}>
+            <Card>
                 {repos.map((repo, idx) => {
                     const { name } = repo
                     return <RepoCell key={`${name}-${idx}`} repo={repo} />

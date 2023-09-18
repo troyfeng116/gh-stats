@@ -4,6 +4,8 @@ import BarChart from '@/client/components/Reuse/d3/BarChart'
 import { PRIMARY_BAR_COLOR } from '@/client/utils/charts/chartColors'
 
 interface MonthlyBarChartProps {
+    width?: number
+    height?: number
     contributionsByMonth: {
         month: string
         contributionCount: number
@@ -11,7 +13,7 @@ interface MonthlyBarChartProps {
 }
 
 export const MonthlyBarChart: React.FC<MonthlyBarChartProps> = (props) => {
-    const { contributionsByMonth } = props
+    const { width = 530, height = 390, contributionsByMonth } = props
 
     const barChartData: { xLabel: string; y: number; color?: string }[] = contributionsByMonth.map(
         ({ month, contributionCount }) => {
@@ -23,8 +25,8 @@ export const MonthlyBarChart: React.FC<MonthlyBarChartProps> = (props) => {
         <BarChart
             title="Breakdown by month"
             data={barChartData}
-            width={590}
-            height={390}
+            width={width}
+            height={height}
             axisHorizontalPadding={39}
             barPadding={9}
             xAxisLabel="Month"

@@ -6,11 +6,13 @@ import { SHARED_Model__DailyContributionsInfo } from '@/shared/models/models/Con
 import { weekdayIntToFullName } from '@/shared/utils/weekdayIntToName'
 
 interface DailyBarChartProps {
+    width?: number
+    height?: number
     dailyContributionInfo: SHARED_Model__DailyContributionsInfo
 }
 
 export const DailyBarChart: React.FC<DailyBarChartProps> = (props) => {
-    const { dailyContributionInfo } = props
+    const { width = 530, height = 390, dailyContributionInfo } = props
     const { contributionsByWeekday } = dailyContributionInfo
 
     const barChartData: { xLabel: string; y: number; color?: string }[] = contributionsByWeekday.map(
@@ -23,8 +25,8 @@ export const DailyBarChart: React.FC<DailyBarChartProps> = (props) => {
         <BarChart
             title="Breakdown by weekday"
             data={barChartData}
-            width={590}
-            height={390}
+            width={width}
+            height={height}
             axisHorizontalPadding={69}
             xAxisLabel="Weekday"
             yAxisProperties={{

@@ -5,7 +5,7 @@ import UserCardProfile from './UserCardProfile'
 
 import Card from '@/client/components/Reuse/Card'
 import HrDivider from '@/client/components/Reuse/HrDivider'
-import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
+import { StdLayout, StdMargin } from '@/client/styles'
 import { SHARED_Model__UserCardClientInfo } from '@/shared/models/models/UserCard'
 
 interface UserCardProps {
@@ -18,7 +18,7 @@ export const UserCard: React.FC<UserCardProps> = (props) => {
     const { totalPublicRepos, totalMergedPRs } = userCard
 
     return (
-        <Card className={`${StdLayout.FlexCol} ${StdPadding.All24}`}>
+        <Card className={`${StdLayout.FlexCol}`}>
             <UserCardProfile userCard={userCard} className={`${StdMargin.B12}`} />
             <HrDivider />
             <UserCardStats
