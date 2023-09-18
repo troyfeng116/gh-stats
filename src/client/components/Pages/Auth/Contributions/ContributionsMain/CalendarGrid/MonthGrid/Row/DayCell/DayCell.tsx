@@ -10,7 +10,7 @@ interface DayCellProps {
 
 export const DayCell: React.FC<DayCellProps> = (props) => {
     const { day, tooltipPosition } = props
-    const { color, contributionCount, contributionLevel, date } = day
+    const { color, contributionCount, date } = day
 
     const [shouldShowCard, setShouldShowCard] = useState<boolean>(false)
 
@@ -51,9 +51,7 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
                     }}
                 >
                     <p>{formatDateUTC__WWMMMMDYYYY(date)}</p>
-                    <p>
-                        {contributionCount} contributions ({contributionLevel})
-                    </p>
+                    <p>{contributionCount} contributions</p>
                 </div>
             )}
         </div>
