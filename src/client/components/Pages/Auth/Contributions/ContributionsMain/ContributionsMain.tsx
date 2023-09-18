@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AllContributionsGraph from './AllContributionsGraph'
+import AllContributionsHistogram from './AllContributionsHistogram'
 import ByRepo from './ByRepo'
 import CalendarGrid from './CalendarGrid'
 import DailyBarChart from './DailyBarChart'
@@ -44,16 +44,30 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 </Card>
             </div>
 
-            <MonthAndYearHistogram contributionsByMonthAndYear={contributionsByMonthAndYear} />
+            <Card
+                className={`${StdMargin.T60}`}
+                padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
+                type={CardType.Secondary}
+            >
+                <MonthAndYearHistogram contributionsByMonthAndYear={contributionsByMonthAndYear} />
+            </Card>
 
-            <div>
-                <h3>Commit contributions graph</h3>
-                <AllContributionsGraph contributionsByRepo={commitContributionsByRepository} />
-            </div>
-            <div>
+            <Card
+                className={`${StdMargin.T60}`}
+                padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
+                type={CardType.Secondary}
+            >
+                <AllContributionsHistogram contributionsByRepo={commitContributionsByRepository} />
+            </Card>
+
+            <Card
+                className={`${StdMargin.T60}`}
+                padding={[StdPadding.T24, StdPadding.R24, StdPadding.B6, StdPadding.L24]}
+                type={CardType.Secondary}
+            >
                 <h3>Commit contributions by repository</h3>
                 <ByRepo contributionsByRepo={commitContributionsByRepository} />
-            </div>
+            </Card>
         </div>
     )
 }

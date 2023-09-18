@@ -33,6 +33,7 @@ export const MonthAndYearHistogram: React.FC<MonthAndYearHistogramProps> = (prop
 
     return (
         <Histogram
+            title="Contributions over months"
             data={histogramData}
             width={690}
             height={390}

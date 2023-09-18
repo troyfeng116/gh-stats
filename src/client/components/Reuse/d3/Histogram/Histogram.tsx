@@ -1,10 +1,14 @@
 import React from 'react'
 
+import OverflowScroll from '../../OverflowScroll'
+
 import Axes, { AxisProperties } from '@/client/components/Reuse/d3/Axes'
 import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
+import { StdFonts, StdLayout, StdTextSize } from '@/client/styles'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface HistogramProps {
+    title?: string
     data: {
         points: { x: number; y: number }[]
         color?: string
@@ -24,6 +28,7 @@ interface HistogramProps {
 
 export const Histogram: React.FC<HistogramProps> = (props) => {
     const {
+        title,
         data,
         width,
         height,
@@ -40,37 +45,40 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
     const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
     return (
-        <svg width={width} height={height}>
-            <Axes
-                xDomain={xDomain}
-                yDomain={yDomain}
-                height={height}
-                width={width}
-                padding={padding}
-                axisHorizontalPadding={axisHorizontalPadding}
-                xAxisProperties={xAxisProperties}
-                yAxisProperties={yAxisProperties}
-            />
-            {data.map(({ points, color, r, opacity, lineStrokeWidth }, idx) => {
-                return (
-                    <ScatterPoints
-                        key={`scatter-points-${idx}`}
-                        points={points}
-                        xDomain={xDomain}
-                        yDomain={yDomain}
-                        width={width}
-                        height={height}
-                        axisHorizontalPadding={axisHorizontalPadding}
-                        padding={padding}
-                        includeLines={true}
-                        color={color}
-                        r={r}
-                        opacity={opacity}
-                        lineStrokeWidth={lineStrokeWidth}
-                        dataTooltipMapping={dataTooltipMapping}
-                    />
-                )
-            })}
-        </svg>
+        <OverflowScroll className={`${StdLayout.FlexCol}`} width={width}>
+            {title !== undefined && <p className={`${StdTextSize.Medium}`}>{title}</p>}
+            <svg className={`${StdFonts.Secondary}`} width={width} height={height}>
+                <Axes
+                    xDomain={xDomain}
+                    yDomain={yDomain}
+                    height={height}
+                    width={width}
+                    padding={padding}
+                    axisHorizontalPadding={axisHorizontalPadding}
+                    xAxisProperties={xAxisProperties}
+                    yAxisProperties={yAxisProperties}
+                />
+                {data.map(({ points, color, r, opacity, lineStrokeWidth }, idx) => {
+                    return (
+                        <ScatterPoints
+                            key={`scatter-points-${idx}`}
+                            points={points}
+                            xDomain={xDomain}
+                            yDomain={yDomain}
+                            width={width}
+                            height={height}
+                            axisHorizontalPadding={axisHorizontalPadding}
+                            padding={padding}
+                            includeLines={true}
+                            color={color}
+                            r={r}
+                            opacity={opacity}
+                            lineStrokeWidth={lineStrokeWidth}
+                            dataTooltipMapping={dataTooltipMapping}
+                        />
+                    )
+                })}
+            </svg>
+        </OverflowScroll>
     )
 }

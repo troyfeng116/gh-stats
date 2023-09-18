@@ -6,11 +6,11 @@ import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointT
 import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
-interface AllContributionsGraphProps {
+interface AllContributionsHistogramProps {
     contributionsByRepo: SHARED_Model__CommitContributionsByRepo[]
 }
 
-export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (props) => {
+export const AllContributionsHistogram: React.FC<AllContributionsHistogramProps> = (props) => {
     const { contributionsByRepo } = props
 
     const allContributionPoints: { x: number; y: number }[] = useMemo(() => {
@@ -44,6 +44,7 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
     return useMemo(
         () => (
             <Histogram
+                title="All (public) contributions"
                 data={histogramData}
                 width={900}
                 height={600}
@@ -58,6 +59,6 @@ export const AllContributionsGraph: React.FC<AllContributionsGraphProps> = (prop
                 dataTooltipMapping={dataToContributionsDateMapping}
             />
         ),
-        [allContributionPoints],
+        [histogramData],
     )
 }
