@@ -120,12 +120,13 @@ const extractMonthlyContributionsInfo = (
         })
     }
 
-    const numRepresentedMonths = Object.keys(contributionsByMonthDict).length
     contributionsByMonthDict = populateMonthDictWithMissingMonths(contributionsByMonthDict)
     const contributionsByMonth: { month: string; contributionCount: number }[] = []
     for (const month in contributionsByMonthDict) {
         contributionsByMonth.push({ month: month, contributionCount: contributionsByMonthDict[month] })
     }
+
+    const numRepresentedMonths = Object.keys(contributionsByMonthAndYearDict).length
 
     return {
         avgMonthlyContributions: totalContributions / numRepresentedMonths,
