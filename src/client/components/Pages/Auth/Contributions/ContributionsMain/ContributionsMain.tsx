@@ -23,6 +23,8 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
     const { commitContributionsByRepository } = contributions
     const { contributionsByMonth, contributionsByMonthAndYear } = monthlyInfo
 
+    const chartCardPadding: StdPadding[] = [StdPadding.T24, StdPadding.R18, StdPadding.B12, StdPadding.L18]
+
     return (
         <div className={`${StdLayout.FlexCol}`}>
             <CalendarGrid calendarGrid={calendarGrid} />
@@ -31,24 +33,16 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
             </Card>
 
             <div className={`${StdMargin.T60} ${StdLayout.FlexRow}`}>
-                <Card
-                    className={`${StdMargin.R30}`}
-                    padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
-                    type={CardType.Secondary}
-                >
+                <Card className={`${StdMargin.R30}`} padding={chartCardPadding} type={CardType.Secondary}>
                     <DailyBarChart dailyContributionInfo={dailyInfo} width={530} height={390} />
                 </Card>
 
-                <Card padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]} type={CardType.Secondary}>
+                <Card padding={chartCardPadding} type={CardType.Secondary}>
                     <MonthlyBarChart contributionsByMonth={contributionsByMonth} width={530} height={390} />
                 </Card>
             </div>
 
-            <Card
-                className={`${StdMargin.T60}`}
-                padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
-                type={CardType.Secondary}
-            >
+            <Card className={`${StdMargin.T60}`} padding={chartCardPadding} type={CardType.Secondary}>
                 <MonthAndYearHistogram
                     contributionsByMonthAndYear={contributionsByMonthAndYear}
                     width={690}
@@ -56,11 +50,7 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 />
             </Card>
 
-            <Card
-                className={`${StdMargin.T60}`}
-                padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
-                type={CardType.Secondary}
-            >
+            <Card className={`${StdMargin.T60}`} padding={chartCardPadding} type={CardType.Secondary}>
                 <AllContributionsHistogram
                     contributionsByRepo={commitContributionsByRepository}
                     width={690}

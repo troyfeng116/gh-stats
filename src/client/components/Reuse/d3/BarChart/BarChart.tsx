@@ -4,7 +4,7 @@ import Axes, { AxisProperties } from '../Axes'
 import BarRects from '../BarRects'
 
 import OverflowScroll from '@/client/components/Reuse/OverflowScroll'
-import { StdFonts, StdLayout, StdTextSize } from '@/client/styles'
+import { StdFonts, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface BarChartProps {
@@ -25,7 +25,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
         data,
         width,
         height,
-        padding = [18, 18, 90, 72],
+        padding = [0, 0, 0, 0],
         axisHorizontalPadding = 39,
         barPadding = 9,
         xAxisLabel,
@@ -42,16 +42,23 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
     const yValues = data.map(({ y }) => y)
     const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
+    const paddingWithAxisLabels: [number, number, number, number] = [
+        padding[0],
+        padding[1],
+        padding[2] + 79,
+        padding[3] + 60,
+    ]
+
     return (
         <OverflowScroll className={`${StdLayout.FlexCol}`} width={width}>
-            {title !== undefined && <p className={`${StdTextSize.Medium}`}>{title}</p>}
+            {title !== undefined && <p className={`${StdTextSize.Medium} ${StdMargin.B12}`}>{title}</p>}
             <svg width={width} height={height} className={`${StdFonts.Secondary}`}>
                 <Axes
                     xDomain={xDomain}
                     yDomain={yDomain}
                     height={height}
                     width={width}
-                    padding={padding}
+                    padding={paddingWithAxisLabels}
                     axisHorizontalPadding={axisHorizontalPadding}
                     xAxisProperties={xAxisProperties}
                     yAxisProperties={yAxisProperties}
@@ -62,7 +69,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
                     yDomain={yDomain}
                     width={width}
                     height={height}
-                    padding={padding}
+                    padding={paddingWithAxisLabels}
                     barPadding={barPadding}
                     axisHorizontalPadding={axisHorizontalPadding}
                 />

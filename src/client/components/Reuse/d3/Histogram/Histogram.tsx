@@ -4,7 +4,7 @@ import OverflowScroll from '../../OverflowScroll'
 
 import Axes, { AxisProperties } from '@/client/components/Reuse/d3/Axes'
 import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
-import { StdFonts, StdLayout, StdTextSize } from '@/client/styles'
+import { StdFonts, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface HistogramProps {
@@ -32,7 +32,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
         data,
         width,
         height,
-        padding = [18, 18, 90, 90],
+        padding = [0, 0, 0, 0],
         axisHorizontalPadding = 39,
         xAxisProperties,
         yAxisProperties,
@@ -44,16 +44,23 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
     const xDomain = computeChartDimensionDomain(xValues)
     const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
+    const paddingWithAxisLabels: [number, number, number, number] = [
+        padding[0],
+        padding[1],
+        padding[2] + 79,
+        padding[3] + 60,
+    ]
+
     return (
         <OverflowScroll className={`${StdLayout.FlexCol}`} width={width}>
-            {title !== undefined && <p className={`${StdTextSize.Medium}`}>{title}</p>}
+            {title !== undefined && <p className={`${StdTextSize.Medium} ${StdMargin.B12}`}>{title}</p>}
             <svg className={`${StdFonts.Secondary}`} width={width} height={height}>
                 <Axes
                     xDomain={xDomain}
                     yDomain={yDomain}
                     height={height}
                     width={width}
-                    padding={padding}
+                    padding={paddingWithAxisLabels}
                     axisHorizontalPadding={axisHorizontalPadding}
                     xAxisProperties={xAxisProperties}
                     yAxisProperties={yAxisProperties}
@@ -68,7 +75,7 @@ export const Histogram: React.FC<HistogramProps> = (props) => {
                             width={width}
                             height={height}
                             axisHorizontalPadding={axisHorizontalPadding}
-                            padding={padding}
+                            padding={paddingWithAxisLabels}
                             includeLines={true}
                             color={color}
                             r={r}
