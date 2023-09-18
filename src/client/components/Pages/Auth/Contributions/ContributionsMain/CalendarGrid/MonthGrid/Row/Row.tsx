@@ -21,7 +21,7 @@ export const Row: React.FC<RowProps> = (props) => {
                         <div
                             key={`day-cell-${dayIdx}`}
                             style={{ height: 12, minWidth: 12, maxWidth: 12, margin: '0 1px' }}
-                        ></div>
+                        />
                     )
                 }
 

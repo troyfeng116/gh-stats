@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Row from '../Row'
+import Row from './Row'
 
 import { StdLayout, StdTextSize } from '@/client/styles'
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
