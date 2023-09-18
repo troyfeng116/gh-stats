@@ -43,8 +43,8 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
     const yDomain = computeChartDimensionDomain(yValues, true, 0.09)
 
     const paddingWithAxisLabels: [number, number, number, number] = [
-        padding[0],
-        padding[1],
+        padding[0] + 6,
+        padding[1] + 6,
         padding[2] + 79,
         padding[3] + 60,
     ]
