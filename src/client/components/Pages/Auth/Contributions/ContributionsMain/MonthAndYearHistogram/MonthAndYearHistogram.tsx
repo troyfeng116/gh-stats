@@ -11,10 +11,12 @@ interface MonthAndYearHistogramProps {
         monthAndYear: string
         contributionCount: number
     }[]
+    width?: number
+    height?: number
 }
 
 export const MonthAndYearHistogram: React.FC<MonthAndYearHistogramProps> = (props) => {
-    const { contributionsByMonthAndYear } = props
+    const { contributionsByMonthAndYear, width = 790, height = 390 } = props
     const monthAndYearPoints: { x: number; y: number }[] = contributionsByMonthAndYear.map(
         ({ monthAndYear, contributionCount }) => {
             return { x: new Date(monthAndYear).getTime(), y: contributionCount }
@@ -35,8 +37,8 @@ export const MonthAndYearHistogram: React.FC<MonthAndYearHistogramProps> = (prop
         <Histogram
             title="Contributions over months"
             data={histogramData}
-            width={690}
-            height={390}
+            width={width}
+            height={height}
             yAxisProperties={{
                 label: 'Contributions',
             }}

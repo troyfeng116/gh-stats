@@ -8,10 +8,12 @@ import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/
 
 interface AllContributionsHistogramProps {
     contributionsByRepo: SHARED_Model__CommitContributionsByRepo[]
+    width?: number
+    height?: number
 }
 
 export const AllContributionsHistogram: React.FC<AllContributionsHistogramProps> = (props) => {
-    const { contributionsByRepo } = props
+    const { contributionsByRepo, width = 790, height = 590 } = props
 
     const allContributionPoints: { x: number; y: number }[] = useMemo(() => {
         const aggregatedContributions = new Map<number, number>()
@@ -46,8 +48,8 @@ export const AllContributionsHistogram: React.FC<AllContributionsHistogramProps>
             <Histogram
                 title="All (public) contributions"
                 data={histogramData}
-                width={900}
-                height={600}
+                width={width}
+                height={height}
                 yAxisProperties={{
                     label: 'Contributions',
                 }}

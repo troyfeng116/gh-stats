@@ -36,11 +36,11 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                     padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
                     type={CardType.Secondary}
                 >
-                    <DailyBarChart dailyContributionInfo={dailyInfo} />
+                    <DailyBarChart dailyContributionInfo={dailyInfo} width={530} height={390} />
                 </Card>
 
                 <Card padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]} type={CardType.Secondary}>
-                    <MonthlyBarChart contributionsByMonth={contributionsByMonth} />
+                    <MonthlyBarChart contributionsByMonth={contributionsByMonth} width={530} height={390} />
                 </Card>
             </div>
 
@@ -49,7 +49,11 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
                 type={CardType.Secondary}
             >
-                <MonthAndYearHistogram contributionsByMonthAndYear={contributionsByMonthAndYear} />
+                <MonthAndYearHistogram
+                    contributionsByMonthAndYear={contributionsByMonthAndYear}
+                    width={690}
+                    height={390}
+                />
             </Card>
 
             <Card
@@ -57,7 +61,11 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 padding={[StdPadding.T24, StdPadding.R6, StdPadding.B6, StdPadding.L6]}
                 type={CardType.Secondary}
             >
-                <AllContributionsHistogram contributionsByRepo={commitContributionsByRepository} />
+                <AllContributionsHistogram
+                    contributionsByRepo={commitContributionsByRepository}
+                    width={690}
+                    height={390}
+                />
             </Card>
 
             <Card
