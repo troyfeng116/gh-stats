@@ -65,6 +65,10 @@ export interface SHARED_Model__ContributionsCollection extends SHARED_Model__Con
 export interface SHARED_Model__DailyContributionsInfo {
     avgDailyContributions: number
     contributionsByWeekday: number[] // weekday (idx) -> total contributionsCount on that weekday
+    mostActiveDay: {
+        maxContributions: number
+        maxDate: string
+    }
 }
 
 export interface SHARED_Model__MonthlyContributionsInfo {

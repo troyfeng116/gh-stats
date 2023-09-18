@@ -65,15 +65,27 @@ const extractDailyContributionsInfo = (
     dailyContributionData: GH_GQL_Schema__ContributionCalendarDay[],
     totalContributions: number,
 ): SHARED_Model__DailyContributionsInfo => {
+    let maxIdx = 0
     const contributionsByWeekday = new Array(7).fill(0)
-    for (const contributionDay of dailyContributionData) {
+    for (let i = 0; i < dailyContributionData.length; i++) {
+        const contributionDay = dailyContributionData[i]
         const { contributionCount, weekday } = contributionDay
         contributionsByWeekday[weekday] += contributionCount
+
+        if (contributionCount > dailyContributionData[maxIdx].contributionCount) {
+            maxIdx = i
+        }
     }
+
+    const { contributionCount: maxContributions, date: maxDate } = dailyContributionData[maxIdx]
 
     return {
         avgDailyContributions: totalContributions / dailyContributionData.length,
         contributionsByWeekday: contributionsByWeekday,
+        mostActiveDay: {
+            maxContributions: maxContributions,
+            maxDate: maxDate,
+        },
     }
 }
 

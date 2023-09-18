@@ -30,6 +30,22 @@ export const formatDateUTC__MDYYYY = (date: string | number | Date): string => {
 }
 
 /**
+ * Formats given date into UTC string, formatted `M/D/YY`.
+ *
+ * @param date Date string/timestamp/object.
+ *
+ * @returns Date formatted in UTC, formatted `M/D/YY`.
+ */
+export const formatDateUTC__MDYY = (date: string | number | Date): string => {
+    return new Date(date).toLocaleDateString(undefined, {
+        year: '2-digit',
+        month: 'numeric',
+        day: 'numeric',
+        timeZone: 'UTC',
+    })
+}
+
+/**
  * Formats given date into UTC string, formatted `WEEKDAY, MMMM/D/YYYY`.
  *
  * @param date Date string/timestamp/object.
