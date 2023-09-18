@@ -8,7 +8,7 @@ import {
     orderContributionMonthsByCalendarOrder,
     populateMonthDictWithMissingMonths,
 } from '@/server/utils/monthStringUtils'
-import { weeksToCalendarGrid } from '@/server/utils/weeksToCalendarGrid'
+import { weeksToCalendarGridByMonthAndYear } from '@/server/utils/weeksToCalendarGrid'
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
 import {
     CONVERTER__contributionsSchemaToShared,
@@ -271,7 +271,7 @@ export const SERVICE_Call__getContributions = async (
     return {
         contributionsClientInfo: {
             contributions: contributionsCollection,
-            calendarGrid: weeksToCalendarGrid(weeks),
+            calendarGridByMonthAndYear: weeksToCalendarGridByMonthAndYear(weeks),
             dailyInfo: extractDailyContributionsInfo(dailyContributionData, totalContributions),
             monthlyInfo: extractMonthlyContributionsInfo(dailyContributionData, totalContributions),
             longestContributionStreak: longestStreak,

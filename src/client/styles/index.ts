@@ -10,6 +10,7 @@ export enum StdBgColors {
 }
 
 export enum StdTextSize {
+    Label = 'std-text-size-Label',
     Small = 'std-text-size-Small',
     Medium = 'std-text-size-Medium',
     Large = 'std-text-size-Large',

@@ -19,7 +19,7 @@ interface ContributionsMainProps {
 export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
     const { contributionsClientInfo } = props
 
-    const { contributions, calendarGrid, dailyInfo, monthlyInfo } = contributionsClientInfo
+    const { contributions, calendarGridByMonthAndYear, dailyInfo, monthlyInfo } = contributionsClientInfo
     const { commitContributionsByRepository } = contributions
     const { contributionsByMonth, contributionsByMonthAndYear } = monthlyInfo
 
@@ -33,7 +33,7 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
 
             <Card className={`${StdMargin.T60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>
                 <p className={`${StdTextSize.Medium} ${StdMargin.B12}`}>Calendar</p>
-                <CalendarGrid calendarGrid={calendarGrid} />
+                <CalendarGrid calendarGridByMonthAndYear={calendarGridByMonthAndYear} />
             </Card>
 
             <div className={`${StdMargin.T30} ${StdLayout.FlexRow}`}>

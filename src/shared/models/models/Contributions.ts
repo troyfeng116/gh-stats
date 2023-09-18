@@ -79,7 +79,7 @@ export interface SHARED_Model__MonthlyContributionsInfo {
 
 export interface SHARED_Model__ContributionsClientInfo {
     contributions: SHARED_Model__ContributionsCollection
-    calendarGrid: (SHARED_Model__ContributionCalendarDay | null)[][]
+    calendarGridByMonthAndYear: { monthAndYear: string; grid: (SHARED_Model__ContributionCalendarDay | null)[][] }[]
     dailyInfo: SHARED_Model__DailyContributionsInfo
     monthlyInfo: SHARED_Model__MonthlyContributionsInfo
     longestContributionStreak: number

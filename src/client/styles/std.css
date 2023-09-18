@@ -24,6 +24,10 @@
 
 /* ======== font size ========*/
 
+.std-text-size-Label {
+    font-size: 12px;
+}
+
 .std-text-size-Small {
     font-size: 16px;
 }

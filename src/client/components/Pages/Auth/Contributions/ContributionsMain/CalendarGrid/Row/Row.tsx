@@ -6,16 +6,15 @@ import { StdLayout } from '@/client/styles'
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
 
 interface RowProps {
-    weekdayName: string
+    height: number
     days: (SHARED_Model__ContributionCalendarDay | null)[]
 }
 
 export const Row: React.FC<RowProps> = (props) => {
-    const { weekdayName, days } = props
+    const { height, days } = props
 
     return (
-        <div className={`${StdLayout.FlexRow}`}>
-            <p style={{ minWidth: 48, maxWidth: 48 }}>{weekdayName}</p>
+        <div className={`${StdLayout.FlexRow}`} style={{ height: height }}>
             {days.map((day, dayIdx) => {
                 if (day === null) {
                     return (

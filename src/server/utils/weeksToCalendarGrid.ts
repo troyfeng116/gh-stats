@@ -19,36 +19,25 @@ const padFlattenedDays = (
 }
 
 /**
- * Given list of contribution weeks, reorganize into grid with seven rows corresponding to calendar view.
+ * Given ordered list of contribution days, reorganize into seven rows corresponding to calendar view.
  * Pads front with `null` values to ensure reading from first column is consistent.
  *
- * @param weeks List of weeks of contributions.
+ * @param days Ordered list of days of contributions.
  *
  * @returns Grid of contribution days, for use in client-side calendar grid view.
  */
-export const weeksToCalendarGrid = (
-    weeks: SHARED_Model__ContributionCalendarWeek[],
+const computeGridForDays = (
+    days: SHARED_Model__ContributionCalendarDay[],
 ): (SHARED_Model__ContributionCalendarDay | null)[][] => {
     const calendarGrid: (SHARED_Model__ContributionCalendarDay | null)[][] = []
     for (let i = 0; i < 7; i++) {
         calendarGrid.push([])
     }
 
-    const flattenedDays: SHARED_Model__ContributionCalendarDay[] = weeks
-        .map(({ contributionDays }) => contributionDays)
-        .flat(1)
-        .sort(({ date: date1 }, { date: date2 }) => {
-            return new Date(date1).getTime() - new Date(date2).getTime()
-        })
+    const paddedDays: (SHARED_Model__ContributionCalendarDay | null)[] = padFlattenedDays(days)
 
-    if (flattenedDays.length === 0) {
-        return calendarGrid
-    }
-
-    const paddedFlattenedDays: (SHARED_Model__ContributionCalendarDay | null)[] = padFlattenedDays(flattenedDays)
-
-    for (let i = 0; i < paddedFlattenedDays.length; i++) {
-        const day = paddedFlattenedDays[i]
+    for (let i = 0; i < paddedDays.length; i++) {
+        const day = paddedDays[i]
         // only padded at front for missing weekdays
         if (day === null) {
             calendarGrid[i].push(null)
@@ -59,4 +48,63 @@ export const weeksToCalendarGrid = (
     }
 
     return calendarGrid
+}
+
+/**
+ * Given list of contribution weeks, reorganize into list of grids by month/year,
+ * each with seven rows corresponding to calendar view.
+ * Pads front of each month/year grid with `null` values to ensure reading from first column is consistent.
+ *
+ * @param weeks List of weeks of contributions.
+ *
+ * @returns Grid of contribution days, for use in client-side calendar grid view.
+ */
+export const weeksToCalendarGridByMonthAndYear = (
+    weeks: SHARED_Model__ContributionCalendarWeek[],
+): { monthAndYear: string; grid: (SHARED_Model__ContributionCalendarDay | null)[][] }[] => {
+    const allDays: SHARED_Model__ContributionCalendarDay[] = weeks
+        .map(({ contributionDays }) => contributionDays)
+        .flat(1)
+
+    const contributionsByMonthAndYearDict: { [monthAndYear: string]: SHARED_Model__ContributionCalendarDay[] } = {}
+    for (const contributionDay of allDays) {
+        const { date } = contributionDay
+
+        const monthAndYear = new Date(date).toLocaleDateString(undefined, {
+            month: 'long',
+            year: 'numeric',
+            timeZone: 'UTC',
+        })
+        if (!(monthAndYear in contributionsByMonthAndYearDict)) {
+            contributionsByMonthAndYearDict[monthAndYear] = []
+        }
+        contributionsByMonthAndYearDict[monthAndYear].push(contributionDay)
+    }
+
+    const contributionsByMonthAndYearList: {
+        monthAndYear: string
+        contributionDays: SHARED_Model__ContributionCalendarDay[]
+    }[] = []
+    for (const monthAndYear in contributionsByMonthAndYearDict) {
+        contributionsByMonthAndYearList.push({
+            monthAndYear: new Date(monthAndYear).toLocaleDateString(undefined, {
+                month: 'short',
+                timeZone: 'UTC',
+            }),
+            contributionDays: contributionsByMonthAndYearDict[monthAndYear],
+        })
+    }
+
+    contributionsByMonthAndYearList.forEach(({ contributionDays }) => {
+        contributionDays.sort(({ date: date1 }, { date: date2 }) => {
+            return new Date(date1).getTime() - new Date(date2).getTime()
+        })
+    })
+
+    return contributionsByMonthAndYearList.map(({ monthAndYear, contributionDays }) => {
+        return {
+            monthAndYear: monthAndYear,
+            grid: computeGridForDays(contributionDays),
+        }
+    })
 }
