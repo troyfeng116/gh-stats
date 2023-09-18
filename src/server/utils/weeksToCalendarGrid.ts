@@ -1,3 +1,5 @@
+import { groupContributionDaysByMonthAndYear } from './contributionDaysAggregators'
+
 import {
     SHARED_Model__ContributionCalendarDay,
     SHARED_Model__ContributionCalendarWeek,
@@ -66,34 +68,10 @@ export const weeksToCalendarGridByMonthAndYear = (
         .map(({ contributionDays }) => contributionDays)
         .flat(1)
 
-    const contributionsByMonthAndYearDict: { [monthAndYear: string]: SHARED_Model__ContributionCalendarDay[] } = {}
-    for (const contributionDay of allDays) {
-        const { date } = contributionDay
-
-        const monthAndYear = new Date(date).toLocaleDateString(undefined, {
-            month: 'long',
-            year: 'numeric',
-            timeZone: 'UTC',
-        })
-        if (!(monthAndYear in contributionsByMonthAndYearDict)) {
-            contributionsByMonthAndYearDict[monthAndYear] = []
-        }
-        contributionsByMonthAndYearDict[monthAndYear].push(contributionDay)
-    }
-
     const contributionsByMonthAndYearList: {
         monthAndYear: string
         contributionDays: SHARED_Model__ContributionCalendarDay[]
-    }[] = []
-    for (const monthAndYear in contributionsByMonthAndYearDict) {
-        contributionsByMonthAndYearList.push({
-            monthAndYear: new Date(monthAndYear).toLocaleDateString(undefined, {
-                month: 'short',
-                timeZone: 'UTC',
-            }),
-            contributionDays: contributionsByMonthAndYearDict[monthAndYear],
-        })
-    }
+    }[] = groupContributionDaysByMonthAndYear(allDays)
 
     contributionsByMonthAndYearList.forEach(({ contributionDays }) => {
         contributionDays.sort(({ date: date1 }, { date: date2 }) => {

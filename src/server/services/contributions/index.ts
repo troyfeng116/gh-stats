@@ -5,9 +5,10 @@ import { GH_GQL_Call__Contributions } from '@/server/lib/gh-gql/Contributions'
 import { GH_GQL_Schema__ContributionCalendarDay } from '@/server/lib/gh-gql/Contributions/query'
 import { chunkFromToRange } from '@/server/utils/chunkFromTo'
 import {
-    orderContributionMonthsByCalendarOrder,
-    populateMonthDictWithMissingMonths,
-} from '@/server/utils/monthStringUtils'
+    aggregateContributionDayCountsByMonth,
+    aggregateContributionDayCountsByMonthAndYear,
+} from '@/server/utils/contributionDaysAggregators'
+import { orderContributionMonthsByCalendarOrder } from '@/server/utils/monthStringUtils'
 import { weeksToCalendarGridByMonthAndYear } from '@/server/utils/weeksToCalendarGrid'
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
 import {
@@ -102,48 +103,16 @@ const extractMonthlyContributionsInfo = (
     dailyContributionData: GH_GQL_Schema__ContributionCalendarDay[],
     totalContributions: number,
 ): SHARED_Model__MonthlyContributionsInfo => {
-    const contributionsByMonthAndYearDict: { [monthAndYear: string]: number } = {}
-    let contributionsByMonthDict: { [month: string]: number } = {}
-    for (const contributionDay of dailyContributionData) {
-        const { contributionCount, date } = contributionDay
+    const contributionsByMonthAndYearList: { monthAndYear: string; contributionCount: number }[] =
+        aggregateContributionDayCountsByMonthAndYear(dailyContributionData)
 
-        const monthAndYear = new Date(date).toLocaleDateString(undefined, {
-            month: 'long',
-            year: 'numeric',
-            timeZone: 'UTC',
-        })
-        if (!(monthAndYear in contributionsByMonthAndYearDict)) {
-            contributionsByMonthAndYearDict[monthAndYear] = 0
-        }
-        contributionsByMonthAndYearDict[monthAndYear] += contributionCount
-
-        const month = new Date(date).toLocaleDateString(undefined, { month: 'long', timeZone: 'UTC' })
-        if (!(month in contributionsByMonthDict)) {
-            contributionsByMonthDict[month] = 0
-        }
-        contributionsByMonthDict[month] += contributionCount
-    }
-
-    const contributionsByMonthAndYear: { monthAndYear: string; contributionCount: number }[] = []
-    for (const monthAndYear in contributionsByMonthAndYearDict) {
-        contributionsByMonthAndYear.push({
-            monthAndYear: monthAndYear,
-            contributionCount: contributionsByMonthAndYearDict[monthAndYear],
-        })
-    }
-
-    contributionsByMonthDict = populateMonthDictWithMissingMonths(contributionsByMonthDict)
-    const contributionsByMonth: { month: string; contributionCount: number }[] = []
-    for (const month in contributionsByMonthDict) {
-        contributionsByMonth.push({ month: month, contributionCount: contributionsByMonthDict[month] })
-    }
-
-    const numRepresentedMonths = Object.keys(contributionsByMonthAndYearDict).length
+    const contributionsByMonthList: { month: string; contributionCount: number }[] =
+        aggregateContributionDayCountsByMonth(dailyContributionData)
 
     return {
-        avgMonthlyContributions: totalContributions / numRepresentedMonths,
-        contributionsByMonthAndYear: contributionsByMonthAndYear,
-        contributionsByMonth: orderContributionMonthsByCalendarOrder(contributionsByMonth),
+        avgMonthlyContributions: totalContributions / contributionsByMonthAndYearList.length,
+        contributionsByMonthAndYear: contributionsByMonthAndYearList,
+        contributionsByMonth: orderContributionMonthsByCalendarOrder(contributionsByMonthList),
     }
 }
 
