@@ -28,7 +28,7 @@ export const MonthlyBarChart: React.FC<MonthlyBarChartProps> = (props) => {
             width={width}
             height={height}
             axisHorizontalPadding={39}
-            barPadding={9}
+            barPadding={6}
             xAxisLabel="Month"
             yAxisProperties={{
                 label: 'Contributions',
