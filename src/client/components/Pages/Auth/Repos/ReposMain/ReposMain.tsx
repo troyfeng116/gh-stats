@@ -8,11 +8,11 @@ import { StdLayout, StdMargin } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { kbToStr } from '@/shared/utils/toBytesStr'
 
-interface LifetimeStatsProps {
+interface ReposMainProps {
     lifetimeStats: SHARED_Model__LifetimeStats
 }
 
-export const LifetimeStats: React.FC<LifetimeStatsProps> = (props) => {
+export const ReposMain: React.FC<ReposMainProps> = (props) => {
     const { lifetimeStats } = props
 
     const { repos, rc_stats, language_stats } = lifetimeStats
