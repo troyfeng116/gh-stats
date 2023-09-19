@@ -17,7 +17,7 @@ export const Toggle: React.FC<ToggleProps> = (props) => {
         <div className={`${StdLayout.FlexRow}`}>
             <label>
                 <input
-                    name={id}
+                    id={id}
                     type="checkbox"
                     checked={isToggleOn}
                     onChange={handleToggle}
@@ -26,7 +26,7 @@ export const Toggle: React.FC<ToggleProps> = (props) => {
                 <div
                     className={`${StdLayout.FlexRow}`}
                     style={{
-                        backgroundColor: isToggleOn ? 'rgb(129, 249, 209)' : 'rgb(159, 159, 159)',
+                        backgroundColor: isToggleOn ? 'rgb(109, 229, 189)' : 'rgb(139, 139, 139)',
                         borderRadius: 13,
                         width: 48,
                         height: 26,

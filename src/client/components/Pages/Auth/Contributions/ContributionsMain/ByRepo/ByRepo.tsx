@@ -4,6 +4,7 @@ import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
+import Checkbox from '@/client/components/Reuse/Checkbox'
 import Toggle from '@/client/components/Reuse/Toggle'
 import { StdLayout, StdMargin, StdPadding, StdTextSize } from '@/client/styles'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
@@ -56,7 +57,8 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
         byRepoCharts = (
             <div
                 style={{
-                    display: 'grid',
+                    display: selectedRepoContributions.length == 1 ? 'flex' : 'grid',
+                    justifyContent: 'center',
                     gridTemplateColumns: '1fr 1fr',
                     gap: 18,
                 }}
@@ -86,22 +88,21 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
             </h3>
             <Toggle label="Overlay charts" isToggleOn={shouldOverlay} handleToggle={handleOverlayToggled} />
 
-            <div>
-                <div>
+            <div className={`${StdLayout.FlexCol} ${StdMargin.T12}`}>
+                <div className={`${StdMargin.B30}`}>
                     {contributionsByRepo.map((repoContributions) => {
                         const {
                             contributions: { totalCount },
                         } = repoContributions
                         const repoKey = getRepoKey(repoContributions)
                         return (
-                            <div key={`repo-select-${repoKey}`}>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedRepos.get(repoKey) === true}
-                                    onChange={() => handleRepoToggled(repoKey)}
-                                />
-                                {repoKey} ({totalCount} commits)
-                            </div>
+                            <Checkbox
+                                key={`repo-select-${repoKey}`}
+                                id={repoKey}
+                                label={`${repoKey} (${totalCount} commits)`}
+                                isChecked={selectedRepos.get(repoKey) === true}
+                                handleChecked={() => handleRepoToggled(repoKey)}
+                            />
                         )
                     })}
                 </div>

@@ -46,8 +46,8 @@ export enum StdJustify {
 export enum StdLayout {
     FlexRow = 'std-flex-Row std-align-Center',
     FlexCol = 'std-flex-Col std-align-Center',
-    FlexRowCenter = 'std-flex-Row std-align-Center std-flex-justify-Center',
-    FlexColCenter = 'std-flex-Col std-align-Center std-flex-justify-Center',
+    FlexRowCenter = 'std-flex-Row std-align-Center std-justify-Center',
+    FlexColCenter = 'std-flex-Col std-align-Center std-justify-Center',
 }
 
 /* ======== width ======== */
