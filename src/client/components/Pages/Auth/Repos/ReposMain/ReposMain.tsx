@@ -5,8 +5,7 @@ import RepoCell from './RepoCell'
 import ReposSummary from './ReposSummary'
 
 import Card from '@/client/components/Reuse/Card'
-import HrDivider from '@/client/components/Reuse/HrDivider'
-import { StdLayout, StdMargin, StdTextSize } from '@/client/styles'
+import { StdLayout, StdMargin } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 
 interface ReposMainProps {
@@ -22,8 +21,6 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
     return (
         <div className={`${StdLayout.FlexCol}`}>
             <Card className={`${StdMargin.B30} ${StdLayout.FlexCol}`}>
-                <h2 className={`${StdTextSize.Large} ${StdMargin.B6}`}>Public repo stats</h2>
-                <HrDivider />
                 <ReposSummary repoCommitCountStats={rc_stats} />
             </Card>
 
