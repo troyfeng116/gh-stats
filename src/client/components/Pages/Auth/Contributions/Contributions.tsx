@@ -11,10 +11,11 @@ import {
 import ContributionsMain from './ContributionsMain'
 import { reducer } from './reducer'
 
+import Card, { CardType } from '@/client/components/Reuse/Card'
 import DateRangeInput from '@/client/components/Reuse/DateRangeInput'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { contributionsAPI } from '@/client/lib/authAPI'
-import { StdLayout, StdMargin } from '@/client/styles'
+import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
 
 export interface ContributionsState {
@@ -91,13 +92,15 @@ export const Contributions: React.FC = () => {
 
     return (
         <div className={`${StdLayout.FlexCol}`}>
-            <DateRangeInput
-                rangeBounds={dateRangeBounds}
-                initialFrom={undefined}
-                initialTo={undefined}
-                disabled={isLoading}
-                handleRangeSelected={handleRangeSelected}
-            />
+            <Card type={CardType.Secondary} padding={StdPadding.All12}>
+                <DateRangeInput
+                    rangeBounds={dateRangeBounds}
+                    initialFrom={undefined}
+                    initialTo={undefined}
+                    disabled={isLoading}
+                    handleRangeSelected={handleRangeSelected}
+                />
+            </Card>
             <div className={`${StdMargin.T30}`}>{contributionsMainComponent}</div>
         </div>
     )

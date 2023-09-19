@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import Button from '@/client/components/Reuse/Button'
+import { StdAlign, StdFlex, StdLayout, StdMargin, StdWidth } from '@/client/styles'
 import { validateRangeQueryDates } from '@/client/utils/validateRangeQueryDates'
 
 interface DateRangeInputProps {
@@ -82,34 +83,46 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
     }
 
     return (
-        <div>
-            <label htmlFor="from" />
-            <input
-                disabled={disabled}
-                min={min}
-                max={max}
-                type="date"
-                id="from"
-                onChange={handleFromOnChange}
-                onFocus={handleOnFocus}
-            />
+        <div className={`${StdLayout.FlexCol}`}>
+            <div className={`${StdLayout.FlexRow}`}>
+                <div className={`${StdFlex.Col} ${StdAlign.End} ${StdMargin.R18}`}>
+                    <div className={`${StdLayout.FlexRow} ${StdWidth.FitContent} ${StdMargin.B6}`}>
+                        <label htmlFor="from" className={`${StdMargin.R12}`}>
+                            from
+                        </label>
+                        <input
+                            disabled={disabled}
+                            min={min}
+                            max={max}
+                            type="date"
+                            id="from"
+                            onChange={handleFromOnChange}
+                            onFocus={handleOnFocus}
+                        />
+                    </div>
 
-            <label htmlFor="to" />
-            <input
-                disabled={disabled}
-                min={min}
-                max={max}
-                type="date"
-                id="to"
-                onChange={handleToOnChange}
-                onFocus={handleOnFocus}
-            />
+                    <div className={`${StdLayout.FlexRow} ${StdWidth.FitContent}`}>
+                        <label htmlFor="to" className={`${StdMargin.R12}`}>
+                            to
+                        </label>
+                        <input
+                            disabled={disabled}
+                            min={min}
+                            max={max}
+                            type="date"
+                            id="to"
+                            onChange={handleToOnChange}
+                            onFocus={handleOnFocus}
+                        />
+                    </div>
+                </div>
 
-            <Button onClick={onClick} disabled={isButtonDisabled}>
-                Submit
-            </Button>
+                <Button onClick={onClick} disabled={isButtonDisabled}>
+                    Submit
+                </Button>
+            </div>
 
-            {queryDateRangeError !== undefined && <p>{queryDateRangeError}</p>}
+            {queryDateRangeError !== undefined && <p className={''}>{queryDateRangeError}</p>}
         </div>
     )
 }
