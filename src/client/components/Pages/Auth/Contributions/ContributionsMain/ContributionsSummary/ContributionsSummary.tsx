@@ -6,11 +6,11 @@ import { StdColors, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { SHARED_Model__ContributionsClientInfo } from '@/shared/models/models/Contributions'
 import { formatDateUTC__MDYY, formatDateUTC__MDYYYY } from '@/shared/utils/dateUtils'
 
-interface SummaryCardProps {
+interface ContributionsSummaryProps {
     contributionsClientInfo: SHARED_Model__ContributionsClientInfo
 }
 
-export const SummaryCard: React.FC<SummaryCardProps> = (props) => {
+export const ContributionsSummary: React.FC<ContributionsSummaryProps> = (props) => {
     const { contributionsClientInfo } = props
     const { contributions, dailyInfo, monthlyInfo, longestContributionStreak, longestContributionDrySpell } =
         contributionsClientInfo

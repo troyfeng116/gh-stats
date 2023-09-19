@@ -3,10 +3,10 @@ import React from 'react'
 import AllContributionsHistogram from './AllContributionsHistogram'
 import ByRepo from './ByRepo'
 import CalendarGrid from './CalendarGrid'
+import ContributionsSummary from './ContributionsSummary'
 import DailyBarChart from './DailyBarChart'
 import MonthAndYearHistogram from './MonthAndYearHistogram'
 import MonthlyBarChart from './MonthlyBarChart'
-import SummaryCard from './SummaryCard'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
 import { StdLayout, StdMargin, StdPadding, StdTextSize } from '@/client/styles'
@@ -28,7 +28,7 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
     return (
         <div className={`${StdLayout.FlexCol}`}>
             <Card>
-                <SummaryCard contributionsClientInfo={contributionsClientInfo} />
+                <ContributionsSummary contributionsClientInfo={contributionsClientInfo} />
             </Card>
 
             <Card className={`${StdMargin.T60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>
