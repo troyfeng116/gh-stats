@@ -37,16 +37,16 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
             </Card>
 
             <div className={`${StdMargin.T30} ${StdLayout.FlexRow}`}>
-                <Card className={`${StdMargin.R30}`} padding={chartCardPadding} type={CardType.Secondary}>
+                <Card className={`${StdMargin.R30}`} padding={chartCardPadding} type={CardType.Tertiary}>
                     <DailyBarChart dailyContributionInfo={dailyInfo} width={530} height={390} />
                 </Card>
 
-                <Card padding={chartCardPadding} type={CardType.Secondary}>
+                <Card padding={chartCardPadding} type={CardType.Tertiary}>
                     <MonthlyBarChart contributionsByMonth={contributionsByMonth} width={530} height={390} />
                 </Card>
             </div>
 
-            <Card className={`${StdMargin.T30}`} padding={chartCardPadding} type={CardType.Secondary}>
+            <Card className={`${StdMargin.T30}`} padding={chartCardPadding} type={CardType.Tertiary}>
                 <MonthAndYearHistogram
                     contributionsByMonthAndYear={contributionsByMonthAndYear}
                     width={690}
@@ -54,7 +54,7 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 />
             </Card>
 
-            <Card className={`${StdMargin.T30}`} padding={chartCardPadding} type={CardType.Secondary}>
+            <Card className={`${StdMargin.T30}`} padding={chartCardPadding} type={CardType.Tertiary}>
                 <AllContributionsHistogram
                     contributionsByRepo={commitContributionsByRepository}
                     width={690}
@@ -62,7 +62,11 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 />
             </Card>
 
-            <Card className={`${StdMargin.T30}`} padding={StdPadding.All24} type={CardType.Secondary}>
+            <Card
+                className={`${StdMargin.T30}`}
+                padding={[StdPadding.T24, StdPadding.R48, StdPadding.B24, StdPadding.L48]}
+                type={CardType.Secondary}
+            >
                 <ByRepo contributionsByRepo={commitContributionsByRepository} />
             </Card>
         </div>

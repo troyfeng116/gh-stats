@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
+import Card, { CardType } from '@/client/components/Reuse/Card'
 import { StdLayout, StdMargin, StdPadding, StdTextSize } from '@/client/styles'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
@@ -46,7 +47,9 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
     let byRepoCharts: React.ReactElement | null = null
     if (shouldOverlay) {
         byRepoCharts = (
-            <OverlayContributionsGraph contributionsByRepo={selectedRepoContributions} width={690} height={500} />
+            <Card className={`${StdPadding.All12}`} type={CardType.Tertiary}>
+                <OverlayContributionsGraph contributionsByRepo={selectedRepoContributions} width={690} height={500} />
+            </Card>
         )
     } else {
         byRepoCharts = (
@@ -54,17 +57,13 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                 style={{
                     display: 'grid',
                     gridTemplateColumns: '1fr 1fr',
-                    gap: 30,
+                    gap: 18,
                 }}
             >
                 {selectedRepoContributions.map((repoContributions, idx) => {
                     const repoKey = getRepoKey(repoContributions)
                     return (
-                        <div
-                            key={`repo-${idx}`}
-                            className={`${StdPadding.All6} ${StdPadding.All12}`}
-                            style={{ backgroundColor: 'rgb(39, 39, 39)', borderRadius: 12 }}
-                        >
+                        <Card key={`repo-${idx}`} className={`${StdPadding.All12}`} type={CardType.Tertiary}>
                             <RepoContributionsGraph
                                 key={`repo-${repoKey}`}
                                 repoKey={repoKey}
@@ -72,7 +71,7 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                                 width={500}
                                 height={390}
                             />
-                        </div>
+                        </Card>
                     )
                 })}
             </div>

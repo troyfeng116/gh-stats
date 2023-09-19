@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 
 import Histogram from '@/client/components/Reuse/d3/Histogram'
 import Legend from '@/client/components/Reuse/Legend'
+import { StdFlex, StdMargin, StdPadding } from '@/client/styles'
 import { attachScatterPointColors } from '@/client/utils/charts/chartColors'
 import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
 import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
@@ -71,7 +72,7 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
 
     return useMemo(
         () => (
-            <div style={{ display: 'flex' }}>
+            <div className={`${StdFlex.Row}`}>
                 <Histogram
                     title="(public) Commit contributions by repo: overlay"
                     data={histogramDataWithHighlighted}
@@ -88,7 +89,12 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
                     dataTooltipMapping={dataToContributionsDateMapping}
                 />
 
-                <Legend legendData={legendData} />
+                <div
+                    className={`${StdPadding.All12} ${StdMargin.T60} ${StdMargin.L18}`}
+                    style={{ border: '1px solid rgb(199, 199, 199)', height: 'fit-content' }}
+                >
+                    <Legend legendData={legendData} />
+                </div>
             </div>
         ),
         [histogramDataWithHighlighted, legendData],

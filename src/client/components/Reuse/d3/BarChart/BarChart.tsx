@@ -51,7 +51,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
 
     return (
         <OverflowScroll className={`${StdLayout.FlexCol}`} width={width}>
-            {title !== undefined && <p className={`${StdTextSize.Medium} ${StdMargin.B12}`}>{title}</p>}
+            {title !== undefined && <p className={`${StdTextSize.Small} ${StdMargin.B12}`}>{title}</p>}
             <svg width={width} height={height} className={`${StdFonts.Secondary}`}>
                 <Axes
                     xDomain={xDomain}

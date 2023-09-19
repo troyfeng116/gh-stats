@@ -41,6 +41,7 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraphProps> = (pr
                 }}
                 xAxisProperties={{
                     label: 'Date',
+                    numTicks: 6,
                     tickMarkOverride: points.length <= 2 ? points.map(({ x }) => x) : undefined,
                     tickLabelMapping: tickValueToDateLabel,
                 }}
