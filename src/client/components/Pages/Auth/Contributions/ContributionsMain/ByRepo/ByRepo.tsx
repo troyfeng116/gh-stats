@@ -4,6 +4,7 @@ import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
+import Toggle from '@/client/components/Reuse/Toggle'
 import { StdLayout, StdMargin, StdPadding, StdTextSize } from '@/client/styles'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
@@ -83,10 +84,8 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
             <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>
                 Commit contributions breakdown by (public) repos
             </h3>
-            <div>
-                <input type="checkbox" checked={shouldOverlay} onChange={handleOverlayToggled} />
-                Overlay
-            </div>
+            <Toggle label="Overlay charts" isToggleOn={shouldOverlay} handleToggle={handleOverlayToggled} />
+
             <div>
                 <div>
                     {contributionsByRepo.map((repoContributions) => {
