@@ -62,12 +62,7 @@ export const ContributionsMain: React.FC<ContributionsMainProps> = (props) => {
                 />
             </Card>
 
-            <Card
-                className={`${StdMargin.T30}`}
-                padding={[StdPadding.T24, StdPadding.R24, StdPadding.B6, StdPadding.L24]}
-                type={CardType.Secondary}
-            >
-                <h3>Commit contributions by repository</h3>
+            <Card className={`${StdMargin.T30}`} padding={StdPadding.All24} type={CardType.Secondary}>
                 <ByRepo contributionsByRepo={commitContributionsByRepository} />
             </Card>
         </div>

@@ -7,11 +7,14 @@ import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 
 interface RepoContributionsGraphProps {
+    repoKey: string
     repoContributions: SHARED_Model__CommitContributionsByRepo
+    width?: number
+    height?: number
 }
 
 export const RepoContributionsGraph: React.FC<RepoContributionsGraphProps> = (props) => {
-    const { repoContributions } = props
+    const { repoKey, repoContributions, width = 500, height = 390 } = props
 
     const { contributions } = repoContributions
     const { nodes } = contributions
@@ -28,22 +31,21 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraphProps> = (pr
 
     return useMemo(
         () => (
-            <div>
-                <Histogram
-                    data={histogramData}
-                    width={500}
-                    height={360}
-                    yAxisProperties={{
-                        label: 'Contributions',
-                    }}
-                    xAxisProperties={{
-                        label: 'Date',
-                        tickMarkOverride: points.length <= 2 ? points.map(({ x }) => x) : undefined,
-                        tickLabelMapping: tickValueToDateLabel,
-                    }}
-                    dataTooltipMapping={dataToContributionsDateMapping}
-                />
-            </div>
+            <Histogram
+                title={repoKey}
+                data={histogramData}
+                width={width}
+                height={height}
+                yAxisProperties={{
+                    label: 'Contributions',
+                }}
+                xAxisProperties={{
+                    label: 'Date',
+                    tickMarkOverride: points.length <= 2 ? points.map(({ x }) => x) : undefined,
+                    tickLabelMapping: tickValueToDateLabel,
+                }}
+                dataTooltipMapping={dataToContributionsDateMapping}
+            />
         ),
         [repoContributions],
     )

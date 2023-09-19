@@ -46,7 +46,7 @@ export const AllContributionsHistogram: React.FC<AllContributionsHistogramProps>
     return useMemo(
         () => (
             <Histogram
-                title="All (public) contributions"
+                title="All (public) commit contributions"
                 data={histogramData}
                 width={width}
                 height={height}

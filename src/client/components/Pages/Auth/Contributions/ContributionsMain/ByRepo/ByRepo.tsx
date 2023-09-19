@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import OverlayContributionsGraph from './OverlayContributionsGraph'
 import RepoContributionsGraph from './RepoContributionsGraph'
 
+import { StdLayout, StdMargin, StdPadding, StdTextSize } from '@/client/styles'
 import { SHARED_Model__CommitContributionsByRepo } from '@/shared/models/models/Contributions'
 import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
 
@@ -44,25 +45,45 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
 
     let byRepoCharts: React.ReactElement | null = null
     if (shouldOverlay) {
-        byRepoCharts = <OverlayContributionsGraph contributionsByRepo={selectedRepoContributions} />
+        byRepoCharts = (
+            <OverlayContributionsGraph contributionsByRepo={selectedRepoContributions} width={690} height={500} />
+        )
     } else {
         byRepoCharts = (
-            <>
+            <div
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: 30,
+                }}
+            >
                 {selectedRepoContributions.map((repoContributions, idx) => {
                     const repoKey = getRepoKey(repoContributions)
                     return (
-                        <div key={`repo-${idx}`}>
-                            <p>{repoKey}</p>
-                            <RepoContributionsGraph key={`repo-${repoKey}`} repoContributions={repoContributions} />
+                        <div
+                            key={`repo-${idx}`}
+                            className={`${StdPadding.All6} ${StdPadding.All12}`}
+                            style={{ backgroundColor: 'rgb(39, 39, 39)', borderRadius: 12 }}
+                        >
+                            <RepoContributionsGraph
+                                key={`repo-${repoKey}`}
+                                repoKey={repoKey}
+                                repoContributions={repoContributions}
+                                width={500}
+                                height={390}
+                            />
                         </div>
                     )
                 })}
-            </>
+            </div>
         )
     }
 
     return (
-        <div>
+        <div className={`${StdLayout.FlexCol}`}>
+            <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>
+                Commit contributions breakdown by (public) repos
+            </h3>
             <div>
                 <input type="checkbox" checked={shouldOverlay} onChange={handleOverlayToggled} />
                 Overlay
@@ -87,13 +108,11 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                     })}
                 </div>
 
-                <div>
-                    {selectedRepoContributions.length === 0 ? (
-                        <p>Select a repo to view per-repo contribution charts</p>
-                    ) : (
-                        byRepoCharts
-                    )}
-                </div>
+                {selectedRepoContributions.length === 0 ? (
+                    <p>Select a repo to view per-repo contribution charts</p>
+                ) : (
+                    byRepoCharts
+                )}
             </div>
         </div>
     )

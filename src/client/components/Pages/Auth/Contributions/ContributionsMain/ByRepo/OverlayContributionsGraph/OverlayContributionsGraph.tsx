@@ -10,10 +10,12 @@ import { getRepoKey } from '@/shared/utils/getRepoKeyFromRepoContributions'
 
 interface OverlayContributionsGraphProps {
     contributionsByRepo: SHARED_Model__CommitContributionsByRepo[]
+    width?: number
+    height?: number
 }
 
 export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps> = (props) => {
-    const { contributionsByRepo } = props
+    const { contributionsByRepo, width = 690, height = 500 } = props
 
     const [repoKeyToHighlight, setRepoKeyToHighlight] = useState<string>()
 
@@ -71,9 +73,10 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
         () => (
             <div style={{ display: 'flex' }}>
                 <Histogram
+                    title="(public) Commit contributions by repo: overlay"
                     data={histogramDataWithHighlighted}
-                    width={690}
-                    height={420}
+                    width={width}
+                    height={height}
                     yAxisProperties={{
                         label: 'Contributions',
                     }}
