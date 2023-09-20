@@ -1,20 +1,19 @@
 import React from 'react'
 
-import LanguageInfo from './LanguageInfo'
-
 import BarChart, { BarChartData } from '@/client/components/Reuse/d3/BarChart'
 import PieChart, { PieChartData } from '@/client/components/Reuse/d3/PieChart'
+import Legend, { LegendData } from '@/client/components/Reuse/Legend'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
 import { bytesToStr } from '@/shared/utils/toBytesStr'
+import { toPercent } from '@/shared/utils/toPercent'
 
 interface LanguageDataProps {
     languageData: SHARED_Model__Language[]
-    shouldShowBytes?: boolean
     shouldSortMostFirst?: boolean
 }
 
 export const LanguageData: React.FC<LanguageDataProps> = (props) => {
-    const { languageData, shouldShowBytes = true, shouldSortMostFirst = true } = props
+    const { languageData, shouldSortMostFirst = true } = props
 
     if (languageData.length === 0) {
         return null
@@ -32,6 +31,13 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         totalLanguageBytes += size
     }
 
+    const legendData: LegendData[] = languageDataCopy.map(({ name, color, size, approxLoc }) => {
+        return {
+            label: `${name} (${toPercent(size, totalLanguageBytes)}%, ${bytesToStr(size, 2)}, ≈${approxLoc} lines)`,
+            color: color,
+        }
+    })
+
     const pieChartData: PieChartData[] = languageDataCopy.map(({ name, size, color }) => {
         return { label: name, value: size, color: color }
     })
@@ -42,23 +48,13 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
 
     return (
         <div>
-            {languageDataCopy.map((language, idx) => {
-                const { name } = language
-                return (
-                    <LanguageInfo
-                        key={`${name}-${idx}`}
-                        language={language}
-                        totalBytes={totalLanguageBytes}
-                        shouldShowBytes={shouldShowBytes}
-                    />
-                )
-            })}
+            <Legend legendData={legendData} />
             <PieChart data={pieChartData} radius={159} />
             <BarChart
                 data={barChartData}
                 width={590}
                 height={390}
-                barPadding={3}
+                barPadding={0}
                 axisHorizontalPadding={19}
                 xAxisLabel="Language"
                 yAxisProperties={{

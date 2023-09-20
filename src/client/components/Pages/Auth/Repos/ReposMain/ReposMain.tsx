@@ -26,7 +26,7 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
 
             <Card className={`${StdMargin.B30}`}>
                 <h3>language data across all contributed repos:</h3>
-                <LanguageData languageData={allLanguageData} shouldShowBytes={true} />
+                <LanguageData languageData={allLanguageData} />
             </Card>
 
             <Card>
