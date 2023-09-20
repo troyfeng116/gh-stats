@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import LanguageBarChart from './LanguageBarChart'
 import LanguageLegend from './LanguageLegend'
 import LanguagePieChart from './LanguagePieChart'
 
+import ChartButtons, { ChartType } from '@/client/components/Reuse/ChartButtons'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
 
 interface LanguageDataProps {
@@ -13,6 +14,9 @@ interface LanguageDataProps {
 
 export const LanguageData: React.FC<LanguageDataProps> = (props) => {
     const { languageData, shouldSortMostFirst = true } = props
+
+    const chartTypes = [ChartType.Bar, ChartType.Pie]
+    const [chartTypeToDisplay, setChartTypeToDisplay] = useState<ChartType>(ChartType.Bar)
 
     if (languageData.length === 0) {
         return null
@@ -26,11 +30,26 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
 
     const totalLanguageBytes = languageDataCopy.reduce((totalPrev, { size }) => totalPrev + size, 0)
 
+    let chartComponent: React.ReactNode | null = null
+    switch (chartTypeToDisplay) {
+        case ChartType.Bar:
+            chartComponent = <LanguageBarChart languageData={languageDataCopy} />
+            break
+        case ChartType.Pie:
+            chartComponent = (
+                <LanguagePieChart totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
+            )
+            break
+    }
+
     return (
         <div>
+            <ChartButtons
+                chartTypes={chartTypes}
+                handleChartTypeClicked={(chartType) => setChartTypeToDisplay(chartType)}
+            />
             <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
-            <LanguagePieChart totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
-            <LanguageBarChart languageData={languageDataCopy} />
+            {chartComponent}
         </div>
     )
 }
