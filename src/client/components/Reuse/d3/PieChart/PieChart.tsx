@@ -6,9 +6,15 @@ import OverflowScroll from '@/client/components/Reuse/OverflowScroll'
 import { StdMargin, StdTextSize } from '@/client/styles'
 import { computePieChartSlices } from '@/client/utils/charts/computePieChartSlices'
 
+export interface PieChartData {
+    label: string
+    value: number
+    color?: string
+}
+
 interface PieChartProps {
     title?: string
-    data: { label: string; value: number; color?: string }[]
+    data: PieChartData[]
     radius: number
     width?: number
     height?: number

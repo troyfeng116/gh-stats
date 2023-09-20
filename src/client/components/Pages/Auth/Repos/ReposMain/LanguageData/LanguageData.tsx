@@ -3,7 +3,7 @@ import React from 'react'
 import LanguageInfo from './LanguageInfo'
 
 import BarChart, { BarChartData } from '@/client/components/Reuse/d3/BarChart'
-import PieChart from '@/client/components/Reuse/d3/PieChart'
+import PieChart, { PieChartData } from '@/client/components/Reuse/d3/PieChart'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
 import { bytesToStr } from '@/shared/utils/toBytesStr'
 
@@ -32,11 +32,9 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         totalLanguageBytes += size
     }
 
-    const pieChartData: { label: string; value: number; color?: string }[] = languageDataCopy.map(
-        ({ name, size, color }) => {
-            return { label: name, value: size, color: color }
-        },
-    )
+    const pieChartData: PieChartData[] = languageDataCopy.map(({ name, size, color }) => {
+        return { label: name, value: size, color: color }
+    })
 
     const barChartData: BarChartData[] = languageDataCopy.map(({ name, size, color }) => {
         return { xLabel: name, y: size, barLabel: bytesToStr(size, 0), color: color }
