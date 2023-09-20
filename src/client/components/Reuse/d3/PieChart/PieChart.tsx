@@ -41,7 +41,14 @@ export const PieChart: React.FC<PieChartProps> = (props) => {
         const tooltipPoint = sectorData[shouldShowTooltipForIdx]
         const { label, startRadians, endRadians } = tooltipPoint
         pieChartTooltip = (
-            <PieChartTooltip label={label} startRadians={startRadians} endRadians={endRadians} cx={cx} cy={cy} />
+            <PieChartTooltip
+                label={label}
+                startRadians={startRadians}
+                endRadians={endRadians}
+                cx={cx}
+                cy={cy}
+                onMouseEnter={() => handleMouseEnterForIdx(shouldShowTooltipForIdx)}
+            />
         )
     }
 
