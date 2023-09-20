@@ -7,10 +7,14 @@ interface PieChartWedge {
     cx: number
     cy: number
     color?: string
+    opacity?: number
+
+    onMouseEnter?: React.MouseEventHandler<SVGPathElement>
+    onMouseLeave?: React.MouseEventHandler<SVGPathElement>
 }
 
 export const PieChartWedge: React.FC<PieChartWedge> = (props) => {
-    const { startRadians, endRadians, radius, cx, cy, color = 'white' } = props
+    const { startRadians, endRadians, radius, cx, cy, color = 'white', opacity = 1, onMouseEnter, onMouseLeave } = props
 
     if (Math.abs(endRadians - startRadians) === 2 * Math.PI) {
         return <circle cx={cx} cy={cy} r={radius} fill={color} />
@@ -27,5 +31,13 @@ export const PieChartWedge: React.FC<PieChartWedge> = (props) => {
     // http://xahlee.info/js/svg_path_ellipse_arc.html
     const dArr = ['M', x1, y1, 'A', radius, radius, 0, largeArcFlag, 0, x2, y2, 'L', cx, cy, 'Z']
 
-    return <path d={dArr.join(' ')} fill={color} />
+    return (
+        <path
+            d={dArr.join(' ')}
+            fill={color}
+            fillOpacity={opacity}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+        />
+    )
 }

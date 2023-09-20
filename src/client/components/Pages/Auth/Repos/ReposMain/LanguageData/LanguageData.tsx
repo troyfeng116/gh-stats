@@ -29,7 +29,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
     return (
         <div>
             <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
-            <LanguagePieChart languageData={languageDataCopy} />
+            <LanguagePieChart totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
             <LanguageBarChart languageData={languageDataCopy} />
         </div>
     )

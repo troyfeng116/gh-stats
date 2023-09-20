@@ -2,16 +2,23 @@ import React from 'react'
 
 import PieChart, { PieChartData } from '@/client/components/Reuse/d3/PieChart'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
+import { bytesToStr } from '@/shared/utils/toBytesStr'
+import { toPercent } from '@/shared/utils/toPercent'
 
 interface LanguagePieChartProps {
+    totalLanguageBytes: number
     languageData: SHARED_Model__Language[]
 }
 
 export const LanguagePieChart: React.FC<LanguagePieChartProps> = (props) => {
-    const { languageData } = props
+    const { totalLanguageBytes, languageData } = props
 
-    const pieChartData: PieChartData[] = languageData.map(({ name, size, color }) => {
-        return { label: name, value: size, color: color }
+    const pieChartData: PieChartData[] = languageData.map(({ name, size, color, approxLoc }) => {
+        return {
+            label: `${name} (${toPercent(size, totalLanguageBytes)}%, ${bytesToStr(size, 0)}, ≈${approxLoc} lines)`,
+            value: size,
+            color: color,
+        }
     })
 
     return <PieChart data={pieChartData} radius={159} />
