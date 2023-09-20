@@ -2,8 +2,10 @@ import React from 'react'
 
 import LanguageInfo from './LanguageInfo'
 
+import BarChart from '@/client/components/Reuse/d3/BarChart'
 import PieChart from '@/client/components/Reuse/d3/PieChart'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
+import { bytesToStr } from '@/shared/utils/toBytesStr'
 
 interface LanguageDataProps {
     languageData: SHARED_Model__Language[]
@@ -36,6 +38,12 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         },
     )
 
+    const barChartData: { xLabel: string; y: number; color?: string }[] = languageDataCopy.map(
+        ({ name, size, color }) => {
+            return { xLabel: name, y: size, color: color }
+        },
+    )
+
     return (
         <div>
             {languageDataCopy.map((language, idx) => {
@@ -50,6 +58,16 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
                 )
             })}
             <PieChart data={pieChartData} radius={159} />
+            <BarChart
+                data={barChartData}
+                width={590}
+                height={390}
+                xAxisLabel="Language"
+                yAxisProperties={{
+                    label: 'Space (bytes)',
+                    tickLabelMapping: (tickValue) => bytesToStr(tickValue, 0),
+                }}
+            />
         </div>
     )
 }

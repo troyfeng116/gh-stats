@@ -27,7 +27,7 @@ export const DailyBarChart: React.FC<DailyBarChartProps> = (props) => {
             data={barChartData}
             width={width}
             height={height}
-            axisHorizontalPadding={69}
+            axisHorizontalPadding={39}
             xAxisLabel="Weekday"
             yAxisProperties={{
                 label: 'Contributions',

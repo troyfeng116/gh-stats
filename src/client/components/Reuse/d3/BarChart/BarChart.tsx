@@ -5,6 +5,7 @@ import BarRects from '../BarRects'
 
 import OverflowScroll from '@/client/components/Reuse/OverflowScroll'
 import { StdFonts, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
+import { computeBarWidth } from '@/client/utils/charts/computeBarChartBarWidth'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
 interface BarChartProps {
@@ -49,6 +50,17 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
         padding[3] + 60,
     ]
 
+    const barWidth = computeBarWidth(
+        data.length,
+        width,
+        paddingWithAxisLabels[3],
+        paddingWithAxisLabels[1],
+        axisHorizontalPadding,
+        barPadding,
+    )
+
+    const axisHorizontalPaddingWithBar = barWidth / 2 + axisHorizontalPadding
+
     return (
         <OverflowScroll className={`${StdLayout.FlexCol}`} width={width}>
             {title !== undefined && <p className={`${StdTextSize.Small} ${StdMargin.B12}`}>{title}</p>}
@@ -59,7 +71,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
                     height={height}
                     width={width}
                     padding={paddingWithAxisLabels}
-                    axisHorizontalPadding={axisHorizontalPadding}
+                    axisHorizontalPadding={axisHorizontalPaddingWithBar}
                     xAxisProperties={xAxisProperties}
                     yAxisProperties={yAxisProperties}
                 />
@@ -70,8 +82,8 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
                     width={width}
                     height={height}
                     padding={paddingWithAxisLabels}
-                    barPadding={barPadding}
-                    axisHorizontalPadding={axisHorizontalPadding}
+                    axisHorizontalPadding={axisHorizontalPaddingWithBar}
+                    barWidth={barWidth}
                 />
             </svg>
         </OverflowScroll>

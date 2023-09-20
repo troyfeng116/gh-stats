@@ -11,25 +11,13 @@ interface BarRectsProps {
     height: number
     padding: [number, number, number, number]
     axisHorizontalPadding: number
-    barPadding: number
-    maxBarWidth?: number
+    barWidth: number
 }
 
 export const BarRects: React.FC<BarRectsProps> = (props) => {
-    const {
-        data,
-        xDomain,
-        yDomain,
-        width,
-        height,
-        padding,
-        axisHorizontalPadding,
-        barPadding,
-        maxBarWidth = 139,
-    } = props
+    const { data, xDomain, yDomain, width, height, padding, axisHorizontalPadding, barWidth } = props
     const [paddingTop, paddingRight, paddingBottom, paddingLeft] = padding
 
-    const numBars = data.length
     const xScale = d3
         .scaleLinear()
         .domain(xDomain)
@@ -38,10 +26,6 @@ export const BarRects: React.FC<BarRectsProps> = (props) => {
         .scaleLinear()
         .domain(yDomain)
         .range([0, height - paddingBottom - paddingTop])
-
-    const barsAvailableWidth =
-        width - paddingRight - paddingLeft - 2 * axisHorizontalPadding - barPadding * (numBars - 1)
-    const barWidth = Math.min(maxBarWidth, barsAvailableWidth / Math.max(1, numBars - 1))
 
     return (
         <g>
