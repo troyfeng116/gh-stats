@@ -1,11 +1,11 @@
 import React from 'react'
 
+import LanguageLegend from './LanguageLegend'
+
 import BarChart, { BarChartData } from '@/client/components/Reuse/d3/BarChart'
 import PieChart, { PieChartData } from '@/client/components/Reuse/d3/PieChart'
-import Legend, { LegendData } from '@/client/components/Reuse/Legend'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
 import { bytesToStr } from '@/shared/utils/toBytesStr'
-import { toPercent } from '@/shared/utils/toPercent'
 
 interface LanguageDataProps {
     languageData: SHARED_Model__Language[]
@@ -25,18 +25,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         languageDataCopy.sort((a, b) => b.size - a.size)
     }
 
-    let totalLanguageBytes = 0
-    for (let i = 0; i < languageDataCopy.length; i++) {
-        const { size } = languageDataCopy[i]
-        totalLanguageBytes += size
-    }
-
-    const legendData: LegendData[] = languageDataCopy.map(({ name, color, size, approxLoc }) => {
-        return {
-            label: `${name} (${toPercent(size, totalLanguageBytes)}%, ${bytesToStr(size, 2)}, ≈${approxLoc} lines)`,
-            color: color,
-        }
-    })
+    const totalLanguageBytes = languageDataCopy.reduce((totalPrev, { size }) => totalPrev + size, 0)
 
     const pieChartData: PieChartData[] = languageDataCopy.map(({ name, size, color }) => {
         return { label: name, value: size, color: color }
@@ -48,7 +37,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
 
     return (
         <div>
-            <Legend legendData={legendData} />
+            <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
             <PieChart data={pieChartData} radius={159} />
             <BarChart
                 data={barChartData}
