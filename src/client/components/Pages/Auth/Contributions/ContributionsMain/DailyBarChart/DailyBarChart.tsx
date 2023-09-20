@@ -15,9 +15,14 @@ export const DailyBarChart: React.FC<DailyBarChartProps> = (props) => {
     const { dailyContributionInfo, width = 530, height = 390 } = props
     const { contributionsByWeekday } = dailyContributionInfo
 
-    const barChartData: { xLabel: string; y: number; color?: string }[] = contributionsByWeekday.map(
+    const barChartData: { xLabel: string; y: number; barLabel?: string; color?: string }[] = contributionsByWeekday.map(
         (contributionCount, weekdayIdx) => {
-            return { xLabel: weekdayIntToFullName(weekdayIdx), y: contributionCount, color: PRIMARY_BAR_COLOR }
+            return {
+                xLabel: weekdayIntToFullName(weekdayIdx),
+                y: contributionCount,
+                barLabel: contributionCount > 0 ? `${contributionCount}` : undefined,
+                color: PRIMARY_BAR_COLOR,
+            }
         },
     )
 

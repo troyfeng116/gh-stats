@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 import BarRect from './BarRect'
 
 interface BarRectsProps {
-    data: { xLabel: string; y: number; color?: string }[]
+    data: { xLabel: string; y: number; barLabel?: string; color?: string }[]
     xDomain: [number, number]
     yDomain: [number, number]
     width: number
@@ -29,7 +29,7 @@ export const BarRects: React.FC<BarRectsProps> = (props) => {
 
     return (
         <g>
-            {data.map(({ xLabel, y, color = 'white' }, idx) => {
+            {data.map(({ xLabel, y, barLabel, color = 'white' }, idx) => {
                 return (
                     <BarRect
                         key={`${xLabel}-y-${idx}`}
@@ -38,7 +38,7 @@ export const BarRects: React.FC<BarRectsProps> = (props) => {
                         width={barWidth}
                         height={heightScale(y)}
                         color={color}
-                        label={y > 0 ? `${y}` : undefined}
+                        label={barLabel}
                     />
                 )
             })}

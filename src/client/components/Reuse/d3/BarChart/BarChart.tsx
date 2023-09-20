@@ -10,12 +10,13 @@ import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartD
 
 interface BarChartProps {
     title?: string
-    data: { xLabel: string; y: number; color?: string }[]
+    data: { xLabel: string; y: number; barLabel?: string; color?: string }[]
     width: number
     height: number
     padding?: [number, number, number, number]
     axisHorizontalPadding?: number
     barPadding?: number
+    maxBarWidth?: number
     xAxisLabel: string
     yAxisProperties?: AxisProperties
 }
@@ -29,6 +30,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
         padding = [0, 0, 0, 0],
         axisHorizontalPadding = 39,
         barPadding = 9,
+        maxBarWidth = 159,
         xAxisLabel,
         yAxisProperties,
     } = props
@@ -57,6 +59,7 @@ export const BarChart: React.FC<BarChartProps> = (props) => {
         paddingWithAxisLabels[1],
         axisHorizontalPadding,
         barPadding,
+        maxBarWidth,
     )
 
     const axisHorizontalPaddingWithBar = barWidth / 2 + axisHorizontalPadding

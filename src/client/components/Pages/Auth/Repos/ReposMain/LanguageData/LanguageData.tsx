@@ -38,9 +38,9 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         },
     )
 
-    const barChartData: { xLabel: string; y: number; color?: string }[] = languageDataCopy.map(
+    const barChartData: { xLabel: string; y: number; barLabel?: string; color?: string }[] = languageDataCopy.map(
         ({ name, size, color }) => {
-            return { xLabel: name, y: size, color: color }
+            return { xLabel: name, y: size, barLabel: bytesToStr(size, 0), color: color }
         },
     )
 
@@ -62,9 +62,11 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
                 data={barChartData}
                 width={590}
                 height={390}
+                barPadding={3}
+                axisHorizontalPadding={19}
                 xAxisLabel="Language"
                 yAxisProperties={{
-                    label: 'Space (bytes)',
+                    label: 'Space',
                     tickLabelMapping: (tickValue) => bytesToStr(tickValue, 0),
                 }}
             />

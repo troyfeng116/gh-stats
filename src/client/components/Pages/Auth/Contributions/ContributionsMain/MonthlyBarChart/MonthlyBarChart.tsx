@@ -15,9 +15,14 @@ interface MonthlyBarChartProps {
 export const MonthlyBarChart: React.FC<MonthlyBarChartProps> = (props) => {
     const { contributionsByMonth, width = 530, height = 390 } = props
 
-    const barChartData: { xLabel: string; y: number; color?: string }[] = contributionsByMonth.map(
+    const barChartData: { xLabel: string; y: number; barLabel?: string; color?: string }[] = contributionsByMonth.map(
         ({ month, contributionCount }) => {
-            return { xLabel: month, y: contributionCount, color: PRIMARY_BAR_COLOR }
+            return {
+                xLabel: month,
+                y: contributionCount,
+                barLabel: contributionCount > 0 ? `${contributionCount}` : undefined,
+                color: PRIMARY_BAR_COLOR,
+            }
         },
     )
 
