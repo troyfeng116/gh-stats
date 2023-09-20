@@ -2,6 +2,7 @@ import React from 'react'
 
 import LanguageInfo from './LanguageInfo'
 
+import PieChart from '@/client/components/Reuse/d3/PieChart'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
 
 interface LanguageDataProps {
@@ -29,6 +30,12 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         totalLanguageBytes += size
     }
 
+    const pieChartData: { label: string; value: number; color?: string }[] = languageDataCopy.map(
+        ({ name, size, color }) => {
+            return { label: name, value: size, color: color }
+        },
+    )
+
     return (
         <div>
             {languageDataCopy.map((language, idx) => {
@@ -42,6 +49,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
                     />
                 )
             })}
+            <PieChart data={pieChartData} radius={159} />
         </div>
     )
 }
