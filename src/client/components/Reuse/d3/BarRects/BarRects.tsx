@@ -1,10 +1,12 @@
 import React from 'react'
 import * as d3 from 'd3'
 
+import { BarChartData } from '../BarChart'
+
 import BarRect from './BarRect'
 
 interface BarRectsProps {
-    data: { xLabel: string; y: number; barLabel?: string; color?: string }[]
+    data: BarChartData[]
     xDomain: [number, number]
     yDomain: [number, number]
     width: number

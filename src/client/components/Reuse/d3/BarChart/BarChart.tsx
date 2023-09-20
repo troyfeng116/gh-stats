@@ -8,9 +8,16 @@ import { StdFonts, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { computeBarWidth } from '@/client/utils/charts/computeBarChartBarWidth'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
+export interface BarChartData {
+    xLabel: string
+    y: number
+    barLabel?: string
+    color?: string
+}
+
 interface BarChartProps {
     title?: string
-    data: { xLabel: string; y: number; barLabel?: string; color?: string }[]
+    data: BarChartData[]
     width: number
     height: number
     padding?: [number, number, number, number]
