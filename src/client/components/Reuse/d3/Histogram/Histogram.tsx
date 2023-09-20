@@ -7,15 +7,17 @@ import ScatterPoints from '@/client/components/Reuse/d3/ScatterPoints'
 import { StdFonts, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { computeChartDimensionDomain } from '@/client/utils/charts/computeChartDimensionDomain'
 
+export interface HistogramData {
+    points: { x: number; y: number }[]
+    color?: string
+    r?: number
+    opacity?: number
+    lineStrokeWidth?: number
+}
+
 interface HistogramProps {
     title?: string
-    data: {
-        points: { x: number; y: number }[]
-        color?: string
-        r?: number
-        opacity?: number
-        lineStrokeWidth?: number
-    }[]
+    data: HistogramData[]
     width: number
     height: number
     padding?: [number, number, number, number]

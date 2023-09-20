@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 
-import Histogram from '@/client/components/Reuse/d3/Histogram'
+import Histogram, { HistogramData } from '@/client/components/Reuse/d3/Histogram'
 import Legend from '@/client/components/Reuse/Legend'
 import { StdFlex, StdMargin, StdPadding } from '@/client/styles'
 import { attachScatterPointColors } from '@/client/utils/charts/chartColors'
@@ -34,16 +34,11 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
     const histogramDataWithColors: { points: { x: number; y: number }[]; color: string; repoKey: string }[] =
         attachScatterPointColors(histogramData)
 
-    const histogramDataWithHighlighted: {
-        points: {
-            x: number
-            y: number
-        }[]
-        color: string
-        r: number
-        opacity: number
-        lineStrokeWidth: number
-    }[] = histogramDataWithColors
+    const histogramDataWithHighlighted: HistogramData[] = histogramDataWithColors
+        .sort(
+            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
+                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
+        )
         .map((data) => {
             const { repoKey } = data
             if (repoKey == repoKeyToHighlight) {
@@ -51,10 +46,6 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
             }
             return { ...data, r: 2.8, opacity: repoKeyToHighlight !== undefined ? 0.5 : 1, lineStrokeWidth: 1.5 }
         })
-        .sort(
-            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
-                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
-        )
 
     const legendData: {
         label: string

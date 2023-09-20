@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Histogram from '@/client/components/Reuse/d3/Histogram'
+import Histogram, { HistogramData } from '@/client/components/Reuse/d3/Histogram'
 import { PRIMARY_BAR_COLOR } from '@/client/utils/charts/chartColors'
 import { computeAxisTickOverrides } from '@/client/utils/charts/computeTickOverrides'
 import { dataToContributionsMonthAndYearMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
@@ -23,11 +23,7 @@ export const MonthAndYearHistogram: React.FC<MonthAndYearHistogramProps> = (prop
         },
     )
 
-    const histogramData: {
-        points: { x: number; y: number }[]
-        color?: string
-        r?: number
-    }[] = Array.of({
+    const histogramData: HistogramData[] = Array.of({
         points: monthAndYearPoints,
         color: PRIMARY_BAR_COLOR,
         r: 3,

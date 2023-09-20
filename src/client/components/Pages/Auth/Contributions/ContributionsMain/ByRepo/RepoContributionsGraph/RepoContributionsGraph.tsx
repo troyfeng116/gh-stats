@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-import Histogram from '@/client/components/Reuse/d3/Histogram'
+import Histogram, { HistogramData } from '@/client/components/Reuse/d3/Histogram'
 import { getRandomScatterPointColor } from '@/client/utils/charts/chartColors'
 import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
 import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
@@ -23,7 +23,7 @@ export const RepoContributionsGraph: React.FC<RepoContributionsGraphProps> = (pr
         return { x: new Date(occurredAt).getTime(), y: commitCount }
     })
 
-    const histogramData: { points: { x: number; y: number }[]; color: string; r: number }[] = Array.of({
+    const histogramData: HistogramData[] = Array.of({
         points: points,
         color: getRandomScatterPointColor(),
         r: 3.9,
