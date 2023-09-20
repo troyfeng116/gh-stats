@@ -1,9 +1,9 @@
 import React from 'react'
 
 import LanguageLegend from './LanguageLegend'
+import LanguagePieChart from './LanguagePieChart'
 
 import BarChart, { BarChartData } from '@/client/components/Reuse/d3/BarChart'
-import PieChart, { PieChartData } from '@/client/components/Reuse/d3/PieChart'
 import { SHARED_Model__Language } from '@/shared/models/models/Language'
 import { bytesToStr } from '@/shared/utils/toBytesStr'
 
@@ -27,10 +27,6 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
 
     const totalLanguageBytes = languageDataCopy.reduce((totalPrev, { size }) => totalPrev + size, 0)
 
-    const pieChartData: PieChartData[] = languageDataCopy.map(({ name, size, color }) => {
-        return { label: name, value: size, color: color }
-    })
-
     const barChartData: BarChartData[] = languageDataCopy.map(({ name, size, color }) => {
         return { xLabel: name, y: size, barLabel: bytesToStr(size, 0), color: color }
     })
@@ -38,7 +34,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
     return (
         <div>
             <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
-            <PieChart data={pieChartData} radius={159} />
+            <LanguagePieChart languageData={languageDataCopy} />
             <BarChart
                 data={barChartData}
                 width={590}
