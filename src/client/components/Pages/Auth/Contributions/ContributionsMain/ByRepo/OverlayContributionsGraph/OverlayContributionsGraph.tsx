@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 
 import Histogram, { HistogramData } from '@/client/components/Reuse/d3/Histogram'
-import Legend from '@/client/components/Reuse/Legend'
+import Legend, { LegendData } from '@/client/components/Reuse/Legend'
 import { StdFlex, StdMargin, StdPadding } from '@/client/styles'
 import { attachScatterPointColors } from '@/client/utils/charts/chartColors'
 import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
@@ -47,12 +47,7 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
             return { ...data, r: 2.8, opacity: repoKeyToHighlight !== undefined ? 0.5 : 1, lineStrokeWidth: 1.5 }
         })
 
-    const legendData: {
-        label: string
-        color: string
-        onMouseEnter: React.MouseEventHandler<Element>
-        onMouseLeave: React.MouseEventHandler<Element>
-    }[] = histogramDataWithColors.map(({ color, repoKey }) => {
+    const legendData: LegendData[] = histogramDataWithColors.map(({ color, repoKey }) => {
         return {
             label: repoKey,
             color: color,

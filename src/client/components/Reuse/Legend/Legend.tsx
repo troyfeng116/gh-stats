@@ -1,12 +1,14 @@
 import React from 'react'
 
+export interface LegendData {
+    label: string
+    color: string
+    onMouseEnter?: React.MouseEventHandler<Element>
+    onMouseLeave?: React.MouseEventHandler<Element>
+}
+
 interface LegendProps {
-    legendData: {
-        label: string
-        color: string
-        onMouseEnter?: React.MouseEventHandler<Element>
-        onMouseLeave?: React.MouseEventHandler<Element>
-    }[]
+    legendData: LegendData[]
 }
 
 export const Legend: React.FC<LegendProps> = (props) => {
