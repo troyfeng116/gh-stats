@@ -62,15 +62,19 @@ export const SERVICE_Call__computeLifetimeStats = async (
         return { lifetimeStats: undefined, success: false, error: rcError }
     }
 
+    const filteredRepos: SHARED_Model__RepoWithCommitCountsAndLanguages[] = repos.filter(
+        ({ totalCount }) => totalCount > 0,
+    )
+
     const rcStats: SHARED_Model__RepoCommitCountStats = {
-        numRepos: repos.length,
-        numCommits: sharedRepoReduceCommits(repos),
-        totalDiskUsage: sharedRepoReduceDiskUsage(repos),
+        numRepos: filteredRepos.length,
+        numCommits: sharedRepoReduceCommits(filteredRepos),
+        totalDiskUsage: sharedRepoReduceDiskUsage(filteredRepos),
     }
-    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(repos)
+    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(filteredRepos)
 
     const lifetimeStats: SHARED_Model__LifetimeStats = {
-        repos: repos,
+        repos: filteredRepos,
         rc_stats: rcStats,
         language_stats: totalLanguageStats,
     }
