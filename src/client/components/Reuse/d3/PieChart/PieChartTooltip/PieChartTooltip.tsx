@@ -14,8 +14,8 @@ export const PieChartTooltip: React.FC<PieChartTooltipProps> = (props) => {
     const { label, startRadians, endRadians, cx, cy, onMouseEnter } = props
 
     const centerAngleRadians = (startRadians + endRadians) / 2
-    const x = cx + 60 * Math.cos(centerAngleRadians)
-    const y = cy - 60 * Math.sin(centerAngleRadians)
+    const x = cx + 48 * Math.cos(centerAngleRadians)
+    const y = cy - 48 * Math.sin(centerAngleRadians)
 
     return (
         <g style={{ transform: `translate(${x}px, ${y}px)` }} onMouseEnter={onMouseEnter}>

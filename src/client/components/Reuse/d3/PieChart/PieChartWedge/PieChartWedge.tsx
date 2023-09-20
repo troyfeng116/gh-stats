@@ -17,7 +17,17 @@ export const PieChartWedge: React.FC<PieChartWedge> = (props) => {
     const { startRadians, endRadians, radius, cx, cy, color = 'white', opacity = 1, onMouseEnter, onMouseLeave } = props
 
     if (Math.abs(endRadians - startRadians) === 2 * Math.PI) {
-        return <circle cx={cx} cy={cy} r={radius} fill={color} />
+        return (
+            <circle
+                cx={cx}
+                cy={cy}
+                r={radius}
+                fill={color}
+                fillOpacity={opacity}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+            />
+        )
     }
 
     const x1 = cx + radius * Math.cos(startRadians)
