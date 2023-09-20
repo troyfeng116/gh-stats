@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { StdLayout } from '@/client/styles'
+
 export interface LegendData {
     label: string
     color: string
@@ -20,7 +22,7 @@ export const Legend: React.FC<LegendProps> = (props) => {
                 return (
                     <div
                         key={`legend-${label}-${idx}`}
-                        style={{ display: 'flex', alignItems: 'center' }}
+                        className={`${StdLayout.FlexRow}`}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                     >
