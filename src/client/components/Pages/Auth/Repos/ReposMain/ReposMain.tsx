@@ -1,13 +1,12 @@
 import React from 'react'
 
 import LanguageData from './LanguageData'
+import RepoDropdown from './RepoDropdown'
 import ReposSummary from './ReposSummary'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
-import Dropdown from '@/client/components/Reuse/Dropdown'
-import { StdColors, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
+import { StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
-import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface ReposMainProps {
     lifetimeStats: SHARED_Model__LifetimeStats
@@ -31,35 +30,8 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
             </Card>
 
             {repos.map((repo, idx) => {
-                const {
-                    name,
-                    owner: { login },
-                    diskUsage,
-                    totalCount,
-                    languageData,
-                } = repo
-                const repoKey = `${login}/${name}`
-
-                return (
-                    <Card
-                        key={`repo-cell-card-${name}-${idx}`}
-                        className={`${StdMargin.B18} ${StdLayout.FlexCol}`}
-                        type={CardType.Secondary}
-                    >
-                        <Dropdown
-                            header={<h3 className={`${StdTextSize.Medium}`}>{repoKey}</h3>}
-                            headerClassName={`${StdLayout.FlexRowCenter}`}
-                        >
-                            <div
-                                className={`${StdColors.LightGray} ${StdLayout.FlexCol} ${StdMargin.T12} ${StdMargin.B18}`}
-                            >
-                                <p>{kbToStr(diskUsage)} of total repo disk usage</p>
-                                <p>{totalCount} repo commits</p>
-                            </div>
-                            <LanguageData languageData={languageData} chartWidth={590} chartHeight={390} />
-                        </Dropdown>
-                    </Card>
-                )
+                const { name } = repo
+                return <RepoDropdown key={`repo-cell-card-${name}-${idx}`} repo={repo} />
             })}
         </div>
     )
