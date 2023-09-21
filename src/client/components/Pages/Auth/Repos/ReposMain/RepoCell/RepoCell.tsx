@@ -21,20 +21,15 @@ export const RepoCell: React.FC<RepoCellProps> = (props) => {
         diskUsage,
     } = repo
 
-    // const changesStr: string | undefined = undefined
+    const repoKey = `${login}/${name}`
 
     return (
         <div className={styles.card}>
-            <h4>
-                {login}/{name}
-            </h4>
+            <p>{repoKey}</p>
             <p>repo disk usage: {kbToStr(diskUsage)}</p>
             <p>{repoCommitCount} commits</p>
-            {/* <p>
-                {numLines} lines of code contributed{changesStr !== undefined && ` ${changesStr}`}
-            </p> */}
             <div>
-                <LanguageData languageData={languageData} />
+                <LanguageData title={repoKey} languageData={languageData} />
             </div>
         </div>
     )

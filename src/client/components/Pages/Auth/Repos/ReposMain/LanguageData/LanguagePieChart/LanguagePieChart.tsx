@@ -6,12 +6,13 @@ import { bytesToStr } from '@/shared/utils/toBytesStr'
 import { toPercent } from '@/shared/utils/toPercent'
 
 interface LanguagePieChartProps {
+    title?: string
     totalLanguageBytes: number
     languageData: SHARED_Model__Language[]
 }
 
 export const LanguagePieChart: React.FC<LanguagePieChartProps> = (props) => {
-    const { totalLanguageBytes, languageData } = props
+    const { title, totalLanguageBytes, languageData } = props
 
     const pieChartData: PieChartData[] = languageData.map(({ name, size, color, approxLoc }) => {
         return {
@@ -21,5 +22,5 @@ export const LanguagePieChart: React.FC<LanguagePieChartProps> = (props) => {
         }
     })
 
-    return <PieChart data={pieChartData} radius={159} />
+    return <PieChart title={title} data={pieChartData} radius={159} />
 }
