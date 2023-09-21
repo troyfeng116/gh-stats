@@ -4,6 +4,7 @@ import LanguageData from './LanguageData'
 import ReposSummary from './ReposSummary'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
+import Dropdown from '@/client/components/Reuse/Dropdown'
 import { StdColors, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
 import { kbToStr } from '@/shared/utils/toBytesStr'
@@ -45,13 +46,18 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
                         className={`${StdMargin.B18} ${StdLayout.FlexCol}`}
                         type={CardType.Secondary}
                     >
-                        <h3 className={`${StdTextSize.Medium} ${StdMargin.B6}`}>{repoKey}</h3>
-
-                        <div className={`${StdColors.LightGray} ${StdLayout.FlexCol} ${StdMargin.B18}`}>
-                            <p>{kbToStr(diskUsage)} of total repo disk usage</p>
-                            <p>{totalCount} repo commits</p>
-                        </div>
-                        <LanguageData languageData={languageData} chartWidth={590} chartHeight={390} />
+                        <Dropdown
+                            header={<h3 className={`${StdTextSize.Medium}`}>{repoKey}</h3>}
+                            headerClassName={`${StdLayout.FlexRowCenter}`}
+                        >
+                            <div
+                                className={`${StdColors.LightGray} ${StdLayout.FlexCol} ${StdMargin.T12} ${StdMargin.B18}`}
+                            >
+                                <p>{kbToStr(diskUsage)} of total repo disk usage</p>
+                                <p>{totalCount} repo commits</p>
+                            </div>
+                            <LanguageData languageData={languageData} chartWidth={590} chartHeight={390} />
+                        </Dropdown>
                     </Card>
                 )
             })}

@@ -108,3 +108,13 @@
 .std-width-FitContent {
     width: fit-content;
 }
+
+/* ======== cursor ======== */
+
+.std-cursor-Clickable {
+    cursor: pointer;
+}
+
+.std-cursor-NotAllowed {
+    cursor: not-allowed;
+}

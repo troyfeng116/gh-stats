@@ -57,6 +57,13 @@ export enum StdWidth {
     FitContent = 'std-width-FitContent',
 }
 
+/* ======== cursor ======== */
+
+export enum StdCursor {
+    Clickable = 'std-cursor-Clickable',
+    NotAllowed = 'std-cursor-NotAllowed',
+}
+
 /* ======== padding ======== */
 
 export enum StdPadding {
