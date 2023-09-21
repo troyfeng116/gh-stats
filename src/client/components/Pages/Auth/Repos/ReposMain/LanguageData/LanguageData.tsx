@@ -57,6 +57,7 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
         <div className={`${StdLayout.FlexCol}`}>
             <ChartButtons
                 chartTypes={chartTypes}
+                selectedChartType={chartTypeToDisplay}
                 handleChartTypeClicked={(chartType) => setChartTypeToDisplay(chartType)}
             />
 

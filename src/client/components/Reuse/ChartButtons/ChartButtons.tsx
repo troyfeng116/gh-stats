@@ -2,8 +2,7 @@ import React from 'react'
 import { IconType } from 'react-icons'
 import { FaChartBar, FaChartLine, FaChartPie } from 'react-icons/fa'
 
-import Button from '@/client/components/Reuse/Button'
-import { StdLayout } from '@/client/styles'
+import { StdCursor, StdLayout, StdPadding } from '@/client/styles'
 
 export enum ChartType {
     Histogram = 'Histogram',
@@ -13,6 +12,8 @@ export enum ChartType {
 
 interface ChartButtonsProps {
     chartTypes: ChartType[]
+    selectedChartType?: ChartType
+
     handleChartTypeClicked: (chartType: ChartType) => void
 }
 
@@ -23,19 +24,24 @@ const CHART_TYPE_TO_ICON: { [key in ChartType]: IconType } = {
 }
 
 export const ChartButtons: React.FC<ChartButtonsProps> = (props) => {
-    const { chartTypes, handleChartTypeClicked } = props
+    const { chartTypes, selectedChartType, handleChartTypeClicked } = props
 
     return (
-        <div className={`${StdLayout.FlexRow}`}>
+        <div className={`${StdLayout.FlexRow}`} style={{ border: '3px solid rgb(139, 139, 139)' }}>
             {chartTypes.map((chartType, idx) => {
+                const isSelected = chartType === selectedChartType
                 return (
-                    <Button
+                    <div
                         key={`chart-btns-${idx}`}
-                        className={`${StdLayout.FlexRowCenter}`}
+                        className={`${StdLayout.FlexRowCenter} ${StdCursor.Clickable} ${StdPadding.All6}`}
+                        style={{
+                            width: 60,
+                            backgroundColor: isSelected ? 'rgb(129, 249, 209)' : 'rgb(139, 139, 139)',
+                        }}
                         onClick={() => handleChartTypeClicked(chartType)}
                     >
-                        {CHART_TYPE_TO_ICON[chartType]({ size: 18 })}
-                    </Button>
+                        {CHART_TYPE_TO_ICON[chartType]({ size: 21, color: 'black' })}
+                    </div>
                 )
             })}
         </div>
