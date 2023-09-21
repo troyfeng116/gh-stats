@@ -1,0 +1,26 @@
+.main_inner {
+    padding: 36px;
+    overflow-x: auto;
+    max-width: 100%;
+    white-space: nowrap;
+    display: flex;
+}
+
+/* @media screen and (max-width: 1200px) {
+    .main_inner {
+        max-width: 700px;
+    }
+} */
+
+@media screen and (max-width: 800px) {
+    .main_inner {
+        padding: 18px;
+        /* max-width: 420px; */
+    }
+}
+
+/* @media screen and (max-width: 500px) {
+    .main_inner {
+        max-width: 300px;
+    }
+} */

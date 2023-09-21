@@ -8,7 +8,7 @@
         }
     },
     "extends": [
-        "next/core-web-vitals",
+        // "next/core-web-vitals",
         "eslint:recommended",
         "plugin:@next/next/recommended",
         "plugin:react/recommended",
@@ -59,6 +59,7 @@
             {
                 "enforceForRenamedProperties": false
             }
-        ]
+        ],
+        "@typescript-eslint/no-empty-function": "off"
     }
 }
