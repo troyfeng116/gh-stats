@@ -16,13 +16,13 @@ export interface PieChartData {
 interface PieChartProps {
     title?: string
     data: PieChartData[]
-    radius: number
-    width?: number
-    height?: number
+    width: number
+    height: number
+    radius?: number
 }
 
 export const PieChart: React.FC<PieChartProps> = (props) => {
-    const { title, data, radius, width = 2 * (radius * 1.05), height = 2 * (radius * 1.05) } = props
+    const { title, data, width, height, radius = Math.min(width, height) / 2 / 1.05 } = props
 
     const [shouldShowTooltipForIdx, setShouldShowTooltipForIdx] = useState<number>()
 

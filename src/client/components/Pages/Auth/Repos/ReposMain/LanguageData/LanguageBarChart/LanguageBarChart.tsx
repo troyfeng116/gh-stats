@@ -5,12 +5,14 @@ import { SHARED_Model__Language } from '@/shared/models/models/Language'
 import { bytesToStr } from '@/shared/utils/toBytesStr'
 
 interface LanguageBarChartProps {
-    title?: string
     languageData: SHARED_Model__Language[]
+    width: number
+    height: number
+    title?: string
 }
 
 export const LanguageBarChart: React.FC<LanguageBarChartProps> = (props) => {
-    const { title, languageData } = props
+    const { languageData, width, height, title } = props
 
     const barChartData: BarChartData[] = languageData.map(({ name, size, color }) => {
         return { xLabel: name, y: size, barLabel: bytesToStr(size, 0), color: color }
@@ -20,8 +22,8 @@ export const LanguageBarChart: React.FC<LanguageBarChartProps> = (props) => {
         <BarChart
             title={title}
             data={barChartData}
-            width={590}
-            height={390}
+            width={width}
+            height={height}
             barPadding={0}
             axisHorizontalPadding={19}
             xAxisLabel="Language"

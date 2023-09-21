@@ -1,12 +1,12 @@
 import React from 'react'
 
 import LanguageData from './LanguageData'
-import RepoCell from './RepoCell'
 import ReposSummary from './ReposSummary'
 
-import Card from '@/client/components/Reuse/Card'
-import { StdLayout, StdMargin } from '@/client/styles'
+import Card, { CardType } from '@/client/components/Reuse/Card'
+import { StdColors, StdLayout, StdMargin, StdTextSize } from '@/client/styles'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
+import { kbToStr } from '@/shared/utils/toBytesStr'
 
 interface ReposMainProps {
     lifetimeStats: SHARED_Model__LifetimeStats
@@ -20,20 +20,41 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
 
     return (
         <div className={`${StdLayout.FlexCol}`}>
-            <Card className={`${StdMargin.B30} ${StdLayout.FlexCol}`}>
+            <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`}>
                 <ReposSummary repoCommitCountStats={rc_stats} />
             </Card>
 
-            <Card className={`${StdMargin.B30}`}>
-                <LanguageData title="Language breakdown across public repos" languageData={allLanguageData} />
+            <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>
+                <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>Language breakdown across public repos</h3>
+                <LanguageData languageData={allLanguageData} />
             </Card>
 
-            <Card>
-                {repos.map((repo, idx) => {
-                    const { name } = repo
-                    return <RepoCell key={`${name}-${idx}`} repo={repo} />
-                })}
-            </Card>
+            {repos.map((repo, idx) => {
+                const {
+                    name,
+                    owner: { login },
+                    diskUsage,
+                    totalCount,
+                    languageData,
+                } = repo
+                const repoKey = `${login}/${name}`
+
+                return (
+                    <Card
+                        key={`repo-cell-card-${name}-${idx}`}
+                        className={`${StdMargin.B18} ${StdLayout.FlexCol}`}
+                        type={CardType.Secondary}
+                    >
+                        <h3 className={`${StdTextSize.Medium} ${StdMargin.B6}`}>{repoKey}</h3>
+
+                        <div className={`${StdColors.LightGray} ${StdLayout.FlexCol} ${StdMargin.B18}`}>
+                            <p>{kbToStr(diskUsage)} of total repo disk usage</p>
+                            <p>{totalCount} repo commits</p>
+                        </div>
+                        <LanguageData languageData={languageData} chartWidth={590} chartHeight={390} />
+                    </Card>
+                )
+            })}
         </div>
     )
 }

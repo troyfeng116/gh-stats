@@ -1,5 +1,3 @@
-import styles from './RepoCell.module.css'
-
 import React from 'react'
 
 import LanguageData from '../LanguageData'
@@ -24,12 +22,12 @@ export const RepoCell: React.FC<RepoCellProps> = (props) => {
     const repoKey = `${login}/${name}`
 
     return (
-        <div className={styles.card}>
+        <div>
             <p>{repoKey}</p>
             <p>repo disk usage: {kbToStr(diskUsage)}</p>
             <p>{repoCommitCount} commits</p>
             <div>
-                <LanguageData title={repoKey} languageData={languageData} />
+                <LanguageData languageData={languageData} chartWidth={590} chartHeight={390} />
             </div>
         </div>
     )
