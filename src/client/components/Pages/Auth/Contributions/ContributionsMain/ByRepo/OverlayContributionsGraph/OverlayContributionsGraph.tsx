@@ -35,10 +35,6 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
         attachScatterPointColors(histogramData)
 
     const histogramDataWithHighlighted: HistogramData[] = histogramDataWithColors
-        .sort(
-            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
-                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
-        )
         .map((data) => {
             const { repoKey } = data
             if (repoKey == repoKeyToHighlight) {
@@ -46,6 +42,10 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
             }
             return { ...data, r: 2.8, opacity: repoKeyToHighlight !== undefined ? 0.5 : 1, lineStrokeWidth: 1.5 }
         })
+        .sort(
+            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
+                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
+        )
 
     const legendData: LegendData[] = histogramDataWithColors.map(({ color, repoKey }) => {
         return {
