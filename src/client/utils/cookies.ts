@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-import { ACCESS_TOKEN_COOKIE_NAME } from '@/shared/constants'
+import { ACCESS_TOKEN_COOKIE_NAME, DAY_MS } from '@/shared/constants'
 
 export const getAccessTokenCookie = (): string | undefined => {
     return Cookies.get(ACCESS_TOKEN_COOKIE_NAME)
@@ -8,7 +8,7 @@ export const getAccessTokenCookie = (): string | undefined => {
 
 export const setAccessTokenCookie = (accessToken: string) => {
     Cookies.set(ACCESS_TOKEN_COOKIE_NAME, accessToken, {
-        expires: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 6 * 30 * DAY_MS),
     })
 }
 

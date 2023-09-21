@@ -1,15 +1,25 @@
+import { GH_GQL_Schema__ContributionsAggregate } from '../ContributionsAggregate/query'
+
 import { SHARED_Model__ContributionLevelType } from '@/shared/models/models/Contributions'
 
-export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 100) {
+export const GH_GQL_Query__Contributions = `query Contributions($first: Int = 100, $from: DateTime, $to: DateTime) {
     viewer {
-        contributionsCollection {
+        contributionsCollection(from: $from, to: $to) {
             ...ContributionsCollection
         }
     }
 }
 
 fragment ContributionsCollection on ContributionsCollection {
-    contributionYears
+    restrictedContributionsCount
+    totalCommitContributions
+    totalIssueContributions
+    totalPullRequestContributions
+    totalPullRequestReviewContributions
+    totalRepositoriesWithContributedCommits
+    totalRepositoryContributions
+    startedAt
+    endedAt
     contributionCalendar {
         colors
         isHalloween
@@ -30,11 +40,6 @@ fragment ContributionsCollection on ContributionsCollection {
             }
         }
     }
-    totalPullRequestContributions
-    totalCommitContributions
-    totalRepositoriesWithContributedCommits
-    totalRepositoryContributions
-    startedAt
     commitContributionsByRepository {
         repository {
             name
@@ -60,7 +65,8 @@ fragment ContributionsCollection on ContributionsCollection {
 
 export interface GH_GQL_QueryVars__Contributions {
     first?: number
-    after?: string
+    from?: string // ISO-8601 encoded UTC date string
+    to?: string // ISO-8601 encoded UTC date string
 }
 
 export interface GH_GQL_Schema__ContributionCalendarMonth {
@@ -76,7 +82,7 @@ export interface GH_GQL_Schema__ContributionCalendarWeek {
 
 export interface GH_GQL_Schema__ContributionCalendarDay {
     color: string
-    contributionCount: string
+    contributionCount: number
     // TODO: should this be in shared
     contributionLevel: SHARED_Model__ContributionLevelType
     date: string
@@ -104,8 +110,7 @@ export interface GH_GQL_Schema__CommitContributionsByRepository {
     }
 }
 
-export interface GH_GQL_Schema__ContributionsCollection {
-    contributionYears: number[]
+export interface GH_GQL_Schema__ContributionsCollection extends GH_GQL_Schema__ContributionsAggregate {
     contributionCalendar: {
         colors: string[]
         isHalloween: boolean
@@ -113,10 +118,5 @@ export interface GH_GQL_Schema__ContributionsCollection {
         totalContributions: number
         weeks: GH_GQL_Schema__ContributionCalendarWeek[]
     }
-    totalPullRequestContributions: number
-    totalCommitContributions: number
-    totalRepositoriesWithContributedCommits: number
-    totalRepositoryContributions: number
-    startedAt: number
     commitContributionsByRepository: GH_GQL_Schema__CommitContributionsByRepository[]
 }

@@ -1,6 +1,6 @@
 import {
     BASE_GH_GQL_Call__makeQueryWithAuth,
-    GH_GQL_RawResponse_BASE as GH_GQL_RawResponse__BASE,
+    GH_GQL_RawResponse__BASE as GH_GQL_RawResponse__BASE,
     GH_GQL_Response__BASE,
 } from '..'
 

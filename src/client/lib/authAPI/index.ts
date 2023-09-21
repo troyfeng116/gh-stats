@@ -1,4 +1,4 @@
-import { getAPIWithAuth } from '../fetchAPI'
+import { getAPIWithAuth, postAPIWithAuth } from '../fetchAPI'
 
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
 import { SHARED_APIFields__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
@@ -21,8 +21,13 @@ export const lifetimeStatsAPI = async (accessToken: string): Promise<SHARED_APIF
     return lifetimeStatsRes
 }
 
-export const contributionsAPI = async (accessToken: string): Promise<SHARED_APIFields__Contributions> => {
-    const res = await getAPIWithAuth('/api/contributions', accessToken)
+export const contributionsAPI = async (
+    accessToken: string,
+    from?: string,
+    to?: string,
+): Promise<SHARED_APIFields__Contributions> => {
+    const payload = { from: from, to: to }
+    const res = await postAPIWithAuth('/api/contributions', accessToken, {}, payload)
     const contributionsRes = res as SHARED_APIFields__Contributions
     return contributionsRes
 }

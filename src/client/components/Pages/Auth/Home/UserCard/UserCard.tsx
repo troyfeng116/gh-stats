@@ -1,26 +1,31 @@
 import React from 'react'
 
-import { SHARED_Model__UserCard } from '@/shared/models/models/UserCard'
+import { UserCardStats } from './UserCardStats/UserCardStats'
+import UserCardProfile from './UserCardProfile'
+
+import Card from '@/client/components/Reuse/Card'
+import HrDivider from '@/client/components/Reuse/HrDivider'
+import { StdLayout, StdMargin } from '@/client/styles'
+import { SHARED_Model__UserCardClientInfo } from '@/shared/models/models/UserCard'
 
 interface UserCardProps {
-    userCard: SHARED_Model__UserCard
+    userCardClientInfo: SHARED_Model__UserCardClientInfo
 }
 
 export const UserCard: React.FC<UserCardProps> = (props) => {
-    const { userCard } = props
-    const { userId, name, email, followers, following, createdAt, totalRepos, totalPRs } = userCard
+    const { userCardClientInfo } = props
+    const { userCard, contributionsAggregate } = userCardClientInfo
+    const { totalPublicRepos, totalMergedPRs } = userCard
 
     return (
-        <div>
-            <h2>{userId}</h2>
-            {name && <p>{name}</p>}
-            {email && <p>{email}</p>}
-            {createdAt !== undefined && <p>Account created: {new Date(Date.parse(createdAt)).toLocaleString()}</p>}
-            <p>Total repos: {totalRepos}</p>
-            <p>Total PRs merged: {totalPRs}</p>
-            <p>
-                {followers} followers, {following} following
-            </p>
-        </div>
+        <Card className={`${StdLayout.FlexCol}`}>
+            <UserCardProfile userCard={userCard} className={`${StdMargin.B12}`} />
+            <HrDivider />
+            <UserCardStats
+                contributionsAggregate={contributionsAggregate}
+                totalMergedPRs={totalMergedPRs}
+                totalPublicRepos={totalPublicRepos}
+            />
+        </Card>
     )
 }

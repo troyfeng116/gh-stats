@@ -1,11 +1,10 @@
 import './globals.css'
+import '@/client/styles/spacing.css'
+import '@/client/styles/std.css'
 
 import React from 'react'
-import { Inter } from 'next/font/google'
 
 import ClientWrapper from '@/client/components/Wrappers'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
     title: 'Create Next App',
@@ -15,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body>
                 <ClientWrapper>{children}</ClientWrapper>
             </body>
         </html>

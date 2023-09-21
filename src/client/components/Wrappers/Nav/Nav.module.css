@@ -1,7 +1,33 @@
 .nav {
-    padding: 6px 12px;
+    padding: 6px 24px;
     border-bottom: 1px solid white;
     min-height: 48px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    overflow-x: auto;
+}
+
+.nav_left {
+    display: flex;
+    align-items: center;
+}
+
+.nav_link {
+    margin: 0px 12px;
+}
+
+.nav_link:hover {
+    color: rgb(199, 199, 199);
+}
+
+.nav_link:active {
+    color: rgb(129, 249, 209);
+}
+
+.nav_link_logo {
+    margin: 0 24px 0 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

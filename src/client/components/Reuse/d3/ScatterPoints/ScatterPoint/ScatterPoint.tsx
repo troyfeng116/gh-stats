@@ -1,57 +1,22 @@
-import React, { useState } from 'react'
-import * as d3 from 'd3'
+import React from 'react'
 
 interface ScatterPointProps {
-    x: number
-    y: number
+    cx: number
+    cy: number
     r?: number
     fill?: string
 
-    xScale: (value: d3.NumberValue) => number
-    yScale: (value: d3.NumberValue) => number
-
-    dataTooltipMapping?: (data: { x: number; y: number }) => string
+    onMouseEnter?: React.MouseEventHandler<SVGCircleElement>
+    onMouseLeave?: React.MouseEventHandler<SVGCircleElement>
 }
 
 export const ScatterPoint: React.FC<ScatterPointProps> = (props) => {
-    const { x, y, r = 6, fill = 'white', xScale, yScale, dataTooltipMapping } = props
-
-    const [shouldShowToolTip, setShouldShowTooltip] = useState<boolean>(false)
-
-    const onMouseEnter = () => {
-        setShouldShowTooltip(true)
-    }
-
-    const onMouseLeave = () => {
-        setShouldShowTooltip(false)
-    }
+    const { cx, cy, r = 6, fill = 'white', onMouseEnter, onMouseLeave } = props
 
     return (
-        <g style={{ transform: `translate(${xScale(x)}px, ${yScale(y)}px)` }}>
-            <circle fill={fill} cx={0} cy={0} r={r} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
-            {dataTooltipMapping !== undefined && shouldShowToolTip && (
-                <>
-                    <rect
-                        fill="white"
-                        x={0}
-                        y={0}
-                        width={190}
-                        height={36}
-                        style={{ transform: 'translate(-95px, 9px)' }}
-                    ></rect>
-                    <text
-                        fill="black"
-                        style={{
-                            fontSize: '12px',
-                            textAnchor: 'middle',
-                            transform: 'translateY(30px)',
-                            padding: '3px 6px',
-                        }}
-                    >
-                        {dataTooltipMapping({ x: x, y: y })}
-                    </text>
-                </>
-            )}
+        <g style={{ transform: `translate(${cx}px, ${cy}px)` }} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+            <circle fill={fill} cx={0} cy={0} r={9} fillOpacity={0} />
+            <circle r={r} cx={0} cy={0} fill={fill} />
         </g>
     )
 }

@@ -7,6 +7,7 @@ import {
     GH_GQL_Schema__RepoWithCommitCountAndLanguages,
 } from '@/server/lib/gh-gql/AllRepoCommitCounts/query'
 import { GH_GQL_Call__Viewer } from '@/server/lib/gh-gql/Viewer'
+import { diskUsageToApproxLoc } from '@/server/utils/diskUsageToApproxLoc'
 import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models/models/Repos'
 
 // `endCursor = undefined` => no more pages
@@ -46,7 +47,7 @@ const repoSchemaToShared = (
                 size,
                 node: { color, name },
             } = edge
-            return { size: size, color: color, name: name }
+            return { size: size, color: color, name: name, approxLoc: diskUsageToApproxLoc(size) }
         }),
     }
 }

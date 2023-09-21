@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-import LifetimeStats from './LifetimeStats'
+import ReposMain from './ReposMain'
 
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
@@ -33,16 +33,12 @@ export const Repos: React.FC = () => {
     }, [accessToken])
 
     if (isLoading) {
-        return <div>lifetime stats loading...</div>
+        return <div>repository statistics loading...</div>
     }
 
     if (error !== undefined || lifetimeStats === undefined) {
         return <div>{error}</div>
     }
 
-    return (
-        <div>
-            <LifetimeStats lifetimeStats={lifetimeStats} />
-        </div>
-    )
+    return <ReposMain lifetimeStats={lifetimeStats} />
 }

@@ -18,6 +18,8 @@ export interface GH_API_Response__BASE {
 }
 
 export const BASE_GH_API_Call__getWithAuth = async (url: string, accessToken: string): Promise<Response> => {
+    console.log(`[BASE_GH_API_Call__getWithAuth] Github API request: ${url}`)
+
     const res = await fetch(`${BASE_GH_API_URL}${url}`, {
         method: 'GET',
         headers: {

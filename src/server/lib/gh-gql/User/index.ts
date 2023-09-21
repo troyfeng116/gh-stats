@@ -1,8 +1,8 @@
-import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse_BASE, GH_GQL_Response__BASE } from '..'
+import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse__BASE, GH_GQL_Response__BASE } from '..'
 
 import { GH_GQL_Query__User, GH_GQL_QueryVars__User, GH_GQL_Schema__User } from './query'
 
-interface GH_GQL_RawResponse__User extends GH_GQL_RawResponse_BASE {
+interface GH_GQL_RawResponse__User extends GH_GQL_RawResponse__BASE {
     data?: {
         user: GH_GQL_Schema__User
     }

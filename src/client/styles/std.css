@@ -1,0 +1,120 @@
+/* ======== colors ======== */
+
+.std-colors-White {
+    color: white;
+}
+
+.std-colors-Green {
+    color: rgb(129, 249, 209);
+}
+
+.std-colors-LightGray {
+    color: rgb(189, 189, 189);
+}
+
+.std-colors-ErrorRed {
+    color: rgb(249, 59, 59);
+}
+
+/* ======== background colors ======== */
+
+.std-bg-colors-White {
+    background-color: white;
+}
+
+/* ======== font size ========*/
+
+.std-text-size-Label {
+    font-size: 12px;
+}
+
+.std-text-size-Small {
+    font-size: 16px;
+}
+
+.std-text-size-Medium {
+    font-size: 19px;
+}
+
+.std-text-size-Large {
+    font-size: 24px;
+}
+
+.std-text-size-H1 {
+    font-size: 39px;
+}
+
+.std-text-size-H2 {
+    font-size: 33px;
+}
+
+.std-text-size-H3 {
+    font-size: 28px;
+}
+
+/* ======== fonts ======== */
+
+.std-fonts-Primary {
+    font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
+        'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+}
+
+.std-fonts-Secondary {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.std-fonts-Logo {
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* ======== flex layout ======== */
+
+.std-flex-Row {
+    display: flex;
+    flex-direction: row;
+}
+
+.std-flex-Col {
+    display: flex;
+    flex-direction: column;
+}
+
+.std-align-Center {
+    align-items: center;
+}
+
+.std-align-End {
+    align-items: end;
+}
+
+.std-justify-Center {
+    justify-content: center;
+}
+
+.std-justify-End {
+    justify-content: end;
+}
+
+.std-justify-Between {
+    justify-content: space-between;
+}
+
+/* ======== width ======== */
+
+.std-width-Full {
+    width: 100%;
+}
+
+.std-width-FitContent {
+    width: fit-content;
+}
+
+/* ======== cursor ======== */
+
+.std-cursor-Clickable {
+    cursor: pointer;
+}
+
+.std-cursor-NotAllowed {
+    cursor: not-allowed;
+}

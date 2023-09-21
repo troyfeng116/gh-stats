@@ -1,8 +1,8 @@
-import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse_BASE, GH_GQL_Response__BASE } from '..'
+import { BASE_GH_GQL_Call__makeQueryWithAuth, GH_GQL_RawResponse__BASE, GH_GQL_Response__BASE } from '..'
 
 import { GH_GQL_Query__RateLimit, GH_GQL_Schema__RateLimit } from './query'
 
-interface GH_GQL_RawResponse__RateLimit extends GH_GQL_RawResponse_BASE {
+interface GH_GQL_RawResponse__RateLimit extends GH_GQL_RawResponse__BASE {
     data?: {
         rateLimit: GH_GQL_Schema__RateLimit
     }

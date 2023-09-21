@@ -1,9 +1,10 @@
-import { SERVICE_Call__getContributions } from '@/server/services/contributions'
+import { SERVICE_Call__getContributions as SERVICE_Call__getContributionsClientInfo } from '@/server/services/contributions'
 import { AUTH_NO_TOKEN_ERROR_RES, checkAuthHeaders } from '@/server/utils/authHeaders'
 import { SHARED_APIFields__Contributions } from '@/shared/models/apiFields/contributions'
 
-export const GET = async (request: Request): Promise<Response> => {
-    console.log('GET /api/contributions')
+export const POST = async (request: Request): Promise<Response> => {
+    const reqData = await request.json()
+    console.log(`POST /api/contributions ${JSON.stringify(reqData)}`)
 
     const token = checkAuthHeaders(request)
     if (token === undefined) {
@@ -12,10 +13,16 @@ export const GET = async (request: Request): Promise<Response> => {
         })
     }
 
-    const contributionsRes: SHARED_APIFields__Contributions = await SERVICE_Call__getContributions(token)
-    const { success, contributions } = contributionsRes
+    const { from = undefined, to = undefined } = reqData
 
-    const status = !success || contributions === undefined ? 400 : 200
+    const contributionsRes: SHARED_APIFields__Contributions = await SERVICE_Call__getContributionsClientInfo(
+        token,
+        from,
+        to,
+    )
+    const { success, contributionsClientInfo } = contributionsRes
+
+    const status = !success || contributionsClientInfo === undefined ? 400 : 200
 
     return new Response(JSON.stringify(contributionsRes), {
         status: status,

@@ -1,4 +1,5 @@
 import { SERVICE_Call__getAllReposWithCommitCounts } from '@/server/services/reposAndCommitCounts'
+import { diskUsageToApproxLoc } from '@/server/utils/diskUsageToApproxLoc'
 import { SHARED_APIFields__LifetimeStats } from '@/shared/models/apiFields/lifetimeStats'
 import { SHARED_Model__AllLanguageStats, SHARED_Model__Language } from '@/shared/models/models/Language'
 import { SHARED_Model__RepoWithCommitCountsAndLanguages } from '@/shared/models/models/Repos'
@@ -27,22 +28,29 @@ const sharedRepoReduceLanguageStats = (
 
     for (const name in languageToDisk) {
         const { totalSize, color } = languageToDisk[name]
-        allLanguageData.push({ size: totalSize, color: color, name: name })
+        allLanguageData.push({ size: totalSize, color: color, name: name, approxLoc: diskUsageToApproxLoc(totalSize) })
     }
 
     return {
         totalDiskUsage: totalDiskUsage,
-        allLanguageData: allLanguageData,
+        allLanguageData: allLanguageData.sort((a, b) => b.size - a.size),
     }
 }
 
 const sharedRepoReduceCommits = (repos: SHARED_Model__RepoWithCommitCountsAndLanguages[]): number => {
     let totalCommits = 0
-    for (let i = 0; i < repos.length; i++) {
-        const { totalCount } = repos[i]
+    for (const { totalCount } of repos) {
         totalCommits += totalCount
     }
     return totalCommits
+}
+
+const sharedRepoReduceDiskUsage = (repos: SHARED_Model__RepoWithCommitCountsAndLanguages[]): number => {
+    let totalDiskUsage = 0
+    for (const { diskUsage } of repos) {
+        totalDiskUsage += diskUsage
+    }
+    return totalDiskUsage
 }
 
 export const SERVICE_Call__computeLifetimeStats = async (
@@ -54,14 +62,19 @@ export const SERVICE_Call__computeLifetimeStats = async (
         return { lifetimeStats: undefined, success: false, error: rcError }
     }
 
+    const filteredRepos: SHARED_Model__RepoWithCommitCountsAndLanguages[] = repos.filter(
+        ({ totalCount }) => totalCount > 0,
+    )
+
     const rcStats: SHARED_Model__RepoCommitCountStats = {
-        numRepos: repos.length,
-        numCommits: sharedRepoReduceCommits(repos),
+        numRepos: filteredRepos.length,
+        numCommits: sharedRepoReduceCommits(filteredRepos),
+        totalDiskUsage: sharedRepoReduceDiskUsage(filteredRepos),
     }
-    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(repos)
+    const totalLanguageStats: SHARED_Model__AllLanguageStats = sharedRepoReduceLanguageStats(filteredRepos)
 
     const lifetimeStats: SHARED_Model__LifetimeStats = {
-        repos: repos,
+        repos: filteredRepos,
         rc_stats: rcStats,
         language_stats: totalLanguageStats,
     }

@@ -17,7 +17,7 @@ export interface GH_GQL_Response__BASE {
     error?: string
 }
 
-export interface GH_GQL_RawResponse_BASE {
+export interface GH_GQL_RawResponse__BASE {
     errors?: { message: string }[]
 }
 
@@ -26,6 +26,10 @@ export const BASE_GH_GQL_Call__makeQueryWithAuth = async (
     query: string,
     variables?: object,
 ): Promise<Response> => {
+    console.log(
+        `[BASE_GH_GQL_Call__makeQueryWithAuth] ${query.split('\n')[0]} with variables ${JSON.stringify(variables)}`,
+    )
+
     const payload = {
         query: query,
         variables: variables,

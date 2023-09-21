@@ -36,5 +36,5 @@ export const LoginCallback: React.FC = () => {
         return <div>Logging in...</div>
     }
 
-    return null
+    return <div>Login successful!</div>
 }
