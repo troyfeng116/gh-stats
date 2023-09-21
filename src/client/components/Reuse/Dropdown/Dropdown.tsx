@@ -7,12 +7,20 @@ interface DropdownProps {
     header: React.ReactNode
     headerClassName?: string
     children: React.ReactNode
+    contentHeight?: number
     className?: string
     shouldInitiallyShowContent?: boolean
 }
 
 export const Dropdown: React.FC<DropdownProps> = (props) => {
-    const { header, headerClassName = '', children, className = '', shouldInitiallyShowContent = false } = props
+    const {
+        header,
+        headerClassName = '',
+        children,
+        contentHeight = 1000,
+        className = '',
+        shouldInitiallyShowContent = false,
+    } = props
 
     const [shouldShowContent, setShouldShowContent] = useState<boolean>(shouldInitiallyShowContent)
 
@@ -39,7 +47,7 @@ export const Dropdown: React.FC<DropdownProps> = (props) => {
             </div>
             <div
                 style={{
-                    maxHeight: shouldShowContent ? 1000 : 0,
+                    maxHeight: shouldShowContent ? contentHeight : 0,
                     overflowY: 'hidden',
                     transition: 'max-height 0.3s linear',
                 }}

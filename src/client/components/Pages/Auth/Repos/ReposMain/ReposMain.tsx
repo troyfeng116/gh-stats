@@ -31,7 +31,15 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
 
             {repos.map((repo, idx) => {
                 const { name } = repo
-                return <RepoDropdown key={`repo-cell-card-${name}-${idx}`} repo={repo} />
+                return (
+                    <Card
+                        key={`repo-cell-card-${name}-${idx}`}
+                        className={`${StdMargin.B18} ${StdLayout.FlexCol}`}
+                        type={CardType.Secondary}
+                    >
+                        <RepoDropdown repo={repo} />
+                    </Card>
+                )
             })}
         </div>
     )
