@@ -17,7 +17,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = (props) => {
     const gridRowHeight = 16
 
     return (
-        <OverflowScroll className={`${StdFlex.Row} ${StdPadding.B6}`} width={900}>
+        <OverflowScroll className={`${StdFlex.Row} ${StdPadding.B6} ${StdPadding.L30} ${StdPadding.R30}`} width={900}>
             <div className={`${StdFlex.Col} ${StdAlign.End} ${StdMargin.R18}`}>
                 <div style={{ height: gridRowHeight }}></div>
                 {SHORT_WEEKDAYS.map((weekdayName, idx) => {
