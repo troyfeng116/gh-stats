@@ -63,6 +63,25 @@ export const formatDateUTC__WWMMMMDYYYY = (date: string | number | Date): string
 }
 
 /**
+ * Formats given date into UTC string, formatted `YYYY-MM-DD` as a date string for use in date inputs.
+ *
+ * @param date Date string/timestamp/object.
+ *
+ * @returns Date formatted in UTC, formatted `YYYY-MM-DD`.
+ */
+export const formatDateUTC__YYYYMMDD_dashed = (date: string | number | Date): string => {
+    const d = new Date(date)
+    let month = '' + (d.getUTCMonth() + 1)
+    let day = '' + d.getUTCDate()
+    const year = d.getUTCFullYear()
+
+    if (month.length < 2) month = '0' + month
+    if (day.length < 2) day = '0' + day
+
+    return [year, month, day].join('-')
+}
+
+/**
  * Formate date string/timestamp/object to string.
  *
  * @param date Date string/timestamp/object.

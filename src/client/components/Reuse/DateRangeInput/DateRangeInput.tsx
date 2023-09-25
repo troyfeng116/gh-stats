@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
 import Button from '@/client/components/Reuse/Button'
-import { StdAlign, StdFlex, StdLayout, StdMargin, StdWidth } from '@/client/styles'
+import { StdAlign, StdColors, StdFlex, StdLayout, StdMargin, StdTextSize, StdWidth } from '@/client/styles'
 import { validateRangeQueryDates } from '@/client/utils/validateRangeQueryDates'
+import { formatDateUTC__YYYYMMDD_dashed } from '@/shared/utils/dateUtils'
 
 interface DateRangeInputProps {
     rangeBounds: {
@@ -28,7 +29,10 @@ interface DateRangeInputProps {
  */
 export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
     const { rangeBounds, initialFrom, initialTo, disabled = false, handleRangeSelected } = props
-    const { min, max } = rangeBounds
+
+    const { min: unformattedMin, max: unformattedMax } = rangeBounds
+    const min = unformattedMin !== undefined ? formatDateUTC__YYYYMMDD_dashed(unformattedMin) : undefined
+    const max = unformattedMax !== undefined ? formatDateUTC__YYYYMMDD_dashed(unformattedMax) : undefined
 
     const [queryDateRange, setQueryDateRange] = useState<{ from?: string; to?: string }>({
         from: initialFrom,
@@ -122,7 +126,9 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
                 </Button>
             </div>
 
-            {queryDateRangeError !== undefined && <p className={''}>{queryDateRangeError}</p>}
+            {queryDateRangeError !== undefined && (
+                <p className={`${StdTextSize.Label} ${StdColors.ErrorRed} ${StdMargin.T12}`}>{queryDateRangeError}</p>
+            )}
         </div>
     )
 }

@@ -86,7 +86,10 @@ export const Contributions: React.FC = () => {
     }
 
     const dateRangeBounds = {
-        min: new Date(contributionsClientInfo?.accountCreatedDate || 0).toUTCString(),
+        min:
+            contributionsClientInfo === undefined
+                ? undefined
+                : new Date(contributionsClientInfo?.accountCreatedDate || 0).toUTCString(),
         max: new Date().toUTCString(),
     }
 
