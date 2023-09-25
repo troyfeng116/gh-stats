@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
+import { StdFonts } from '@/client/styles'
 import { SHARED_Model__ContributionCalendarDay } from '@/shared/models/models/Contributions'
-import { formatDateUTC__WWMMMMDYYYY } from '@/shared/utils/dateUtils'
+import { formatDateUTC__MDYY } from '@/shared/utils/dateUtils'
 
 interface DayCellProps {
     day: SHARED_Model__ContributionCalendarDay
@@ -40,6 +41,7 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
             ></div>
             {shouldShowCard && (
                 <div
+                    className={`${StdFonts.Secondary}`}
                     style={{
                         ...tooltipPosition,
                         zIndex: 1,
@@ -48,9 +50,10 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
                         color: 'black',
                         position: 'absolute',
                         padding: '3px 6px',
+                        textAlign: 'center',
                     }}
                 >
-                    <p>{formatDateUTC__WWMMMMDYYYY(date)}</p>
+                    <p>{formatDateUTC__MDYY(date)}</p>
                     <p>{contributionCount} contributions</p>
                 </div>
             )}

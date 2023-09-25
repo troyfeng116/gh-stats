@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { StdLayout, StdMargin } from '@/client/styles'
+import { InlineColors } from '@/client/styles/inline'
 
 interface ToggleProps {
     label?: React.ReactNode
@@ -26,7 +27,7 @@ export const Toggle: React.FC<ToggleProps> = (props) => {
                 <div
                     className={`${StdLayout.FlexRow}`}
                     style={{
-                        backgroundColor: isToggleOn ? 'rgb(109, 229, 189)' : 'rgb(139, 139, 139)',
+                        backgroundColor: isToggleOn ? InlineColors.PrimaryGreen : InlineColors.DarkGray,
                         borderRadius: 13,
                         width: 48,
                         height: 26,

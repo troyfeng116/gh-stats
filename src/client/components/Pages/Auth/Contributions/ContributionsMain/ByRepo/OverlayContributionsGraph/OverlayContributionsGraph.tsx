@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react'
 import Histogram, { HistogramData } from '@/client/components/Reuse/d3/Histogram'
 import Legend, { LegendData } from '@/client/components/Reuse/Legend'
 import { StdFlex, StdMargin, StdPadding } from '@/client/styles'
+import { InlineColors } from '@/client/styles/inline'
 import { attachScatterPointColors } from '@/client/utils/charts/chartColors'
 import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
 import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
@@ -35,10 +36,6 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
         attachScatterPointColors(histogramData)
 
     const histogramDataWithHighlighted: HistogramData[] = histogramDataWithColors
-        .sort(
-            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
-                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
-        )
         .map((data) => {
             const { repoKey } = data
             if (repoKey == repoKeyToHighlight) {
@@ -46,6 +43,10 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
             }
             return { ...data, r: 2.8, opacity: repoKeyToHighlight !== undefined ? 0.5 : 1, lineStrokeWidth: 1.5 }
         })
+        .sort(
+            ({ repoKey: repoKey1 }, { repoKey: repoKey2 }) =>
+                (repoKey1 === repoKeyToHighlight ? 1 : 0) - (repoKey2 === repoKeyToHighlight ? 1 : 0),
+        )
 
     const legendData: LegendData[] = histogramDataWithColors.map(({ color, repoKey }) => {
         return {
@@ -77,7 +78,7 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
 
                 <div
                     className={`${StdPadding.All12} ${StdMargin.T60} ${StdMargin.L18}`}
-                    style={{ border: '1px solid rgb(199, 199, 199)', height: 'fit-content' }}
+                    style={{ border: `1px solid ${InlineColors.LightGray}`, height: 'fit-content' }}
                 >
                     <Legend legendData={legendData} />
                 </div>

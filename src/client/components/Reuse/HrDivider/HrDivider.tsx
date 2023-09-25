@@ -12,7 +12,7 @@ export const HrDivider: React.FC<HrDividerProps> = (props) => {
 
     return (
         <hr
-            color="rgb(199, 199, 199)"
+            color="rgb(69, 169, 69)"
             style={{ borderColor: 'rgb(69, 169, 69)', backgroundColor: 'rgb(69, 169, 69)' }}
             className={`${marginTop} ${marginBottom} ${StdWidth.Full}`}
         />

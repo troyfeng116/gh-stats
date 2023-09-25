@@ -78,7 +78,7 @@ export const Contributions: React.FC = () => {
 
     let contributionsMainComponent: React.ReactNode | null = null
     if (isLoading) {
-        contributionsMainComponent = <div>Loading</div>
+        contributionsMainComponent = <div>Loading...</div>
     } else if (contributionsFetchError !== undefined || contributionsClientInfo === undefined) {
         contributionsMainComponent = <div>{contributionsFetchError}</div>
     } else {
@@ -86,7 +86,10 @@ export const Contributions: React.FC = () => {
     }
 
     const dateRangeBounds = {
-        min: new Date(contributionsClientInfo?.accountCreatedDate || 0).toLocaleDateString(),
+        min:
+            contributionsClientInfo === undefined
+                ? undefined
+                : new Date(contributionsClientInfo?.accountCreatedDate || 0).toUTCString(),
         max: new Date().toUTCString(),
     }
 

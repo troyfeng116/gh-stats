@@ -2,6 +2,7 @@ import React from 'react'
 import { FaCheck } from 'react-icons/fa'
 
 import { StdLayout, StdMargin } from '@/client/styles'
+import { InlineColors } from '@/client/styles/inline'
 
 interface CheckboxProps {
     label?: React.ReactNode
@@ -27,7 +28,7 @@ export const Checkbox: React.FC<CheckboxProps> = (props) => {
                 <div
                     className={`${StdLayout.FlexColCenter}`}
                     style={{
-                        backgroundColor: isChecked ? 'rgb(109, 229, 189)' : 'rgb(139, 139, 139)',
+                        backgroundColor: isChecked ? InlineColors.PrimaryGreen : InlineColors.DarkGray,
                         borderRadius: 5,
                         height: 16,
                         width: 16,
