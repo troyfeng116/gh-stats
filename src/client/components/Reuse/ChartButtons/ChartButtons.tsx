@@ -3,6 +3,7 @@ import { IconType } from 'react-icons'
 import { FaChartBar, FaChartLine, FaChartPie } from 'react-icons/fa'
 
 import { StdCursor, StdLayout, StdPadding } from '@/client/styles'
+import { InlineColors } from '@/client/styles/inline'
 
 export enum ChartType {
     Histogram = 'Histogram',
@@ -27,7 +28,7 @@ export const ChartButtons: React.FC<ChartButtonsProps> = (props) => {
     const { chartTypes, selectedChartType, handleChartTypeClicked } = props
 
     return (
-        <div className={`${StdLayout.FlexRow}`} style={{ border: '3px solid rgb(139, 139, 139)' }}>
+        <div className={`${StdLayout.FlexRow}`} style={{ border: `3px solid ${InlineColors.DarkGray}` }}>
             {chartTypes.map((chartType, idx) => {
                 const isSelected = chartType === selectedChartType
                 return (
@@ -36,7 +37,8 @@ export const ChartButtons: React.FC<ChartButtonsProps> = (props) => {
                         className={`${StdLayout.FlexRowCenter} ${StdCursor.Clickable} ${StdPadding.All6}`}
                         style={{
                             width: 60,
-                            backgroundColor: isSelected ? 'rgb(129, 249, 209)' : 'rgb(139, 139, 139)',
+                            backgroundColor: isSelected ? InlineColors.PrimaryGreen : InlineColors.DarkGray,
+                            transition: 'background-color 0.2s linear',
                         }}
                         onClick={() => handleChartTypeClicked(chartType)}
                     >

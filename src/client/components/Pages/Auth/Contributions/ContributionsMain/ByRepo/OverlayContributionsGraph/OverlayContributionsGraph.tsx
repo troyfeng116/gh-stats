@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react'
 import Histogram, { HistogramData } from '@/client/components/Reuse/d3/Histogram'
 import Legend, { LegendData } from '@/client/components/Reuse/Legend'
 import { StdFlex, StdMargin, StdPadding } from '@/client/styles'
+import { InlineColors } from '@/client/styles/inline'
 import { attachScatterPointColors } from '@/client/utils/charts/chartColors'
 import { dataToContributionsDateMapping } from '@/client/utils/charts/dataPointToTooltipLabel'
 import { tickValueToDateLabel } from '@/client/utils/charts/tickValueToLabel'
@@ -77,7 +78,7 @@ export const OverlayContributionsGraph: React.FC<OverlayContributionsGraphProps>
 
                 <div
                     className={`${StdPadding.All12} ${StdMargin.T60} ${StdMargin.L18}`}
-                    style={{ border: '1px solid rgb(199, 199, 199)', height: 'fit-content' }}
+                    style={{ border: `1px solid ${InlineColors.LightGray}`, height: 'fit-content' }}
                 >
                     <Legend legendData={legendData} />
                 </div>
