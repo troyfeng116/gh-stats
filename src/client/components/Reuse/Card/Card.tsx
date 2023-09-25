@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react'
 
 import { StdPadding } from '@/client/styles'
+import { InlineColors } from '@/client/styles/inline'
 
 export enum CardType {
     Primary = 'Primary',
@@ -22,14 +23,14 @@ export const Card: React.FC<CardProps> = (props) => {
     let borderStyle: React.CSSProperties = {}
     switch (type) {
         case CardType.Primary:
-            borderStyle = { border: '3px solid rgb(129, 249, 209)', borderRadius: 12 }
+            borderStyle = { border: `3px solid ${InlineColors.PrimaryGreen}`, borderRadius: 12 }
             break
         case CardType.Secondary:
-            borderStyle = { border: '2px solid rgb(139, 139, 139)', borderRadius: 12 }
+            borderStyle = { border: `2px solid ${InlineColors.DarkGray}`, borderRadius: 12 }
             break
         case CardType.Tertiary:
             borderStyle = {
-                backgroundColor: 'rgb(39, 39, 39)',
+                backgroundColor: `${InlineColors.TertiaryCardBgDarkGray}`,
                 borderRadius: 12,
             }
     }
