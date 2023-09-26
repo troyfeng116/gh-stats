@@ -8,15 +8,16 @@ interface CheckboxProps {
     label?: React.ReactNode
     id?: string
     isChecked: boolean
+    className?: string
 
     handleChecked: () => void
 }
 
 export const Checkbox: React.FC<CheckboxProps> = (props) => {
-    const { label, isChecked, id, handleChecked } = props
+    const { label, isChecked, id, className = '', handleChecked } = props
 
     return (
-        <div className={`${StdLayout.FlexRow}`}>
+        <div className={`${className} ${StdLayout.FlexRow}`}>
             <label>
                 <input
                     id={id}
@@ -38,7 +39,7 @@ export const Checkbox: React.FC<CheckboxProps> = (props) => {
                 </div>
             </label>
             {label !== undefined && (
-                <label htmlFor={id} className={`${StdMargin.L12}`}>
+                <label htmlFor={id} className={`${StdMargin.L6}`}>
                     {label}
                 </label>
             )}
