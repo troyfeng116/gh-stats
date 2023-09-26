@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import Button from '@/client/components/Reuse/Button'
 import { StdAlign, StdColors, StdFlex, StdLayout, StdMargin, StdTextSize, StdWidth } from '@/client/styles'
 import { validateRangeQueryDates } from '@/client/utils/validateRangeQueryDates'
-import { formatDateUTC__YYYYMMDD_dashed } from '@/shared/utils/dateUtils'
+import { formatDateClient__YYYYMMDD_dashed } from '@/shared/utils/dateUtils'
 
 interface DateRangeInputProps {
     rangeBounds: {
-        min?: string
-        max?: string
+        min?: string | number | Date
+        max?: string | number | Date
     }
     initialFrom: string | undefined
     initialTo: string | undefined
@@ -31,8 +31,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = (props) => {
     const { rangeBounds, initialFrom, initialTo, disabled = false, handleRangeSelected } = props
 
     const { min: unformattedMin, max: unformattedMax } = rangeBounds
-    const min = unformattedMin !== undefined ? formatDateUTC__YYYYMMDD_dashed(unformattedMin) : undefined
-    const max = unformattedMax !== undefined ? formatDateUTC__YYYYMMDD_dashed(unformattedMax) : undefined
+    const min = unformattedMin !== undefined ? formatDateClient__YYYYMMDD_dashed(unformattedMin) : undefined
+    const max = unformattedMax !== undefined ? formatDateClient__YYYYMMDD_dashed(unformattedMax) : undefined
 
     const [queryDateRange, setQueryDateRange] = useState<{ from?: string; to?: string }>({
         from: initialFrom,
