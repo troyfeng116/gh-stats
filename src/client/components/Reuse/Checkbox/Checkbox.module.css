@@ -1,0 +1,7 @@
+.checkbox:hover {
+    filter: brightness(150%);
+}
+
+.checkbox:active {
+    filter: brightness(200%);
+}

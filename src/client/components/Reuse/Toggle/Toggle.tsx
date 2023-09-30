@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { StdLayout, StdMargin } from '@/client/styles'
+import { StdCursor, StdLayout, StdMargin } from '@/client/styles'
 import { InlineColors } from '@/client/styles/inline'
 
 interface ToggleProps {
@@ -16,7 +16,7 @@ export const Toggle: React.FC<ToggleProps> = (props) => {
 
     return (
         <div className={`${StdLayout.FlexRow}`}>
-            <label>
+            <label className={`${StdCursor.Clickable}`}>
                 <input
                     id={id}
                     type="checkbox"

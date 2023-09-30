@@ -1,3 +1,5 @@
+import styles from './Checkbox.module.css'
+
 import React from 'react'
 import { FaCheck } from 'react-icons/fa'
 
@@ -27,7 +29,7 @@ export const Checkbox: React.FC<CheckboxProps> = (props) => {
                     style={{ display: 'none' }}
                 />
                 <div
-                    className={`${StdLayout.FlexColCenter}`}
+                    className={`${styles.checkbox} ${StdLayout.FlexColCenter}`}
                     style={{
                         backgroundColor: isChecked ? InlineColors.PrimaryGreen : InlineColors.DarkGray,
                         borderRadius: 5,
