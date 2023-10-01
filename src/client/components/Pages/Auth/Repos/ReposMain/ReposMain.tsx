@@ -1,5 +1,6 @@
 import React from 'react'
 
+import DiskUsageData from './DiskUsageData'
 import LanguageData from './LanguageData'
 import RepoDropdown from './RepoDropdown'
 import ReposSummary from './ReposSummary'
@@ -22,6 +23,11 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
         <div className={`${StdLayout.FlexCol}`}>
             <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`}>
                 <ReposSummary repoCommitCountStats={rc_stats} />
+            </Card>
+
+            <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>
+                <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>Disk usage breakdown across public repos</h3>
+                <DiskUsageData repoData={repos} />
             </Card>
 
             <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>

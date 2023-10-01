@@ -26,6 +26,14 @@ export const attachScatterPointColors = (
     })
 }
 
+export const attachDiskUsageColors = (
+    diskUsageData: { repoName: string; repoKey: string; diskUsage: number }[],
+): { repoName: string; repoKey: string; diskUsage: number; color: string }[] => {
+    return diskUsageData.map((data, idx) => {
+        return { ...data, color: COLORS[idx % COLORS.length] }
+    })
+}
+
 export const getRandomScatterPointColor = (): string => {
     return COLORS[Math.floor(Math.random() * COLORS.length)]
 }
