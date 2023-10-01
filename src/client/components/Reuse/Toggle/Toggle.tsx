@@ -14,6 +14,11 @@ interface ToggleProps {
 export const Toggle: React.FC<ToggleProps> = (props) => {
     const { label, isToggleOn, id, handleToggle } = props
 
+    const bgWidth = 48,
+        bgHeight = 26
+    const toggleSize = 20
+    const bgPadding = (bgHeight - toggleSize) / 2
+
     return (
         <div className={`${StdLayout.FlexRow}`}>
             <label className={`${StdCursor.Clickable}`}>
@@ -28,9 +33,9 @@ export const Toggle: React.FC<ToggleProps> = (props) => {
                     className={`${StdLayout.FlexRow}`}
                     style={{
                         backgroundColor: isToggleOn ? InlineColors.PrimaryGreen : InlineColors.DarkGray,
-                        borderRadius: 13,
-                        width: 48,
-                        height: 26,
+                        borderRadius: bgHeight / 2,
+                        width: bgWidth,
+                        height: bgHeight,
                         position: 'relative',
                         transition: 'background 0.2s linear',
                     }}
@@ -38,12 +43,12 @@ export const Toggle: React.FC<ToggleProps> = (props) => {
                     <div
                         style={{
                             backgroundColor: 'white',
-                            width: 20,
-                            height: 20,
-                            borderRadius: 10,
+                            width: toggleSize,
+                            height: toggleSize,
+                            borderRadius: toggleSize / 2,
                             position: 'absolute',
-                            top: 3,
-                            left: isToggleOn ? 3 : 48 - 3 - 22,
+                            top: bgPadding,
+                            left: isToggleOn ? bgPadding : bgWidth - bgPadding - toggleSize,
                             transition: 'left 0.2s linear',
                         }}
                     />
