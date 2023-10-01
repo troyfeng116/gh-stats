@@ -130,7 +130,9 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                 </div>
 
                 {selectedRepoContributions.length === 0 ? (
-                    <p>Select a repo to view per-repo contribution charts</p>
+                    <Card className={`${StdPadding.All12}`} type={CardType.Tertiary}>
+                        Select a repo to view per-repo contribution charts
+                    </Card>
                 ) : (
                     byRepoCharts
                 )}
