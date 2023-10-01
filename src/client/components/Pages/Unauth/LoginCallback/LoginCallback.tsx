@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import Loading from '@/client/components/Reuse/Loading'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 
 export const LoginCallback: React.FC = () => {
@@ -33,7 +34,7 @@ export const LoginCallback: React.FC = () => {
     }, [router, params, login])
 
     if (isLoading) {
-        return <div>Logging in...</div>
+        return <Loading />
     }
 
     return <div>Login successful!</div>

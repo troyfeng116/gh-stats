@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
+import Loading from '../../Reuse/Loading'
 import { AuthStatus, useAuth } from '../AuthProvider'
 
 import { RATE_LIMIT_AUTH_ERROR, RATE_LIMIT_AUTH_RESPONSE, RATE_LIMIT_LOADING, RATE_LIMIT_UNAUTH } from './actions'
@@ -74,7 +75,7 @@ export const RateLimitWrapper: React.FC<RateLimitWrapperProps> = (props) => {
 
     // prevent state update dispatch race condition
     if (isLoading || pathname !== lastPathname) {
-        return <div>Checking rate limits...</div>
+        return <Loading />
     }
 
     if (rateLimitInfo === undefined) {
