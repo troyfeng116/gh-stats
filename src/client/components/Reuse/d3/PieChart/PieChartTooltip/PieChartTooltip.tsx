@@ -17,9 +17,18 @@ export const PieChartTooltip: React.FC<PieChartTooltipProps> = (props) => {
     const x = cx + 48 * Math.cos(centerAngleRadians)
     const y = cy - 48 * Math.sin(centerAngleRadians)
 
+    const width = label.length * 7 + 60
+
     return (
         <g style={{ transform: `translate(${x}px, ${y}px)` }} onMouseEnter={onMouseEnter}>
-            <rect fill="white" x={0} y={0} width={290} height={36} style={{ transform: 'translate(-145px)' }} />
+            <rect
+                fill="white"
+                x={0}
+                y={0}
+                width={width}
+                height={36}
+                style={{ transform: `translate(-${width / 2}px)` }}
+            />
             <text textAnchor="middle" fill="black" style={{ fontSize: 12, transform: 'translateY(21px)' }}>
                 {label}
             </text>

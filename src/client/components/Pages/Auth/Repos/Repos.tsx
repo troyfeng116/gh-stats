@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import ReposMain from './ReposMain'
 
+import Loading from '@/client/components/Reuse/Loading'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { lifetimeStatsAPI } from '@/client/lib/authAPI'
 import { SHARED_Model__LifetimeStats } from '@/shared/models/models/Stats'
@@ -33,7 +34,7 @@ export const Repos: React.FC = () => {
     }, [accessToken])
 
     if (isLoading) {
-        return <div>repository statistics loading...</div>
+        return <Loading />
     }
 
     if (error !== undefined || lifetimeStats === undefined) {

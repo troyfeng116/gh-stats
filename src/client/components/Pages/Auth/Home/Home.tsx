@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 
 import UserCard from '@/client/components/Pages/Auth/Home/UserCard'
+import Loading from '@/client/components/Reuse/Loading'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { getUserCardAPI } from '@/client/lib/authAPI'
 import { SHARED_Model__UserCardClientInfo } from '@/shared/models/models/UserCard'
@@ -32,7 +33,7 @@ export const Home: React.FC = () => {
     }, [accessToken])
 
     if (isLoading) {
-        return <div>user card loading...</div>
+        return <Loading />
     }
 
     if (error !== undefined || userCardClientInfo === undefined) {
