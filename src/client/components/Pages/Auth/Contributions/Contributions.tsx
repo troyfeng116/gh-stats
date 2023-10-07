@@ -13,6 +13,7 @@ import { reducer } from './reducer'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
 import DateRangeInput from '@/client/components/Reuse/DateRangeInput'
+import Loading from '@/client/components/Reuse/Loading'
 import { useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { contributionsAPI } from '@/client/lib/authAPI'
 import { StdLayout, StdMargin, StdPadding } from '@/client/styles'
@@ -78,7 +79,7 @@ export const Contributions: React.FC = () => {
 
     let contributionsMainComponent: React.ReactNode | null = null
     if (isLoading) {
-        contributionsMainComponent = <div>Loading...</div>
+        contributionsMainComponent = <Loading />
     } else if (contributionsFetchError !== undefined || contributionsClientInfo === undefined) {
         contributionsMainComponent = <div>{contributionsFetchError}</div>
     } else {
@@ -86,11 +87,8 @@ export const Contributions: React.FC = () => {
     }
 
     const dateRangeBounds = {
-        min:
-            contributionsClientInfo === undefined
-                ? undefined
-                : new Date(contributionsClientInfo?.accountCreatedDate || 0).toUTCString(),
-        max: new Date().toUTCString(),
+        min: contributionsClientInfo?.accountCreatedDate,
+        max: new Date(),
     }
 
     return (

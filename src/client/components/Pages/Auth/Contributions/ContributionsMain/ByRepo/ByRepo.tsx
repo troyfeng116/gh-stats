@@ -40,6 +40,21 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
         })
     }
 
+    const handleAllToggled = () => {
+        setSelectedRepos((prevSelectedRepos) => {
+            let hasToggled = false
+            contributionsByRepo.forEach((repoContributions) => {
+                hasToggled ||= prevSelectedRepos.get(getRepoKey(repoContributions)) || false
+            })
+
+            contributionsByRepo.forEach((repoContributions) => {
+                prevSelectedRepos.set(getRepoKey(repoContributions), !hasToggled)
+            })
+
+            return new Map(prevSelectedRepos)
+        })
+    }
+
     const selectedRepoContributions: SHARED_Model__CommitContributionsByRepo[] = contributionsByRepo.filter(
         (repoContributions) => {
             return selectedRepos.get(getRepoKey(repoContributions)) === true
@@ -90,6 +105,13 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
 
             <div className={`${StdLayout.FlexCol} ${StdMargin.T12}`}>
                 <div className={`${StdMargin.B30}`}>
+                    <Checkbox
+                        key="repo-select-all"
+                        id="repo-select-all"
+                        label="Select all"
+                        isChecked={selectedRepoContributions.length === contributionsByRepo.length}
+                        handleChecked={() => handleAllToggled()}
+                    />
                     {contributionsByRepo.map((repoContributions) => {
                         const {
                             contributions: { totalCount },
@@ -108,7 +130,9 @@ export const ByRepo: React.FC<ByRepoProps> = (props) => {
                 </div>
 
                 {selectedRepoContributions.length === 0 ? (
-                    <p>Select a repo to view per-repo contribution charts</p>
+                    <Card className={`${StdPadding.All12}`} type={CardType.Tertiary}>
+                        Select a repo to view per-repo contribution charts
+                    </Card>
                 ) : (
                     byRepoCharts
                 )}

@@ -78,3 +78,19 @@ a {
         color-scheme: dark;
     }
 }
+
+/* ======== scrollbar ======== */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: rgb(189, 189, 189);
+}

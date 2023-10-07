@@ -69,11 +69,11 @@ export const formatDateUTC__WWMMMMDYYYY = (date: string | number | Date): string
  *
  * @returns Date formatted in UTC, formatted `YYYY-MM-DD`.
  */
-export const formatDateUTC__YYYYMMDD_dashed = (date: string | number | Date): string => {
+export const formatDateClient__YYYYMMDD_dashed = (date: string | number | Date): string => {
     const d = new Date(date)
-    let month = '' + (d.getUTCMonth() + 1)
-    let day = '' + d.getUTCDate()
-    const year = d.getUTCFullYear()
+    let month = '' + (d.getMonth() + 1)
+    let day = '' + d.getDate()
+    const year = d.getFullYear()
 
     if (month.length < 2) month = '0' + month
     if (day.length < 2) day = '0' + day

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
+import Loading from '../../Reuse/Loading'
+
 import { AuthStatus, useAuth } from '@/client/components/Wrappers/AuthProvider'
 import { CLIENT_AUTH_ROUTES, CLIENT_UNAUTH_ROUTES } from '@/client/routes'
 
@@ -36,10 +38,9 @@ export const AuthWrapper: React.FC<AuthWrapperProps> = (props) => {
         }
     }, [router, pathname, authStatus, accessToken])
 
-    // TODO: loading state
     // remember this is immediately returned from server before hydration
     if (authStatus === AuthStatus.INITIALIZING) {
-        return <div>Auth loading...</div>
+        return <Loading />
     }
 
     if (authStatus === AuthStatus.UNAUTH && !isUnauthAllowedOnRoute(pathname)) {
