@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import * as d3 from 'd3'
 
-import { AxisProperties } from '../Axes'
+import { AxisProperties } from '..'
 
 interface YAxisProps {
     range: [number, number]
