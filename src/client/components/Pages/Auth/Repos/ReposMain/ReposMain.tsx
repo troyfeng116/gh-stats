@@ -26,13 +26,13 @@ export const ReposMain: React.FC<ReposMainProps> = (props) => {
             </Card>
 
             <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>
-                <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>Disk usage breakdown across public repos</h3>
-                <DiskUsageData repoData={repos} />
+                <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>Language breakdown across public repos</h3>
+                <LanguageData languageData={allLanguageData} />
             </Card>
 
             <Card className={`${StdMargin.B60} ${StdLayout.FlexCol}`} type={CardType.Secondary}>
-                <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>Language breakdown across public repos</h3>
-                <LanguageData languageData={allLanguageData} />
+                <h3 className={`${StdTextSize.Medium} ${StdMargin.B18}`}>Disk usage breakdown across public repos</h3>
+                <DiskUsageData repoData={repos} />
             </Card>
 
             {repos.map((repo, idx) => {
