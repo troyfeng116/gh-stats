@@ -6,7 +6,6 @@ import { formatDateUTC__MDYY } from '@/shared/utils/dateUtils'
 
 interface DayCellProps {
     day: SHARED_Model__ContributionCalendarDay
-    tooltipPosition: React.CSSProperties
 }
 
 export const DayCell: React.FC<DayCellProps> = (props) => {
@@ -54,8 +53,7 @@ export const DayCell: React.FC<DayCellProps> = (props) => {
                         borderRadius: 6,
                     }}
                 >
-                    <p>{formatDateUTC__MDYY(date)}</p>
-                    <p>{contributionCount} contributions</p>
+                    {formatDateUTC__MDYY(date)}: {contributionCount} contributions
                 </div>
             )}
         </div>
