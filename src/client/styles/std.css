@@ -16,6 +16,10 @@
     color: rgb(249, 59, 59);
 }
 
+.std-colors-Black {
+    color: rgb(0, 0, 0);
+}
+
 /* ======== background colors ======== */
 
 .std-bg-colors-White {
