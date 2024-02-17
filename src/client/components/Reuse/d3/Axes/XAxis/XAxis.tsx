@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import * as d3 from 'd3'
 
-import { AxisProperties } from '../Axes'
+import { AxisProperties } from '..'
 
 interface XAxisProps {
     domain: [number, number]
@@ -47,6 +47,8 @@ export const XAxis: React.FC<XAxisProps> = (props) => {
                     textAnchor: 'middle',
                     transform: `translate(${(xStart + xEnd) / 2}px, ${yOffset + 72}px)`,
                 }}
+                strokeWidth={0}
+                fill="currentColor"
             >
                 {label}
             </text>
@@ -61,6 +63,8 @@ export const XAxis: React.FC<XAxisProps> = (props) => {
                             textAnchor: 'end',
                             transform: 'translate(2px, 19px) rotate(-22.9deg)',
                         }}
+                        strokeWidth={0}
+                        fill="currentColor"
                     >
                         {tickLabelMapping(value)}
                     </text>

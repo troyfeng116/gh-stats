@@ -3,6 +3,7 @@ export enum StdColors {
     Green = 'std-colors-Green',
     LightGray = 'std-colors-LightGray',
     ErrorRed = 'std-colors-ErrorRed',
+    Black = 'std-colors-Black',
 }
 
 export enum StdBgColors {

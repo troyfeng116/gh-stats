@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import * as d3 from 'd3'
 
-import { AxisProperties } from '../Axes'
+import { AxisProperties } from '..'
 
 interface YAxisProps {
     range: [number, number]
@@ -36,6 +36,8 @@ export const YAxis: React.FC<YAxisProps> = (props) => {
                     textAnchor: 'middle',
                     transform: `translate(${xOffset - 42}px, ${(yStart + yEnd) / 2}px) rotate(270deg)`,
                 }}
+                strokeWidth={0}
+                fill="currentColor"
             >
                 {label}
             </text>
@@ -51,6 +53,8 @@ export const YAxis: React.FC<YAxisProps> = (props) => {
                             alignmentBaseline: 'central',
                             transform: 'translateX(-12px)',
                         }}
+                        strokeWidth={0}
+                        fill="currentColor"
                     >
                         {tickLabelMapping(value)}
                     </text>
