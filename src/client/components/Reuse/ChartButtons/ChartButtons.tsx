@@ -1,6 +1,6 @@
 import React from 'react'
 import { IconType } from 'react-icons'
-import { FaChartBar, FaChartLine, FaChartPie } from 'react-icons/fa'
+import { FaChartBar, FaChartLine, FaChartPie, FaTable } from 'react-icons/fa'
 
 import { StdCursor, StdLayout, StdPadding } from '@/client/styles'
 import { InlineColors } from '@/client/styles/inline'
@@ -9,6 +9,7 @@ export enum ChartType {
     Histogram = 'Histogram',
     Bar = 'Bar',
     Pie = 'Pie',
+    Table = 'Table',
 }
 
 interface ChartButtonsProps {
@@ -22,6 +23,7 @@ const CHART_TYPE_TO_ICON: { [key in ChartType]: IconType } = {
     [ChartType.Histogram]: FaChartLine,
     [ChartType.Bar]: FaChartBar,
     [ChartType.Pie]: FaChartPie,
+    [ChartType.Table]: FaTable,
 }
 
 export const ChartButtons: React.FC<ChartButtonsProps> = (props) => {

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import LanguageBarChart from './LanguageBarChart'
 import LanguageLegend from './LanguageLegend'
 import LanguagePieChart from './LanguagePieChart'
+import LanguageTable from './LanguageTable'
 
 import Card, { CardType } from '@/client/components/Reuse/Card'
 import ChartButtons, { ChartType } from '@/client/components/Reuse/ChartButtons'
@@ -19,7 +20,7 @@ interface LanguageDataProps {
 export const LanguageData: React.FC<LanguageDataProps> = (props) => {
     const { languageData, shouldSortMostFirst = true, chartWidth = 690, chartHeight = 390 } = props
 
-    const chartTypes = [ChartType.Bar, ChartType.Pie]
+    const chartTypes = [ChartType.Bar, ChartType.Pie, ChartType.Table]
     const [chartTypeToDisplay, setChartTypeToDisplay] = useState<ChartType>(ChartType.Bar)
 
     if (languageData.length === 0) {
@@ -38,16 +39,35 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
     switch (chartTypeToDisplay) {
         case ChartType.Bar:
             chartComponent = (
-                <LanguageBarChart languageData={languageDataCopy} width={chartWidth} height={chartHeight} />
+                <>
+                    <div className={`${StdMargin.B30}`}>
+                        <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
+                    </div>
+                    <LanguageBarChart languageData={languageDataCopy} width={chartWidth} height={chartHeight} />
+                </>
             )
             break
         case ChartType.Pie:
             chartComponent = (
-                <LanguagePieChart
+                <>
+                    <div className={`${StdMargin.B30}`}>
+                        <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
+                    </div>
+                    <LanguagePieChart
+                        totalLanguageBytes={totalLanguageBytes}
+                        languageData={languageDataCopy}
+                        width={chartWidth}
+                        height={chartHeight}
+                    />
+                </>
+            )
+            break
+        case ChartType.Table:
+            chartComponent = (
+                <LanguageTable
+                    width={chartWidth}
                     totalLanguageBytes={totalLanguageBytes}
                     languageData={languageDataCopy}
-                    width={chartWidth}
-                    height={chartHeight}
                 />
             )
             break
@@ -66,10 +86,6 @@ export const LanguageData: React.FC<LanguageDataProps> = (props) => {
                 type={CardType.Tertiary}
                 padding={StdPadding.All18}
             >
-                <div className={`${StdMargin.B30}`}>
-                    <LanguageLegend totalLanguageBytes={totalLanguageBytes} languageData={languageDataCopy} />
-                </div>
-
                 {chartComponent}
             </Card>
         </div>
