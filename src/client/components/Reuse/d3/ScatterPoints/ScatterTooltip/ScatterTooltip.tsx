@@ -11,7 +11,15 @@ export const ScatterTooltip: React.FC<ScatterTooltipProps> = (props) => {
 
     return (
         <g style={{ transform: `translate(${cx}px, ${cy}px)` }}>
-            <rect fill="white" x={0} y={0} width={190} height={36} style={{ transform: 'translate(-95px, 12px)' }} />
+            <rect
+                fill="white"
+                x={0}
+                y={0}
+                width={190}
+                height={36}
+                rx={6}
+                style={{ transform: 'translate(-95px, 12px)' }}
+            />
             <text
                 fill="black"
                 style={{
