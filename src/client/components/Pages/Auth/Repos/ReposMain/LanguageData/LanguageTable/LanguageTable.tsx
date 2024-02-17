@@ -25,7 +25,7 @@ export const LanguageTable: React.FC<LanguageTableProps> = (props) => {
                 return [
                     {
                         data: (
-                            <div className={`${StdLayout.FlexRow}`}>
+                            <div className={`${StdLayout.FlexRowCenter}`}>
                                 <div
                                     style={{
                                         backgroundColor: color,
@@ -38,13 +38,14 @@ export const LanguageTable: React.FC<LanguageTableProps> = (props) => {
                                 {name}
                             </div>
                         ),
+                        shouldCenter: true,
                     },
                     { data: bytesToStr(size, 2), shouldCenter: true },
                     { data: approxLoc, shouldCenter: true },
                 ]
             })}
             footerData={[
-                { data: 'Total', shouldCenter: false },
+                { data: 'Total', shouldCenter: true },
                 { data: bytesToStr(totalLanguageBytes, 2), shouldCenter: true },
                 { data: computeTotalLoc(languageData), shouldCenter: true },
             ]}
